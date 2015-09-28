@@ -31,9 +31,9 @@ get path lambda = do
 
 handleGreetings :: Maybe String -> Maybe String -> Maybe String
 handleGreetings name age = fmap concat $ sequence [hello, name, areYou, age , question]
-    where hello    <- Just "Hello"
-          areYou   <- Just "Are you"
-          question <- Just "?"
+    where hello    = Just "Hello"
+          areYou   = Just "Are you"
+          question = Just "?"
 
 bootstrap :: IO ()
 bootstrap = get "/hi/:name" $ \req \res -> do

@@ -1,0 +1,26 @@
+buildscript {
+    repositories {
+        jcenter()
+        mavenLocal()
+        mavenCentral()
+    }
+}
+
+apply plugin: 'java'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+
+    /* ------------ FREGE -------------*/
+    compile 'org.frege-lang:frege:3.22.367-g2737683'
+
+    /* ------------ SPARK -------------*/
+    compile 'com.sparkjava:spark-core:2.3'
+
+    compile 'org.slf4j:slf4j-api:1.7.12'
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.hamcrest:java-hamcrest:2.0.0.0'
+}

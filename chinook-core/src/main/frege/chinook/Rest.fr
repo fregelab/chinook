@@ -1,0 +1,42 @@
+--- This module holds all HTTP method calls
+module chinook.Rest where
+
+--- Request
+data Request  = pure native spark.Request where
+    native params :: Request -> String -> IO (Maybe String)
+
+-- Gets a param value by name
+params :: Request -> String -> IO (Maybe String)
+params = Request.params
+
+--- Response
+data Response = pure native spark.Response
+
+--- Route represents the body of the response
+data Route    = mutable native spark.Route where
+    native handle :: Route -> Request -> Response -> IO (Maybe String)
+        throws Exception
+    native new chinook.into.Rest.createRoute
+                  :: (Request -> Response -> IO (Maybe String)) -> IO Route
+
+--- Rest wraps all sparkjava.com calls and exposes to Frege
+data Rest = pure native spark.Spark where
+    native doGet spark.Spark.get :: String -> Route -> IO ()
+
+--- Creates a GET endpoint
+get :: String -> (Request -> Response -> IO (Maybe String)) -> IO ()
+get path lambda = do
+    route <- Route.new lambda
+    Rest.doGet path route
+
+handleGreetings :: Maybe String -> Maybe String -> Maybe String
+handleGreetings name age = fmap concat $ sequence [hello, name, areYou, age , question]
+    where hello    <- Just "Hello"
+          areYou   <- Just "Are you"
+          question <- Just "?"
+
+bootstrap :: IO ()
+bootstrap = get "/hi/:name" $ \req \res -> do
+    name <- params req ":name"
+    age  <- params req ":age"
+    return $ handleGreetings name age

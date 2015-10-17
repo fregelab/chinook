@@ -1,6 +1,9 @@
 --- This module holds all HTTP method calls
 module chinook.Rest where
 
+--- CONSTANTS
+blank = ""
+
 --- Request
 data Request  = pure native spark.Request where
     pure native params :: Request -> String -> Maybe String
@@ -21,10 +24,19 @@ data Rest = pure native spark.Spark where
     native doGet spark.Spark.get :: String -> Route -> IO ()
 
 --- Creates a GET endpoint
-get :: String -> (Request -> Response -> String) -> IO ()
-get path lambda = Rest.doGet path $ Route.new lambda
+get :: String -> (Request -> Response -> Maybe String) -> IO ()
+get path lambda = Rest.doGet path $ Route.new $ toSpark lambda
 
+--- While we want to make the user to use a lambda expression returning
+--- a Maybe value, eventually we need to pass a String object to spark.
+--- This function transforms the 'user' lambda expression to a valid
+--- spark handler function
+toSpark :: (a -> b -> Maybe String) -> (a -> b -> String)
+toSpark fn1 request response = (fromMaybe empty) $ fn1 request response
+
+--- This is an example
 bootstrap :: IO ()
-bootstrap = get "/hi/:name" $ \req \res ->
-    let message = fmap (\name -> "Hello " ++ name) $ params req ":name" in
-    maybe "nothing" id $ message
+bootstrap = get "/hi/:name" $ \req \res -> do
+    name      <- params req ":name"
+    greetings <- Just ("Hello " ++ name)
+    return greetings

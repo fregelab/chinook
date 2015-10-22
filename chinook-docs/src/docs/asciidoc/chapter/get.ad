@@ -1,0 +1,56 @@
+== GET
+
+Here is the function to perform HTTP `GET` calls:
+
+[source, haskell]
+----
+include::{coreSrc}/chinook/Chinook.fr[tags=getFunction]
+----
+
+It basically needs:
+
+- A `String` representing the URI resource A handler function to
+- A `Handler` to deal with the `request` and `response` originated in
+this invocation.
+
+As a function sending and receiving data to and from the outside world
+needs to deal with the `IO` abstraction. Consequently it should
+reflect that situation in the function signature.
+
+On one side the handler should return a `IO (Maybe String)` data,
+meaning it could return a `String` and also that this `String` will be
+sent outside.
+
+On the other hand, the function itself returns IO () meaning it may
+content `side-effects` produced by the exposure to the real world.
+
+Do you remember the registered enpoints we had in our sample app ?
+
+[source, haskell]
+----
+include::{sampleSrc}/chinook/App.fr[tags=routes]
+----
+
+=== Return only values
+
+The first endpoint returns a typical `hello world` message when
+invoking the `/hi` endpoint. Here is the handler implementation:
+
+[source, haskell]
+----
+include::{sampleSrc}/chinook/Handlers.fr[tags=helloWorldHandler]
+----
+
+=== Changing response
+
+Sometimes depending on the request we may want to change something
+about the response.
+
+[source, haskell]
+----
+include::{sampleSrc}/chinook/Handlers.fr[tags=greetingsHandler]
+----
+
+There are many functions available for `Request` and `Response`
+abstractions, if you want to explore it please don't hesitate to
+explore the project's Frege docs.

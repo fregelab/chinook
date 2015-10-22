@@ -1,5 +1,5 @@
-**Chinook** is a http://frege-lang.org[Frege] port of
-  http://sparkjava.com[SparkJava] for creating web applications with
+**Chinook** is a `Frege` (http://frege-lang.org) port of
+  `SparkJava` http://sparkjava.com for creating web applications with
   minimum effort.
 
 Docs are available at https://januslynd.github.com/chinook

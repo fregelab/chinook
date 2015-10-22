@@ -1,0 +1,35 @@
+allprojects {
+    group   = "com.github.januslynd"
+    version = "1.0.0-beta"
+}
+
+subprojects {
+    buildscript {
+        repositories {
+            mavenLocal()
+            jcenter()
+            maven { url "https://oss.sonatype.org/content/groups/public" }
+            mavenCentral()
+        }
+        dependencies {
+            classpath 'org.frege-lang:frege-gradle-plugin:0.4.1'
+        }
+    }
+
+    repositories {
+        jcenter()
+        maven { url "https://oss.sonatype.org/content/groups/public" }
+    }
+}
+
+ext.libraries = [
+    frege_core: 'org.frege-lang:frege:3.23.288-gaa3af0c',
+    frege_repl: "org.frege-lang:frege-repl-core:1.2.1-SNAPSHOT",
+    frege_nati: "org.frege-lang:frege-native-gen:1.3",
+
+    spark_java: 'com.sparkjava:spark-core:2.3',
+
+    slf4j: 'org.slf4j:slf4j-api:1.7.12',
+    junit: 'junit:junit:4.12',
+    hamcrest: 'org.hamcrest:java-hamcrest:2.0.0.0',
+]

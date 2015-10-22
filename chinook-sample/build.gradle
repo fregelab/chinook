@@ -1,0 +1,10 @@
+apply plugin: 'java'
+apply plugin: 'frege'
+apply plugin: 'application'
+
+dependencies {
+    compile project (':chinook-core')
+}
+
+mainClassName = "chinook.Routes"
+compileFrege.dependsOn 'compileJava'

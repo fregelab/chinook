@@ -1,2 +1,3 @@
-include 'chinook-into'
 include 'chinook-core'
+include 'chinook-sample'
+include 'chinook-docs'

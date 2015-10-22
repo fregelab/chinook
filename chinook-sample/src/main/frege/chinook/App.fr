@@ -1,0 +1,12 @@
+--- This module registers handlers to a given URI
+module chinook.Routes where
+
+import chinook.Chinook
+import chinook.Handlers (helloWorldHandler, greetingsHandler, goodbyeHandler)
+
+-- tag::routes[]
+main _  = do
+    get  "/hi"         helloWorldHandler
+    get  "/hi/:name"   greetingsHandler
+    get  "/bye"        goodbyeHandler
+-- end::routes[]

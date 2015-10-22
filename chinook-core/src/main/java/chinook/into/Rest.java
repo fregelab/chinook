@@ -38,7 +38,11 @@ public final class Rest {
         return new Route() {
             @Override
             public Object handle(final Request request, final Response response) throws Exception {
-                return fn.apply(request).apply(response).result().forced();
+                return fn.apply(request)
+                         .apply(response)
+                         .apply(null) // Forces IO to extract its value
+                         .result()
+                         .forced();
             }
         };
     }

@@ -1,0 +1,26 @@
+= Chinook
+:revnumber: {project-version}
+:numbered:
+:imagesDir: images/
+:baseDir: ../../../../..
+:stem:
+
+:coreBase: {baseDir}/chinook-core
+:sampleBase: {baseDir}/chinook-sample
+
+:coreSrc: {coreBase}/src/main/frege
+:sampleSrc: {sampleBase}/src/main/frege
+
+"Chinook winds /ʃɪˈnʊk/, or simply chinooks, are foehn winds in the
+interior West of North America, where the Canadian Prairies and Great
+Plains meet various mountain ranges, although the original usage is in
+reference to wet, warm coastal winds in the Pacific Northwest."
+-- Wikipedia
+
+**Chinook** is a `Frege` (http://frege-lang.org) port of
+  `SparkJava` (http://sparkjava.com) for creating web applications with
+  minimum effort.
+
+include::chapter/getting.ad[]
+
+include::chapter/get.ad[]

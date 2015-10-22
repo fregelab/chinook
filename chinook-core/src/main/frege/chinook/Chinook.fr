@@ -1,0 +1,61 @@
+{-
+   This module exposes the API to build rest
+   applications
+--}
+module chinook.Chinook where
+
+import chinook.Utils (blank)
+import chinook.Spark (Request, Response, Route, Rest)
+
+-- __      __       _
+-- \ \    / /      | |
+--  \ \  / /__ _ __| |__  ___
+--   \ \/ / _ \ '__| '_ \/ __|
+--    \  /  __/ |  | |_) \__ \
+--     \/ \___|_|  |_.__/|___/
+--
+
+{--
+   Creates an HTTP GET endpoint. It receives:
+
+   - A path
+   - A function handling the request
+
+   The function is a lambda function receiving a chinook.Request
+   and a chinook.Response and returns an IO (Maybe String).
+
+-}
+-- tag::getFunction[]
+get  :: String -> (Request -> Response -> IO (Maybe String)) -> IO ()
+-- end::getFunction[]
+get path lambda = do
+  route <- Route.new $ toSpark lambda
+  Rest.get path route
+
+{--
+   Creates an HTTP POST endpoint. It receives:
+
+   - A path
+   - A function handling the request
+
+   The function is a lambda function receiving a chinook.Request
+   and a chinook.Response and returns an IO ().
+
+-}
+post :: String -> (Request -> Response -> IO ()) -> IO ()
+post path lambda = do
+  route <- Route.new lambda
+  Rest.post path route
+
+{--
+  While within Frege we want to work with safe abstractions like
+  Maybe or Either, Spark needs to receive a concrete Java type.
+  This transformation narrows the gap between both worlds.
+
+  Apart from this function, there is also another part of the
+  bridge between Frege->Spark written in Rest.java
+-}
+toSpark :: (a -> b -> IO (Maybe String)) -> (a -> b -> IO String)
+toSpark fn1 request response = do
+  result <- fn1 request response
+  return $ fromMaybe blank result

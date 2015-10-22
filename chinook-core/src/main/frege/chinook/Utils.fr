@@ -1,0 +1,7 @@
+{-
+   This module holds utility functions
+--}
+module chinook.Utils where
+
+{-- Returns an empty String -}
+blank = ""

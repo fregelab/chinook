@@ -1,0 +1,72 @@
+{-
+   This module does the mapping from Sparkjava abstractions
+   to Frege.
+--}
+module chinook.Spark where
+
+--   _____                            _
+--  |  __ \                          | |
+--  | |__) |___  __ _ _   _  ___  ___| |_
+--  |  _  // _ \/ _` | | | |/ _ \/ __| __|
+--  | | \ \  __/ (_| | |_| |  __/\__ \ |_
+--  |_|  \_\___|\__, |\__,_|\___||___/\__|
+--                 | |
+--                 |_|
+
+{-
+   Request type and related methods to get information
+   from the request.
+--}
+data Request = pure native spark.Request where
+    native params :: Request -> String -> IO (Maybe String)
+
+--   _____
+--  |  __ \
+--  | |__) |___  ___ _ __   ___  _ __  ___  ___
+--  |  _  // _ \/ __| '_ \ / _ \| '_ \/ __|/ _ \
+--  | | \ \  __/\__ \ |_) | (_) | | | \__ \  __/
+--  |_|  \_\___||___/ .__/ \___/|_| |_|___/\___|
+--                  | |
+--                  |_|
+
+{-
+   Response type and related methods to complete/alter
+   the response.
+--}
+data Response = pure native spark.Response where
+    native status :: Response -> Int    -> IO ()
+    native body   :: Response -> String -> IO ()
+    native header :: Response -> String -> String -> IO ()
+    native cookie :: Response -> String -> String -> IO ()
+
+--   _____             _
+--  |  __ \           | |
+--  | |__) |___  _   _| |_ ___
+--  |  _  // _ \| | | | __/ _ \
+--  | | \ \ (_) | |_| | ||  __/
+--  |_|  \_\___/ \__,_|\__\___|
+--
+
+{-
+    A Route is the function handling the current request. The only
+    way of creating a route is by using the method Route.new and
+    passing a lambda expression of type (Request -> Response -> IO a)
+--}
+data Route = pure native spark.Route where
+    native new chinook.into.Rest.createRoute :: (Request -> Response -> IO a) -> IO Route
+
+--   _____                  _
+--  / ____|                | |
+-- | (___  _ __   __ _ _ __| | __
+--  \___ \| '_ \ / _` | '__| |/ /
+--  ____) | |_) | (_| | |  |   <
+-- |_____/| .__/ \__,_|_|  |_|\_\
+--        | |
+--        |_|
+
+{--
+    Rest wraps all sparkjava.com calls and exposes to Frege
+-}
+data Rest = pure native spark.Spark where
+    native get  spark.Spark.get   :: String -> Route -> IO ()
+    native post spark.Spark.post  :: String -> Route -> IO ()

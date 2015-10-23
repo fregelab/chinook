@@ -2,4 +2,4 @@
   `SparkJava` http://sparkjava.com for creating web applications with
   minimum effort.
 
-Docs are available at https://januslynd.github.com/chinook
+Docs are available at https://januslynd.github.io/chinook

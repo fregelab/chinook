@@ -1,0 +1,23 @@
+module chinook.Data where
+import Data.JSON
+import Data.List
+
+data Lang = Lang { code :: String,
+                   desc :: String }
+
+derive Show Lang
+
+instance ToJSON Lang where
+  toJSON Lang {code, desc} =
+    Struct [
+      assoc "code" code,
+      assoc "desc" desc
+    ]
+
+instance FromJSON Lang where
+  fromJSON v = case v of
+    Struct s -> do
+      code <- field "code" s
+      desc <- field "desc" s
+      return Lang {code, desc}
+    _        ->  fail ("expected {\"code\" : ..., \"desc\" : ...}, found " ++ show v)

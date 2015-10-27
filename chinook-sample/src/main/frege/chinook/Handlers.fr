@@ -1,5 +1,8 @@
 module chinook.Handlers where
 
+import Data.JSON
+
+import chinook.Data (Lang)
 import chinook.Spark (Request,Response)
 
 -- tag::helloWorldHandler[]
@@ -27,7 +30,15 @@ createGreetings name age = fmap (concat) $ sequence [greeting, name, question, a
           question = Just ". Are you "
           mark     = Just "?"
 
-isJohn :: (Maybe String) -> Bool
-isJohn name = case name of
-    Nothing   -> false
-    Just x    -> x == "john"
+getJSON :: Request -> Response -> IO (Maybe String)
+getJSON = \req \res -> do
+  code  <- req.queryParams "code"
+  desc  <- req.queryParams "desc"
+  _     <- res.contentType "application/json"
+  return $ getLangAsJSON code desc
+
+getLangAsJSON :: Maybe String -> Maybe String -> Maybe String
+getLangAsJSON pCode pDesc = do
+  code <- pCode
+  desc <- pDesc
+  return $ (show . toJSON) $ Lang { code = code, desc = desc }

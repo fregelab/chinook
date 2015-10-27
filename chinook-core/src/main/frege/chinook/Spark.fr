@@ -19,6 +19,7 @@ module chinook.Spark where
 --}
 data Request = pure native spark.Request where
     native paths params :: Request -> String -> IO (Maybe String)
+    native queryParams  :: Request -> String -> IO (Maybe String)
 
 --   _____
 --  |  __ \
@@ -34,10 +35,11 @@ data Request = pure native spark.Request where
    the response.
 --}
 data Response = pure native spark.Response where
-    native status :: Response -> Int    -> IO ()
-    native body   :: Response -> String -> IO ()
-    native header :: Response -> String -> String -> IO ()
-    native cookie :: Response -> String -> String -> IO ()
+    native status              :: Response -> Int    -> IO ()
+    native body                :: Response -> String -> IO ()
+    native header              :: Response -> String -> String -> IO ()
+    native cookie              :: Response -> String -> String -> IO ()
+    native contentType `type`  :: Response -> String -> IO ()
 
 --   _____             _
 --  |  __ \           | |

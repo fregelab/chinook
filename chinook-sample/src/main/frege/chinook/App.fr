@@ -6,7 +6,7 @@ import chinook.Handlers (helloWorldHandler, greetingsHandler, goodbyeHandler)
 
 -- tag::routes[]
 main _  = do
-    get  "/hi"         helloWorldHandler
-    get  "/hi/:name"   greetingsHandler
-    get  "/bye"        goodbyeHandler
+    get  "/hi"              helloWorldHandler
+    get  "/hi/:name/:age"   greetingsHandler
+    get  "/bye"             goodbyeHandler
 -- end::routes[]

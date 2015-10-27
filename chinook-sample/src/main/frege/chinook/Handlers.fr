@@ -15,10 +15,17 @@ goodbyeHandler = \req \res -> do
 -- tag::greetingsHandler[]
 greetingsHandler :: Request -> Response -> IO (Maybe String)
 greetingsHandler = \req \res -> do
-  name      <- req.params ":name"
-  res.status 200
-  return $ (++) <$> Just "Hello " <*> name
+  name      <- req.paths ":name"
+  age       <- req.paths ":age"
+  _         <- res.status 200
+  return $ createGreetings name age
 -- end::greetingsHandler[]
+
+createGreetings :: Maybe String -> Maybe String -> Maybe String
+createGreetings name age = fmap (concat) $ sequence [greeting, name, question, age, mark]
+    where greeting = Just "Hello "
+          question = Just ". Are you "
+          mark     = Just "?"
 
 isJohn :: (Maybe String) -> Bool
 isJohn name = case name of

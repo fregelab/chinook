@@ -15,15 +15,9 @@ instance ToJSON Lang where
     ]
 
 instance FromJSON Lang where
-   fromJSON (Struct fields)
-      | Just code <- lookup "code" fields
-      = case lookup "desc" fields of
-            Just pdesc -> do
-               fcode <- fromJSON code
-               fdesc <- fromJSON pdesc
-               return Lang { code = fcode, desc = fdesc }
-            Nothing -> do
-               return Lang { code = "", desc = "" }
-      | otherwise = fail "no lang"
-
-   fromJSON _ = fail ""
+  fromJSON v = case v of
+    Struct s -> do
+      code <- field "code" s
+      desc <- field "desc" s
+      return Lang {code, desc}
+    _        ->  fail ("expected {\"code\" : ..., \"desc\" : ...}, found " ++ show v)

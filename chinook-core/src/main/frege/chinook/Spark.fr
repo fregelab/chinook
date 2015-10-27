@@ -18,7 +18,7 @@ module chinook.Spark where
    from the request.
 --}
 data Request = pure native spark.Request where
-    native params :: Request -> String -> IO (Maybe String)
+    native paths params :: Request -> String -> IO (Maybe String)
 
 --   _____
 --  |  __ \

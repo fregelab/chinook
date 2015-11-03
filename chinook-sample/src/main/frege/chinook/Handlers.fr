@@ -20,7 +20,7 @@ greetingsHandler :: Request -> Response -> IO (Maybe String)
 greetingsHandler = \req \res -> do
   name      <- req.paths ":name"
   age       <- req.paths ":age"
-  _         <- res.status 200
+  _         <- res.status 200 -- <1> response status code
   return $ createGreetings name age
 -- end::greetingsHandler[]
 
@@ -30,12 +30,14 @@ createGreetings name age = fmap (concat) $ sequence [greeting, name, question, a
           question = Just ". Are you "
           mark     = Just "?"
 
+-- tag::getJSON[]
 getJSON :: Request -> Response -> IO (Maybe String)
 getJSON = \req \res -> do
   code  <- req.queryParams "code"
   desc  <- req.queryParams "desc"
-  _     <- res.contentType "application/json"
+  _     <- res.contentType "application/json" -- <1> response content type
   return $ getLangAsJSON code desc
+-- end::getJSON[]
 
 getLangAsJSON :: Maybe String -> Maybe String -> Maybe String
 getLangAsJSON pCode pDesc = do

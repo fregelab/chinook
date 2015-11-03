@@ -51,6 +51,17 @@ about the response.
 include::{sampleSrc}/chinook/Handlers.fr[tags=greetingsHandler]
 ----
 
+<1> Setting response status
+
+Here we're setting the content type:
+
+[source, haskell]
+----
+include::{sampleSrc}/chinook/Handlers.fr[tags=getJSON]
+----
+
+<1> Setting response content type
+
 There are many functions available for `Request` and `Response`
 abstractions, if you want to explore it please don't hesitate to
 explore the project's Frege docs.

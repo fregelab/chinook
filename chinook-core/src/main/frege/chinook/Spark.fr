@@ -13,13 +13,80 @@ module chinook.Spark where
 --                 | |
 --                 |_|
 
+data JSet = native java.util.Set
+data JMap = native java.util.Map
+
+data QueryMap = native spark.QueryParamsMap
+
 {-
    Request type and related methods to get information
    from the request.
 --}
 data Request = pure native spark.Request where
-    native paths params :: Request -> String -> IO (Maybe String)
-    native queryParams  :: Request -> String -> IO (Maybe String)
+    -- value of foo path parameter
+    native paths params                      :: Request -> String -> IO (Maybe String)
+    -- all path parameters
+    native allPaths params                   :: Request -> IO (MutableIO JMap)
+    -- value of FOO query param
+    native queryParams                       :: Request -> String -> IO (Maybe String)
+    -- all query parameters
+    native allQueryParams queryParams        :: Request -> IO (MutableIO JSet)
+    -- all values of FOO query param
+    native queryParamsValues                 :: Request -> String -> IO (ArrayOf RealWorld String)
+    -- the query map
+    native queryMap                          :: Request -> IO (MutableIO QueryMap)
+    -- query map for a certain parameter
+    native queryMapFor queryMap              :: Request -> String -> IO (MutableIO QueryMap)
+    -- the query param list
+    native params queryParams                :: Request -> String -> IO (Maybe String)
+-- the attributes list
+    native attributes                        :: Request -> IO (MutableIO JSet)
+    -- value of foo attribute
+    native gattr attribute                   :: Request -> String -> IO (Maybe String)
+    -- sets value of attribute A to V
+    native sattr attribute                   :: Request -> String -> String -> IO ()
+    -- request body sent by the client
+    native body                              :: Request -> IO (Maybe String)
+    -- request body as bytes
+    native bodyAsBytes                       :: Request -> IO (ArrayOf RealWorld Byte)
+    -- length of request body
+    native contentLength                     :: Request -> IO (Int)
+    -- content type of request.body
+    native contentType                       :: Request -> IO (Maybe String)
+    -- the context path, e.g. "/hello"
+    native contextPath                       :: Request -> IO (Maybe String)
+    -- request cookies sent by the client
+    native cookies                           :: Request -> IO (MutableIO JMap)
+    -- Get cookies by name
+    native cookie                            :: Request -> String -> IO (Maybe String)
+    -- the HTTP header list
+    native allHeaders headers                :: Request -> IO (MutableIO JSet)
+    -- value of BAR header
+    native headers                           :: Request -> String -> IO (Maybe String)
+    -- the host, e.g. "example.com"
+    native host                              :: Request -> IO (Maybe String)
+    -- client IP address
+    native ip                                :: Request -> IO (Maybe String)
+    -- the path info
+    native pathInfo                          :: Request -> IO (Maybe String)
+    -- the server port
+    native port                              :: Request -> IO (Maybe Integer)
+    -- the protocol, e.g. HTTP/1.1
+    native protocol                          :: Request -> IO (Maybe String)
+    -- The HTTP method (GET, ..etc)
+    native requestMethod                     :: Request -> IO (Maybe String)
+    -- "http"
+    native scheme                            :: Request -> IO (Maybe String)
+    -- the servlet path, e.g. /result.jsp
+    native servletPath                       :: Request -> IO (Maybe String)
+    -- splat (*) parameters:
+    native splat                             :: Request -> IO (ArrayOf RealWorld String)
+    -- the uri, e.g. "http://example.com/foo"
+    native uri                               :: Request -> IO (Maybe String)
+    -- the url. e.g. "http://example.com/foo"
+    native url                               :: Request -> IO (Maybe String)
+    -- The user agent
+    native userAgent                         :: Request -> IO (Maybe String)
 
 --   _____
 --  |  __ \

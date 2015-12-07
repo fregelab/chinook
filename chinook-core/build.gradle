@@ -1,5 +1,16 @@
 apply plugin: 'java'
 apply plugin: 'frege'
+apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.bintray'
+
+//    _____                            _                 _
+//   |  __ \                          | |               (_)
+//   | |  | | ___ _ __   ___ _ __   __| | ___ _ __   ___ _  ___  ___
+//   | |  | |/ _ \ '_ \ / _ \ '_ \ / _` |/ _ \ '_ \ / __| |/ _ \/ __|
+//   | |__| |  __/ |_) |  __/ | | | (_| |  __/ | | | (__| |  __/\__ \
+//   |_____/ \___| .__/ \___|_| |_|\__,_|\___|_| |_|\___|_|\___||___/
+//               | |
+//               |_|
 
 dependencies {
     compile libraries.frege_core
@@ -14,3 +25,48 @@ dependencies {
 }
 
 compileFrege.dependsOn 'compileJava'
+
+//    _____  _     _        _ _           _   _
+//   |  __ \(_)   | |      (_) |         | | (_)
+//   | |  | |_ ___| |_ _ __ _| |__  _   _| |_ _  ___  _ __
+//   | |  | | / __| __| '__| | '_ \| | | | __| |/ _ \| '_ \
+//   | |__| | \__ \ |_| |  | | |_) | |_| | |_| | (_) | | | |
+//   |_____/|_|___/\__|_|  |_|_.__/ \__,_|\__|_|\___/|_| |_|
+//
+//
+
+publishing {
+    publications {
+        mavenCustom(MavenPublication) {
+            groupId    metadata.group
+            artifactId 'chinook-core'
+            version    metadata.version
+
+            from components.java
+        }
+    }
+}
+
+bintray {
+ /* Normally taken from ~/.gradle/gradle.properties */
+    user         = bintrayUser
+    key          = bintrayKey
+    publish      = false
+    publications = ['mavenCustom']
+    pkg {
+        repo            = 'maven'
+        name            = 'chinook-core'
+        desc            =  metadata.desc
+        websiteUrl      = 'http://januslynd.github.io/chinook/'
+        issueTrackerUrl = 'https://github.com/januslynd/chinook/issues'
+        licenses        = ['Apache-2.0']
+        vcsUrl          = 'https://github.com/januslynd/chinook.git'
+        labels          = ['frege', 'rest']
+        version {
+            name      = metadata.version
+            desc      = 'Chinook Release'
+            released  = new Date()
+            vcsTag    = metadata.version
+        }
+    }
+}

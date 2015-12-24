@@ -101,12 +101,12 @@ data Request = pure native spark.Request where
    Response type and related methods to complete/alter
    the response.
 --}
-data Response = pure native spark.Response where
-    native status              :: Response -> Int    -> IO ()
-    native body                :: Response -> String -> IO ()
-    native header              :: Response -> String -> String -> IO ()
-    native cookie              :: Response -> String -> String -> IO ()
-    native contentType `type`  :: Response -> String -> IO ()
+data Response = native spark.Response where
+    native status              :: MutableIO Response -> Int    -> IO ()
+    native body                :: MutableIO Response -> String -> IO ()
+    native header              :: MutableIO Response -> String -> String -> IO ()
+    native cookie              :: MutableIO Response -> String -> String -> IO ()
+    native contentType `type`  :: MutableIO Response -> String -> IO ()
 
 --   _____             _
 --  |  __ \           | |
@@ -121,8 +121,8 @@ data Response = pure native spark.Response where
     way of creating a route is by using the method Route.new and
     passing a lambda expression of type (Request -> Response -> IO a)
 --}
-data Route = pure native spark.Route where
-    native new chinook.into.Rest.createRoute :: (Request -> Response -> IO a) -> IO Route
+data Route = native spark.Route where
+    native new chinook.into.Rest.createRoute :: (Request -> MutableIO Response -> IO a) -> IO (MutableIO Route)
 
 --   _____                  _
 --  / ____|                | |
@@ -136,6 +136,6 @@ data Route = pure native spark.Route where
 {--
     Rest wraps all sparkjava.com calls and exposes to Frege
 -}
-data Rest = pure native spark.Spark where
-    native get  spark.Spark.get   :: String -> Route -> IO ()
-    native post spark.Spark.post  :: String -> Route -> IO ()
+data Rest = native spark.Spark where
+    native get  spark.Spark.get   :: String -> MutableIO Route -> IO ()
+    native post spark.Spark.post  :: String -> MutableIO Route -> IO ()

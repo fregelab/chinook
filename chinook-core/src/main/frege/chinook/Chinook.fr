@@ -26,7 +26,7 @@ import chinook.Spark (Request, Response, Route, Rest)
 
 -}
 -- tag::getFunction[]
-get  :: String -> (Request -> MutableIO Response -> IO (Maybe String)) -> IO ()
+get  :: String -> (MutableIO Request -> MutableIO Response -> IO (Maybe String)) -> IO ()
 -- end::getFunction[]
 get path lambda = do
   route <- Route.new $ toSpark lambda
@@ -42,7 +42,7 @@ get path lambda = do
    and a chinook.Response and returns an IO ().
 
 -}
-post :: String -> (Request -> MutableIO Response -> IO ()) -> IO ()
+post :: String -> (MutableIO Request -> MutableIO Response -> IO ()) -> IO ()
 post path lambda = do
   route <- Route.new lambda
   Rest.post path route

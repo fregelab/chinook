@@ -6,17 +6,17 @@ import chinook.Data (Lang)
 import chinook.Spark (Request,Response)
 
 -- tag::helloWorldHandler[]
-helloWorldHandler :: Request -> MutableIO Response -> IO (Maybe String)
+helloWorldHandler :: MutableIO Request -> MutableIO Response -> IO (Maybe String)
 helloWorldHandler = \req \res -> do
   return $ Just "Hello World from Chinook :-)"
 -- end::helloWorldHandler[]
 
-goodbyeHandler :: Request -> MutableIO Response -> IO (Maybe String)
+goodbyeHandler :: MutableIO Request -> MutableIO Response -> IO (Maybe String)
 goodbyeHandler = \req \res -> do
   return $ Just "Bye bye"
 
 -- tag::greetingsHandler[]
-greetingsHandler :: Request -> MutableIO Response -> IO (Maybe String)
+greetingsHandler :: MutableIO Request -> MutableIO Response -> IO (Maybe String)
 greetingsHandler = \req \res -> do
   name      <- req.paths ":name"
   age       <- req.paths ":age"
@@ -31,7 +31,7 @@ createGreetings name age = fmap (concat) $ sequence [greeting, name, question, a
           mark     = Just "?"
 
 -- tag::getJSON[]
-getJSON :: Request -> MutableIO Response -> IO (Maybe String)
+getJSON :: MutableIO Request -> MutableIO Response -> IO (Maybe String)
 getJSON = \req \res -> do
   code  <- req.queryParams "code"
   desc  <- req.queryParams "desc"

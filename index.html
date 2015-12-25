@@ -432,7 +432,7 @@ MathJax.Hub.Config({
 <div id="header">
 <h1>Chinook</h1>
 <div class="details">
-<span id="revnumber">version 1.0.0-beta</span>
+<span id="revnumber">version unspecified</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -446,6 +446,13 @@ MathJax.Hub.Config({
 <ul class="sectlevel2">
 <li><a href="#_return_only_values">2.1. Return only values</a></li>
 <li><a href="#_changing_response">2.2. Changing response</a></li>
+</ul>
+</li>
+<li><a href="#_development">3. Development</a>
+<ul class="sectlevel2">
+<li><a href="#_license">3.1. License</a></li>
+<li><a href="#_frege_docs">3.2. Frege docs</a></li>
+<li><a href="#_github">3.3. Github</a></li>
 </ul>
 </li>
 </ul>
@@ -537,9 +544,10 @@ point is located in the <code>App.fr</code> file.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">main _  = do
-    get  "/hi"         helloWorldHandler
-    get  "/hi/:name"   greetingsHandler
-    get  "/bye"        goodbyeHandler</code></pre>
+    get  "/hi"              helloWorldHandler
+    get  "/hi/:name/:age"   greetingsHandler
+    get  "/bye"             goodbyeHandler
+    get  "/getjson"         getJSON</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -563,7 +571,7 @@ importing functions.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">get  :: String -&gt; (Request -&gt; Response -&gt; IO (Maybe String)) -&gt; IO ()</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">get  :: String -&gt; (MutableIO Request -&gt; MutableIO Response -&gt; IO (Maybe String)) -&gt; IO ()</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -600,9 +608,10 @@ content <code>side-effects</code> produced by the exposure to the real world.</p
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">main _  = do
-    get  "/hi"         helloWorldHandler
-    get  "/hi/:name"   greetingsHandler
-    get  "/bye"        goodbyeHandler</code></pre>
+    get  "/hi"              helloWorldHandler
+    get  "/hi/:name/:age"   greetingsHandler
+    get  "/bye"             goodbyeHandler
+    get  "/getjson"         getJSON</code></pre>
 </div>
 </div>
 <div class="sect2">
@@ -613,7 +622,7 @@ invoking the <code>/hi</code> endpoint. Here is the handler implementation:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">helloWorldHandler :: Request -&gt; Response -&gt; IO (Maybe String)
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">helloWorldHandler :: MutableIO Request -&gt; MutableIO Response -&gt; IO (Maybe String)
 helloWorldHandler = \req \res -&gt; do
   return $ Just "Hello World from Chinook :-)"</code></pre>
 </div>
@@ -627,12 +636,42 @@ about the response.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">greetingsHandler :: Request -&gt; Response -&gt; IO (Maybe String)
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">greetingsHandler :: MutableIO Request -&gt; MutableIO Response -&gt; IO (Maybe String)
 greetingsHandler = \req \res -&gt; do
-  name      &lt;- req.params ":name"
-  res.status 200
-  return $ (++) &lt;$&gt; Just "Hello " &lt;*&gt; name</code></pre>
+  name      &lt;- req.paths ":name"
+  age       &lt;- req.paths ":age"
+  _         &lt;- res.status 200 -- &lt;1&gt; response status code
+  return $ createGreetings name age</code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Setting response status</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Here we&#8217;re setting the content type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">getJSON :: MutableIO Request -&gt; MutableIO Response -&gt; IO (Maybe String)
+getJSON = \req \res -&gt; do
+  code  &lt;- req.queryParams "code"
+  desc  &lt;- req.queryParams "desc"
+  _     &lt;- res.contentType "application/json" -- &lt;1&gt; response content type
+  return $ getLangAsJSON code desc</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Setting response content type</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>There are many functions available for <code>Request</code> and <code>Response</code>
@@ -642,11 +681,34 @@ explore the project&#8217;s Frege docs.</p>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_development">3. Development</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_license">3.1. License</h3>
+<div class="paragraph">
+<p><code>Chinook</code> uses <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_frege_docs">3.2. Frege docs</h3>
+<div class="paragraph">
+<p>#TODO</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_github">3.3. Github</h3>
+<div class="paragraph">
+<p><code>Chinook</code> source code is hosted at <a href="https://github.com/januslynd/chinook">Github</a></p>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 1.0.0-beta<br>
-Last updated 2015-10-23 01:39:42 +02:00
+Version unspecified<br>
+Last updated 2015-11-04 00:41:52 +01:00
 </div>
 </div>
 </body>

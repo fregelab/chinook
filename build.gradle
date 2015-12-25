@@ -20,7 +20,7 @@ subprojects {
 
 ext.metadata = [
     group   : "com.github.januslynd",
-    version : "0.1.0-beta-a3c03ee",
+    version : "0.1.0-beta-c27dd63",
     desc: 'Chinook is a Frege (http://frege-lang.org) port of SparkJava (http://sparkjava.com) for creating web applications with minimum effort.'
 ]
 

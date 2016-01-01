@@ -4,6 +4,7 @@
 --}
 module chinook.Spark where
 
+import frege.java.Util (Set, Map)
 --   _____                            _
 --  |  __ \                          | |
 --  | |__) |___  __ _ _   _  ___  ___| |_
@@ -13,11 +14,8 @@ module chinook.Spark where
 --                 | |
 --                 |_|
 
-data JSet = native java.util.Set
-data JMap = native java.util.Map
-
-data QueryMap = native spark.QueryParamsMap
-
+data QueryMap = native spark.QueryParamsMap where
+    native toMap :: MutableIO QueryMap -> IO (MutableIO (Map String (JArray String)))
 {-
    Request type and related methods to get information
    from the request.
@@ -26,11 +24,11 @@ data Request = native spark.Request where
     -- value of foo path parameter
     native paths params                      :: MutableIO Request -> String -> IO (Maybe String)
     -- all path parameters
-    native allPaths params                   :: MutableIO Request -> IO (MutableIO JMap)
+    native allPaths params                   :: MutableIO Request -> IO (MutableIO (Map String String))
     -- value of FOO query param
     native queryParams                       :: MutableIO Request -> String -> IO (Maybe String)
     -- all query parameters
-    native allQueryParams queryParams        :: MutableIO Request -> IO (MutableIO JSet)
+    native allQueryParams queryParams        :: MutableIO Request -> IO (MutableIO (Set String))
     -- all values of FOO query param
     native queryParamsValues                 :: MutableIO Request -> String -> IO (ArrayOf RealWorld String)
     -- the query map
@@ -40,7 +38,7 @@ data Request = native spark.Request where
     -- the query param list
     native params queryParams                :: MutableIO Request -> String -> IO (Maybe String)
 -- the attributes list
-    native attributes                        :: MutableIO Request -> IO (MutableIO JSet)
+    native attributes                        :: MutableIO Request -> IO (MutableIO (Set String))
     -- value of foo attribute
     native gattr attribute                   :: MutableIO Request -> String -> IO (Maybe String)
     -- sets value of attribute A to V
@@ -56,11 +54,11 @@ data Request = native spark.Request where
     -- the context path, e.g. "/hello"
     native contextPath                       :: MutableIO Request -> IO (Maybe String)
     -- request cookies sent by the client
-    native cookies                           :: MutableIO Request -> IO (MutableIO JMap)
+    native cookies                           :: MutableIO Request -> IO (MutableIO (Map String String))
     -- Get cookies by name
     native cookie                            :: MutableIO Request -> String -> IO (Maybe String)
     -- the HTTP header list
-    native allHeaders headers                :: MutableIO Request -> IO (MutableIO JSet)
+    native allHeaders headers                :: MutableIO Request -> IO (MutableIO (Set String))
     -- value of BAR header
     native headers                           :: MutableIO Request -> String -> IO (Maybe String)
     -- the host, e.g. "example.com"

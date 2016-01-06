@@ -1,0 +1,55 @@
+== Request / Response
+
+Chinook http handlers normally have the following signature:
+
+[source, haskell]
+----
+IO Request -> IO Reponse
+----
+
+=== Request
+
+A `chinook.Request` is a immutable data structure containing:
+
+[source, haskell]
+----
+include::{coreSrc}/chinook/Chinook.fr[tags=request]
+----
+
+* `Headers`:
+
+Headers are of type `(String, Maybe String)` meaning `(name of the
+header, possible value)`. There are two utility methods to get headers
+from a `IO Request`.
+
+[source, haskell]
+----
+include::{coreSrc}/chinook/Chinook.fr[tags=allheaders]
+----
+
+Returns a list of all headers from the request passed as first
+argument.
+
+[source, haskell]
+----
+include::{coreSrc}/chinook/Chinook.fr[tags=header]
+----
+
+Returns a specific header. First argument is the request, then the
+name of the header.
+
+* `Query Parameters`:
+
+#TODO
+
+* `Path Parameters`:
+
+#TODO
+
+=== Response
+
+[source, haskell]
+----
+include::{coreSrc}/chinook/Chinook.fr[tags=response]
+----
+#TODO

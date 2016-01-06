@@ -1,0 +1,14 @@
+== POST
+
+Here is the function to perform HTTP `POST` calls:
+
+[source, haskell]
+----
+include::{coreSrc}/chinook/Chinook.fr[tags=postFunction]
+----
+
+It basically needs:
+
+- A `String` representing the URI resource A handler function to
+- A `Handler` to deal with the `request` and `response` originated in
+this invocation.

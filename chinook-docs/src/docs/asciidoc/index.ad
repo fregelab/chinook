@@ -23,11 +23,13 @@ reference to wet, warm coastal winds in the Pacific Northwest."
 
 include::chapter/getting.ad[]
 
-include::chapter/request_response.ad[]
+include::chapter/overview.ad[]
 
 include::chapter/get.ad[]
 
 include::chapter/post.ad[]
+
+include::chapter/request_response.ad[]
 
 include::chapter/development.ad[]
 

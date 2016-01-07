@@ -4,7 +4,9 @@ import Data.JSON
 
 import chinook.Data (Lang)
 import chinook.util.ContentType
+--tag::basic-imports[]
 import chinook.Chinook (Request, Response, response)
+--end::basic-imports[]
 
 -- tag::helloWorldHandler[]
 helloWorldHandler :: IO Request -> IO Response
@@ -32,13 +34,13 @@ createGreetings name age = fmap (concat) $ sequence [greeting, name, question, a
           mark     = Just "?"
 
 -- tag::getJSON[]
-getJSON :: IO Request -> IO Response
-getJSON req = do
+getJSONHandler :: IO Request -> IO Response
+getJSONHandler req = do
   code  <- req.param "code"
   desc  <- req.param "desc"
   return $ response.{ status  = 200,
-                      output  = (getLangAsJSON code desc),
-                      headers = [ContentType.json] } -- <1> response content type
+                      output  = getLangAsJSON code desc,
+                      headers = [("Content-Type", Just "application/json")] } -- <1> response content type
 -- end::getJSON[]
 
 getLangAsJSON :: Maybe String -> Maybe String -> Maybe String
@@ -46,3 +48,22 @@ getLangAsJSON pCode pDesc = do
   code <- pCode
   desc <- pDesc
   return $ (show . toJSON) $ Lang { code = code, desc = desc }
+
+-- tag::postJSONHandler[]
+postJSONHandler :: IO Request -> IO Response
+postJSONHandler req = do
+    body     <- req.body
+    case (processJSON body) of
+        Just Lang { code, desc } -> return response.{ status = 201 } -- <1> Created
+        Nothing                  -> return response.{ status = 400 } -- <2> Bad request
+-- end::postJSONHandler[]
+
+-- tag::processJSON[]
+processJSON :: Maybe String -> Maybe Lang
+processJSON body = do
+  text  <- body
+  json  <- parseJSON text
+  case json of
+    Lang { code, desc }  -> Just json
+    _                    -> Nothing
+-- end::processJSON[]

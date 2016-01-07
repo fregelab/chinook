@@ -24,7 +24,8 @@ import chinook.Spark as Spark
 -- tag::request[]
 data Request = Request { headers     :: [(String, Maybe String)],
                          queryParams :: [(String, [String])],
-                         pathParams  :: [(String, String)] }
+                         pathParams  :: [(String, String)],
+                         body        :: Maybe String }
 -- end::request[]
 
 {--
@@ -39,6 +40,7 @@ class Requestable a where
     param      :: a -> String -> IO (Maybe String)
     allPaths   :: a           -> IO [(String, String)]
     path       :: a -> String -> IO (Maybe String)
+    body       :: a           -> IO (Maybe String)
 
 {--
    Instance of Requestable to make the access to the
@@ -76,13 +78,17 @@ instance Requestable (IO Request) where
     params req name = lookup name <$> allParams req
 
     -- Returns first available value stored under a given query param name
+    -- tag::param[]
     param :: IO Request -> String -> IO (Maybe String)
+    -- end::param[]
     param req name = do
       all   <- params req name
       return $ fmap head all
 
     -- Returns all path params
+    -- tag::allpaths[]
     allPaths :: IO Request -> IO [(String, String)]
+    -- end::allpaths[]
     allPaths req = do
       request <- req
       case request of
@@ -90,10 +96,17 @@ instance Requestable (IO Request) where
         _                                            -> return []
 
     -- Returns a specific path param by its name
+    -- tag::path[]
     path :: IO Request -> String -> IO (Maybe String)
+    -- end::path[]
     path req name = do
       all <- allPaths req
       return $ lookup name all
+
+    body :: IO Request -> IO (Maybe String)
+    body req = do
+       request <- req
+       return $ request.body
 
 derive Show Request
 
@@ -105,9 +118,11 @@ toChinookRequest source = do
   sQueryParams  <- convertQueryParams source
   sHeaders      <- convertHeaders     source
   sPathParams   <- convertPathParams  source
-  return $ Request { headers  = sHeaders,
-                      queryParams = sQueryParams,
-                      pathParams = sPathParams }
+  sBody         <- convertBody        source
+  return $ Request { headers     = sHeaders,
+                     queryParams = sQueryParams,
+                     pathParams  = sPathParams,
+                     body        = sBody }
 
 {--
     Extracts query params from a mutable structure to a list of
@@ -149,6 +164,10 @@ convertPathParams source = do
   tuples  <- Map.toList mutable
   return tuples
 
+convertBody :: MutableIO Spark.Request -> IO (Maybe String)
+convertBody source = do
+  Spark.Request.body source
+
 --    _____
 --   |  __ \
 --   | |__) |___  ___ _ __   ___  _ __  ___  ___
@@ -178,8 +197,9 @@ data Response = Response { status  :: Int,
 derive Show Response
 
 -- Default response.
+--tag::responseconstant[]
 response = Response 200 Nothing []
-
+--end::responseconstant[]
 {--
    Takes the response generated in a Chinook Handler and converts that response
    in a Spark valid response

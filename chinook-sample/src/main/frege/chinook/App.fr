@@ -2,12 +2,19 @@
 module chinook.Routes where
 
 import chinook.Chinook
-import chinook.Handlers (helloWorldHandler, greetingsHandler, goodbyeHandler, getJSON)
+import chinook.Handlers (helloWorldHandler,
+                         greetingsHandler,
+                         goodbyeHandler,
+                         getJSONHandler,
+                         postJSONHandler)
 
 -- tag::routes[]
 main _  = do
+    -- GET
     get  "/hi"              helloWorldHandler
     get  "/hi/:name/:age"   greetingsHandler
     get  "/bye"             goodbyeHandler
-    get  "/getjson"         getJSON
+    get  "/getjson"         getJSONHandler
+    -- POST
+    post "/postjson"        postJSONHandler
 -- end::routes[]

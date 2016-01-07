@@ -1,5 +1,5 @@
 apply plugin: 'java'
-apply plugin: 'frege'
+apply plugin: "org.frege-lang"
 apply plugin: 'application'
 
 dependencies {

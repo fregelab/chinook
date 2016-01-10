@@ -3,12 +3,15 @@ subprojects {
         repositories {
             mavenLocal()
             jcenter()
-            maven { url "https://oss.sonatype.org/content/groups/public" }
+            maven {
+                url "https://plugins.gradle.org/m2/"
+            }
             mavenCentral()
         }
         dependencies {
-            classpath 'org.frege-lang:frege-gradle-plugin:0.4.1'
+            classpath "gradle.plugin.org.frege-lang:frege-gradle-plugin:0.6"
             classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.4'
+            classpath 'commons-io:commons-io:2.4'
         }
     }
 

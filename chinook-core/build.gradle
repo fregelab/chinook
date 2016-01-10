@@ -1,5 +1,5 @@
 apply plugin: 'java'
-apply plugin: 'frege'
+apply plugin: "org.frege-lang"
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
@@ -67,6 +67,45 @@ bintray {
             desc      = 'Chinook Release'
             released  = new Date()
             vcsTag    = metadata.version
+        }
+    }
+}
+
+//    ______                       _
+//   |  ____|                     | |
+//   | |__ _ __ ___  __ _  ___  __| | ___   ___
+//   |  __| '__/ _ \/ _` |/ _ \/ _` |/ _ \ / __|
+//   | |  | | |  __/ (_| |  __/ (_| | (_) | (__
+//   |_|  |_|  \___|\__, |\___|\__,_|\___/ \___|
+//                   __/ |
+//                  |___/
+
+task fregeDocComplete(type: JavaExec, dependsOn: 'fregeDoc') {
+    group       = 'chinook-core'
+    description = 'generates Fregedoc with fregedoc.html file'
+
+    main           = "frege.tools.MakeDocIndex"
+    args           = ["${project.buildDir}/docs" as File]
+    workingDir     = project.projectDir
+    standardInput  = System.in
+    standardOutput = System.out
+    classpath      = sourceSets.main.runtimeClasspath
+
+    doLast {
+        // 1.  Main frame to Chinook.html
+        def docsDir   = "${project.buildDir}/docs" as File
+        def mainFrame = "${docsDir}/fregedoc.html" as File
+        def replaced  = mainFrame.text.replace("frege/Prelude.html","frege/chinook/Chinook.html")
+
+        mainFrame.text = replaced
+
+        // 2. Copy stylesheet and background image
+        new File("${project.projectDir}/src/docs").eachFile { File resource ->
+            java.nio.file.Files.copy(
+                resource.toPath(),
+                new File("$docsDir/${resource.name}").toPath(),
+                java.nio.file.StandardCopyOption.REPLACE_EXISTING
+            )
         }
     }
 }

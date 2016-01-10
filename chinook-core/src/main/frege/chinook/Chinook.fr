@@ -4,9 +4,219 @@
 --}
 module chinook.Chinook where
 
-import chinook.Utils (blank)
-import chinook.Spark (Request, Response, Route, Rest)
+import Data.List (lookup)
 
+import frege.java.Util (Set, Map)
+import frege.data.Iterators (ArrayIterator)
+
+import chinook.Utils (blank)
+import chinook.Spark as Spark
+
+--    _____                            _
+--   |  __ \                          | |
+--   | |__) |___  __ _ _   _  ___  ___| |_
+--   |  _  // _ \/ _` | | | |/ _ \/ __| __|
+--   | | \ \  __/ (_| | |_| |  __/\__ \ |_
+--   |_|  \_\___|\__, |\__,_|\___||___/\__|
+--                  | |
+--                  |_|
+
+-- tag::request[]
+data Request = Request { headers     :: [(String, Maybe String)],
+                         queryParams :: [(String, [String])],
+                         pathParams  :: [(String, String)],
+                         body        :: Maybe String }
+-- end::request[]
+
+{--
+   This type class is to make the access to the
+   IO Request easier to the user
+-}
+class Requestable a where
+    allHeaders :: a           -> IO [(String, Maybe String)]
+    header     :: a -> String -> IO (Maybe String)
+    allParams  :: a           -> IO [(String, [String])]
+    params     :: a -> String -> IO (Maybe [String])
+    param      :: a -> String -> IO (Maybe String)
+    allPaths   :: a           -> IO [(String, String)]
+    path       :: a -> String -> IO (Maybe String)
+    body       :: a           -> IO (Maybe String)
+
+{--
+   Instance of Requestable to make the access to the
+   IO Request more user-friendly
+-}
+instance Requestable (IO Request) where
+    --- Retrieves all headers from a given request
+    -- tag::allheaders[]
+    allHeaders :: IO Request -> IO [(String, Maybe String)]
+    -- end::allheaders[]
+    allHeaders req = do
+        request <- req
+        case request of
+            Request { headers, queryParams, pathParams} -> return headers
+            _                                           -> return []
+
+    --- Returns a value stored under a given header name
+    -- tag::header[]
+    header :: IO Request -> String -> IO (Maybe String)
+    -- end::header[]
+    header req name = do
+        headers     <- allHeaders req
+        return $ join $ lookup name headers
+
+    -- Retrieves all query params from a given request
+    allParams :: IO Request -> IO [(String, [String])]
+    allParams req = do
+      request  <- req
+      case request of
+        Request { headers, queryParams, pathParams } -> return queryParams
+        _                                            -> return []
+
+    -- Returns all param values stored under a given query param name
+    params :: IO Request -> String -> IO (Maybe [String])
+    params req name = lookup name <$> allParams req
+
+    -- Returns first available value stored under a given query param name
+    -- tag::param[]
+    param :: IO Request -> String -> IO (Maybe String)
+    -- end::param[]
+    param req name = do
+      all   <- params req name
+      return $ fmap head all
+
+    -- Returns all path params
+    -- tag::allpaths[]
+    allPaths :: IO Request -> IO [(String, String)]
+    -- end::allpaths[]
+    allPaths req = do
+      request <- req
+      case request of
+        Request { headers, queryParams, pathParams } -> return pathParams
+        _                                            -> return []
+
+    -- Returns a specific path param by its name
+    -- tag::path[]
+    path :: IO Request -> String -> IO (Maybe String)
+    -- end::path[]
+    path req name = do
+      all <- allPaths req
+      return $ lookup name all
+
+    body :: IO Request -> IO (Maybe String)
+    body req = do
+       request <- req
+       return $ request.body
+
+derive Show Request
+
+{--
+   Converts a mutable request in an immutable data structure
+-}
+toChinookRequest :: MutableIO Spark.Request -> IO Request
+toChinookRequest source = do
+  sQueryParams  <- convertQueryParams source
+  sHeaders      <- convertHeaders     source
+  sPathParams   <- convertPathParams  source
+  sBody         <- convertBody        source
+  return $ Request { headers     = sHeaders,
+                     queryParams = sQueryParams,
+                     pathParams  = sPathParams,
+                     body        = sBody }
+
+{--
+    Extracts query params from a mutable structure to a list of
+    `QueryParam` values. When getting a list from the QueryMap it
+    gives us a list of [(String, JArray String)] so we need to
+    convert it to [(String, [String])]
+-}
+convertQueryParams :: MutableIO Spark.Request -> IO [(String, [String])]
+convertQueryParams request = do
+  mQueryMap   <- Spark.Request.queryMap request
+  mMap        <- Spark.QueryMap.toMap mQueryMap
+  list        <- Map.toList mMap
+  return $ map fromArrayToList list
+
+-- We need to transform String arrays to [String]
+fromArrayToList :: (String, JArray String) -> (String, [String])
+fromArrayToList (st, arr) = (st, (ArrayIterator.from(arr)).toList)
+
+{--
+   Extracts all headers coming from a mutable structure to a
+   list of `Header` values
+-}
+
+convertHeaders :: MutableIO Spark.Request -> IO [(String, Maybe String)]
+convertHeaders request = do
+  mutableNames  <- Spark.Request.allHeaders request
+  names         <- Set.toList mutableNames
+  values        <- sequence $ map (Spark.Request.headers request) names
+  return $ zip names values
+
+{--
+    Extracts path params coming from a mutable structure into a list of
+    `PathParam` values
+-}
+
+convertPathParams :: MutableIO Spark.Request -> IO [(String, String)]
+convertPathParams source = do
+  mutable <- Spark.Request.allPaths source
+  tuples  <- Map.toList mutable
+  return tuples
+
+convertBody :: MutableIO Spark.Request -> IO (Maybe String)
+convertBody source = do
+  Spark.Request.body source
+
+--    _____
+--   |  __ \
+--   | |__) |___  ___ _ __   ___  _ __  ___  ___
+--   |  _  // _ \/ __| '_ \ / _ \| '_ \/ __|/ _ \
+--   | | \ \  __/\__ \ |_) | (_) | | | \__ \  __/
+--   |_|  \_\___||___/ .__/ \___/|_| |_|___/\___|
+--                   | |
+--                   |_|
+
+-- tag::response[]
+data Response = Response { status  :: Int,
+                           output  :: Maybe String,
+                           headers :: [(String, Maybe String)]} where
+-- end::response[]
+    -- Adds a new response header and returns a new response
+    addHeader :: Response -> (String, Maybe String) -> Response
+    addHeader res header = res.{ headers <- (header:) }
+
+    -- Sets HTTP status and returns a new response
+    setStatus :: Response -> Int -> Response
+    setStatus res status = res.{ status = status}
+
+    -- Sets output message and returns a new response
+    setOutput :: Response -> Maybe String -> Response
+    setOutput res message = res.{ output = message }
+
+derive Show Response
+
+-- Default response.
+--tag::responseconstant[]
+response = Response 200 Nothing []
+--end::responseconstant[]
+{--
+   Takes the response generated in a Chinook Handler and converts that response
+   in a Spark valid response
+-}
+applyChinookResponseToSpark :: Response -> MutableIO Spark.Response -> IO ()
+applyChinookResponseToSpark response spark = do
+    setSparkStatus  response.status  spark
+    setSparkHeaders response.headers spark
+
+setSparkStatus  :: Int -> MutableIO Spark.Response  -> IO ()
+setSparkStatus status response = response.status status
+
+setSparkHeaders :: [(String, Maybe String)] -> MutableIO Spark.Response -> IO ()
+setSparkHeaders []     response = return ()
+setSparkHeaders (x:xs) response = case x of
+    (a, Just b) -> response.header a b
+    _           -> setSparkHeaders xs response
 -- __      __       _
 -- \ \    / /      | |
 --  \ \  / /__ _ __| |__  ___
@@ -26,11 +236,14 @@ import chinook.Spark (Request, Response, Route, Rest)
 
 -}
 -- tag::getFunction[]
-get  :: String -> (MutableIO Request -> MutableIO Response -> IO (Maybe String)) -> IO ()
+get  :: String -> (IO Request -> IO Response) -> IO ()
 -- end::getFunction[]
 get path lambda = do
-  route <- Route.new $ toSpark lambda
-  Rest.get path route
+  route <- Spark.Route.new $ toSparkOutput $ \req \res -> do
+      response  <- lambda $ toChinookRequest req
+      applyChinookResponseToSpark response res
+      return $ response.output
+  Spark.Rest.get path route
 
 {--
    Creates an HTTP POST endpoint. It receives:
@@ -42,10 +255,15 @@ get path lambda = do
    and a chinook.Response and returns an IO ().
 
 -}
-post :: String -> (MutableIO Request -> MutableIO Response -> IO ()) -> IO ()
+-- tag::postFunction[]
+post :: String -> (IO Request -> IO Response) -> IO ()
+-- end::postFunction[]
 post path lambda = do
-  route <- Route.new lambda
-  Rest.post path route
+  route <- Spark.Route.new $ toSparkOutput $ \req \res -> do
+    response  <- lambda $ toChinookRequest req
+    applyChinookResponseToSpark response res
+    return $ response.output
+  Spark.Rest.post path route
 
 {--
   While within Frege we want to work with safe abstractions like
@@ -53,9 +271,9 @@ post path lambda = do
   This transformation narrows the gap between both worlds.
 
   Apart from this function, there is also another part of the
-  bridge between Frege->Spark written in Rest.java
+  bridge between Frege->Spark written in Spark.Rest.java
 -}
-toSpark :: (a -> b -> IO (Maybe String)) -> (a -> b -> IO String)
-toSpark fn1 request response = do
+toSparkOutput :: (a -> b -> IO (Maybe String)) -> (a -> b -> IO String)
+toSparkOutput fn1 request response = do
   result <- fn1 request response
   return $ fromMaybe blank result

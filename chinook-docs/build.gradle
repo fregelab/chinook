@@ -17,3 +17,19 @@ asciidoctor {
                toclevels           : 3,
                'pdf-style'         : 'default'
 }
+
+asciidoctor.dependsOn 'copyFregeDocs'
+
+//    ______                       _
+//   |  ____|                     | |
+//   | |__ _ __ ___  __ _  ___  __| | ___   ___
+//   |  __| '__/ _ \/ _` |/ _ \/ _` |/ _ \ / __|
+//   | |  | | |  __/ (_| |  __/ (_| | (_) | (__
+//   |_|  |_|  \___|\__, |\___|\__,_|\___/ \___|
+//                   __/ |
+//                  |___/
+
+task copyFregeDocs(type: Copy, dependsOn: ':chinook-core:fregeDocComplete') {
+    from "../chinook-core/build/docs"
+    into "build/asciidoc/html5/fregedoc/"
+}

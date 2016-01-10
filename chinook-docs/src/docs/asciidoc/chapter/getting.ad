@@ -25,25 +25,3 @@ Once the server has started:
 You can go to your browser a go to http://localhost:4567/hi You should
 see the phrase `Hello World from Chinook :-)`.
 
-=== Hello World
-
-The way `Chinook` works at the moment is a main entry point where
-registering the routes and then several files where implementing
-application handlers.
-
-If take a look at the `chinook-sample` application, the main entry
-point is located in the `App.fr` file.
-
-[source, haskell]
-----
-include::{sampleSrc}/chinook/App.fr[tags=routes]
-----
-
-Here you can see all available endpoints in your application. For a
-given URL there is the related handler. How you manage your handler
-files is completely up to you.
-
-In this example I'm importing certain handlers from `chinook.Handlers`
-but I could have imported all of them just ommiting the `Frege` way of
-importing functions.
-

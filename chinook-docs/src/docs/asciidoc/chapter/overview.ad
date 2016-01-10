@@ -1,0 +1,73 @@
+== Overview
+
+Chinook is a tiny web framework aimed to create microservices. A basic
+`Chinook` application needs only three steps to expose an endpoint:
+
+* `Handler`
+* `Endpoint registration`
+* `Main method`
+
+A whole `Chinook` application could simply be:
+
+[source, haskell]
+----
+import chinook.Chinook
+
+main _ = do
+   get "/hello" $ \req -> do
+      return response.{ output = Just "Hello World" }
+----
+
+
+=== Handler
+
+Handlers are the most important part of Chinook, is where client
+requests are handled. Chinook http handlers normally have the
+following signature:
+
+[source, haskell]
+----
+IO Request -> IO Reponse
+----
+
+=== Endpoint registration
+
+The way `Chinook` works at the moment is a main entry point where
+registering the routes and then several files where implementing
+application handlers.
+
+It always follow the same pattern:
+
+[source, haskell]
+----
+http-verb "/registered-path" handler
+----
+
+If take a look at the `chinook-sample` application, the main entry
+point is located in the `App.fr` file.
+
+[source, haskell]
+----
+include::{sampleSrc}/chinook/App.fr[tags=routes]
+----
+
+Here you can see all available endpoints in your application. For a
+given URL there is the related handler function. How you manage your
+handler files is completely up to you.
+
+=== Main
+
+To start a `Chinook` application you only have to invoke the main
+function containing all the endpoint registrations as we saw in the
+previous chapter.
+
+This is independent of the tool used to call that method. For instance,
+using gradle you can use the `application` plugin.
+
+[source, groovy]
+----
+include::{sampleBase}/build.gradle[]
+----
+
+<1> Gradle Application plugin 
+<2> Namespace where the `main` function is located

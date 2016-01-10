@@ -1,6 +1,6 @@
 == GET
 
-Here is the function to perform HTTP `GET` calls:
+Here is the function to register a HTTP `GET` handler:
 
 [source, haskell]
 ----
@@ -13,18 +13,32 @@ It basically needs:
 - A `Handler` to deal with the `request` and `response` originated in
 this invocation.
 
-As a function sending and receiving data to and from the outside world
-needs to deal with the `IO` abstraction. Consequently it should
-reflect that situation in the function signature.
+A `handler` basically receives a `IO Request` and should return a `IO
+Response`. Both are available undere `chinook.Chinook`:
 
-On one side the handler should return a `IO (Maybe String)` data,
-meaning it could return a `String` and also that this `String` will be
-sent outside.
+[source, haskell]
+----
+include::{sampleSrc}/chinook/Handlers.fr[tags=basic-imports]
+----
 
-On the other hand, the function itself returns IO () meaning it may
-content `side-effects` produced by the exposure to the real world.
+Here's a simple example:
 
-Do you remember the registered enpoints we had in our sample app ?
+[source, haskell]
+----
+include::{sampleSrc}/chinook/Handlers.fr[tags=helloWorldHandler]
+----
+
+NOTE: `Chinook.response` is a way of creating a new
+`chinook.Chinook.Response` without having to specify all possible
+fields in `Response`. It creates a new copy from the default
+`Response` value, but it lets you set different field values. This is
+not a `Chinook` thing but `Frege's` and it's call `value update`.
+
+If you want a `GET` handler to return an output you should be setting
+the response's `output` field.
+
+Then the only thing remaining is to register the handler to receive
+a get call in a given URI:
 
 [source, haskell]
 ----

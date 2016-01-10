@@ -1,0 +1,177 @@
+== Request / Response
+
+Chinook http handlers normally have the following signature:
+
+[source, haskell]
+----
+IO Request -> IO Reponse
+----
+
+=== Request
+
+A `chinook.Request` is a immutable data structure containing:
+
+[source, haskell]
+----
+include::{coreSrc}/chinook/Chinook.fr[tags=request]
+----
+
+==== Headers
+
+Headers are of type `(String, Maybe String)` meaning `(name of the
+header, possible value)`. There are two utility methods to get headers
+from a `IO Request`.
+
+[source, haskell]
+----
+include::{coreSrc}/chinook/Chinook.fr[tags=allheaders]
+----
+
+Returns a list of all headers from the request passed as first
+argument.
+
+[source, haskell]
+----
+include::{coreSrc}/chinook/Chinook.fr[tags=header]
+----
+
+Returns a specific header. First argument is the request, then the
+name of the header.
+
+==== Query Parameters
+
+A typical URL containing a query string is as follows:
+
+[source, text]
+----
+http://anysite.com/over/there?name=ferret
+----
+
+In order to get the name parameter we'll be using the function:
+
+[source, haskell]
+----
+include::{coreSrc}/chinook/Chinook.fr[tags=param]
+----
+
+First parameter is the request, and then the name of the parameter
+(`name` in this particular example).
+
+==== Path Parameters
+
+Bind the value of a path segment to a parameter. For instance:
+
+[source, text]
+----
+http://localhost:4567/john/34
+----
+
+Is mapped here `/hi/:name/:age`:
+
+[source, haskell]
+----
+include::{sampleSrc}/chinook/App.fr[tags=routes]
+----
+
+So how can we retrieve the `:name` and `:age` path parameters ? With
+the following functions:
+
+[source, haskell]
+----
+include::{coreSrc}/chinook/Chinook.fr[tags=allpaths]
+----
+
+This function receives the request as argument and it will return
+a list of type `(String, String)`.
+
+NOTE: Why `(String, String)` and not `(String, Maybe String)` ? Well
+if it didn't have any value it couldn't match the path. So it's safe
+to assume everytime the URI is hit you will get a value.
+
+[source, haskell]
+----
+include::{coreSrc}/chinook/Chinook.fr[tags=path]
+----
+
+`path` should be use to get a specific path parameter. It receives the
+request and the name of the path parameter, and it will return a
+string representation of that parameter.
+
+This way you could be able to use it like the following:
+
+[source, haskell]
+----
+include::{sampleSrc}/chinook/Handlers.fr[tags=greetingsHandler]
+----
+
+==== Body
+
+Specially when trying to save or update data you will need to access
+the request `body`.
+
+[source, haskell]
+----
+include::{sampleSrc}/chinook/Handlers.fr[tags=postJSONHandler]
+----
+
+=== Response
+
+`chinook.Chinook.Response` is just a data type:
+
+[source, haskell]
+----
+include::{coreSrc}/chinook/Chinook.fr[tags=response]
+----
+
+Unlike other web frameworks, you won't be mutating the response via
+functions modifiying internal fields. `Chinook` forces you to create
+an immutable structure.
+
+Well, but, does it means I should be building from the scratch a
+`Response` every time ? Yes but `Chinook` (well `Frege` actually) will
+help you in this task. `Chinook` has a default `Response` value
+available through the constant `chinook.Chinook.response`. This
+value looks like this:
+
+[source, haskell]
+----
+include::{coreSrc}/chinook/Chinook.fr[tags=responseconstant]
+----
+
+So e.g next time you wanted to return a message with no headers and
+returning a 200 http status you don't have to set everything, you
+can take advantage of `Frege's value update` and write something
+like this:
+
+[source, haskell]
+----
+include::{sampleSrc}/chinook/Handlers.fr[tags=helloWorldHandler]
+----
+
+A `Response` may contain:
+
+==== Headers
+
+`(String, Maybe String)`
+
+When setting content type, or setting browser cache...etc we should be using
+http response headers. A header is of type `(String, Maybe String)` where
+the first tuple argument is the **name** of the header and the second part
+of the tuple is the **possible value** of the header.
+
+==== Output
+
+`Maybe String`
+
+If you would like to respond back with a message, you can set the output field
+with a `Maybe String`. That string could be anything: text, json...
+
+==== Status
+
+`Int`
+
+HTTP statuses are used often when doing Rest. For instance if you
+would like to create a resource, you would send a message to a
+resource using a POST endpoint and if it succeed it will return a 201
+code meaning `resource created`.  A status code is of type `Int`.
+

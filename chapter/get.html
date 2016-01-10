@@ -432,7 +432,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="_get">GET</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Here is the function to perform HTTP <code>GET</code> calls:</p>
+<p>Here is the function to register a HTTP <code>GET</code> handler:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -454,21 +454,45 @@ this invocation.</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>As a function sending and receiving data to and from the outside world
-needs to deal with the <code>IO</code> abstraction. Consequently it should
-reflect that situation in the function signature.</p>
+<p>A <code>handler</code> basically receives a <code>IO Request</code> and should return a <code>IO
+Response</code>. Both are available undere <code>chinook.Chinook</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in get.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=basic-imports]</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>On one side the handler should return a <code>IO (Maybe String)</code> data,
-meaning it could return a <code>String</code> and also that this <code>String</code> will be
-sent outside.</p>
+<p>Here&#8217;s a simple example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in get.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=helloWorldHandler]</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>Chinook.response</code> is a way of creating a new
+<code>chinook.Chinook.Response</code> without having to specify all possible
+fields in <code>Response</code>. It creates a new copy from the default
+<code>Response</code> value, but it lets you set different field values. This is
+not a <code>Chinook</code> thing but <code>Frege&#8217;s</code> and it&#8217;s call <code>value update</code>.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>On the other hand, the function itself returns IO () meaning it may
-content <code>side-effects</code> produced by the exposure to the real world.</p>
+<p>If you want a <code>GET</code> handler to return an output you should be setting
+the response&#8217;s <code>output</code> field.</p>
 </div>
 <div class="paragraph">
-<p>Do you remember the registered enpoints we had in our sample app ?</p>
+<p>Then the only thing remaining is to register the handler to receive
+a get call in a given URI:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -533,7 +557,7 @@ explore the project&#8217;s Frege docs.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-11-04 00:41:52 +01:00
+Last updated 2016-01-10 12:22:33 +01:00
 </div>
 </div>
 </body>

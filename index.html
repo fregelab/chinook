@@ -437,22 +437,45 @@ MathJax.Hub.Config({
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_getting_started">1. Getting Started</a>
+<li><a href="#_getting_started">1. Getting Started</a></li>
+<li><a href="#_overview">2. Overview</a>
 <ul class="sectlevel2">
-<li><a href="#_hello_world">1.1. Hello World</a></li>
+<li><a href="#_handler">2.1. Handler</a></li>
+<li><a href="#_endpoint_registration">2.2. Endpoint registration</a></li>
+<li><a href="#_main">2.3. Main</a></li>
 </ul>
 </li>
-<li><a href="#_get">2. GET</a>
+<li><a href="#_get">3. GET</a>
 <ul class="sectlevel2">
-<li><a href="#_return_only_values">2.1. Return only values</a></li>
-<li><a href="#_changing_response">2.2. Changing response</a></li>
+<li><a href="#_return_only_values">3.1. Return only values</a></li>
+<li><a href="#_changing_response">3.2. Changing response</a></li>
 </ul>
 </li>
-<li><a href="#_development">3. Development</a>
+<li><a href="#_post">4. POST</a></li>
+<li><a href="#_request_response">5. Request / Response</a>
 <ul class="sectlevel2">
-<li><a href="#_license">3.1. License</a></li>
-<li><a href="#_frege_docs">3.2. Frege docs</a></li>
-<li><a href="#_github">3.3. Github</a></li>
+<li><a href="#_request">5.1. Request</a>
+<ul class="sectlevel3">
+<li><a href="#_headers">5.1.1. Headers</a></li>
+<li><a href="#_query_parameters">5.1.2. Query Parameters</a></li>
+<li><a href="#_path_parameters">5.1.3. Path Parameters</a></li>
+<li><a href="#_body">5.1.4. Body</a></li>
+</ul>
+</li>
+<li><a href="#_response">5.2. Response</a>
+<ul class="sectlevel3">
+<li><a href="#_headers_2">5.2.1. Headers</a></li>
+<li><a href="#_output">5.2.2. Output</a></li>
+<li><a href="#_status">5.2.3. Status</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_development">6. Development</a>
+<ul class="sectlevel2">
+<li><a href="#_license">6.1. License</a></li>
+<li><a href="#_frege_docs">6.2. Frege docs</a></li>
+<li><a href="#_github">6.3. Github</a></li>
 </ul>
 </li>
 </ul>
@@ -530,12 +553,67 @@ executing <code>Chinook</code>.
 <p>You can go to your browser a go to <a href="http://localhost:4567/hi" class="bare">http://localhost:4567/hi</a> You should
 see the phrase <code>Hello World from Chinook :-)</code>.</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_overview">2. Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Chinook is a tiny web framework aimed to create microservices. A basic
+<code>Chinook</code> application needs only three steps to expose an endpoint:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Handler</code></p>
+</li>
+<li>
+<p><code>Endpoint registration</code></p>
+</li>
+<li>
+<p><code>Main method</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>A whole <code>Chinook</code> application could simply be:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">import chinook.Chinook
+
+main _ = do
+   get "/hello" $ \req -&gt; do
+      return response.{ output = Just "Hello World" }</code></pre>
+</div>
+</div>
 <div class="sect2">
-<h3 id="_hello_world">1.1. Hello World</h3>
+<h3 id="_handler">2.1. Handler</h3>
+<div class="paragraph">
+<p>Handlers are the most important part of Chinook, is where client
+requests are handled. Chinook http handlers normally have the
+following signature:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">IO Request -&gt; IO Reponse</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpoint_registration">2.2. Endpoint registration</h3>
 <div class="paragraph">
 <p>The way <code>Chinook</code> works at the moment is a main entry point where
 registering the routes and then several files where implementing
 application handlers.</p>
+</div>
+<div class="paragraph">
+<p>It always follow the same pattern:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">http-verb "/registered-path" handler</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>If take a look at the <code>chinook-sample</code> application, the main entry
@@ -544,34 +622,71 @@ point is located in the <code>App.fr</code> file.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">main _  = do
+    -- GET
     get  "/hi"              helloWorldHandler
     get  "/hi/:name/:age"   greetingsHandler
     get  "/bye"             goodbyeHandler
-    get  "/getjson"         getJSON</code></pre>
+    get  "/getjson"         getJSONHandler
+    -- POST
+    post "/postjson"        postJSONHandler</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Here you can see all available endpoints in your application. For a
-given URL there is the related handler. How you manage your handler
-files is completely up to you.</p>
+given URL there is the related handler function. How you manage your
+handler files is completely up to you.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_main">2.3. Main</h3>
+<div class="paragraph">
+<p>To start a <code>Chinook</code> application you only have to invoke the main
+function containing all the endpoint registrations as we saw in the
+previous chapter.</p>
 </div>
 <div class="paragraph">
-<p>In this example I&#8217;m importing certain handlers from <code>chinook.Handlers</code>
-but I could have imported all of them just ommiting the <code>Frege</code> way of
-importing functions.</p>
+<p>This is independent of the tool used to call that method. For instance,
+using gradle you can use the <code>application</code> plugin.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">apply plugin: 'java'
+apply plugin: "org.frege-lang"
+apply plugin: 'application' <i class="conum" data-value="1"></i><b>(1)</b>
+
+dependencies {
+    compile project (':chinook-core')
+}
+
+mainClassName = "chinook.Routes" <i class="conum" data-value="2"></i><b>(2)</b>
+
+compileFrege.dependsOn 'compileJava'</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Gradle Application plugin</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Namespace where the <code>main</code> function is located</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_get">2. GET</h2>
+<h2 id="_get">3. GET</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Here is the function to perform HTTP <code>GET</code> calls:</p>
+<p>Here is the function to register a HTTP <code>GET</code> handler:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">get  :: String -&gt; (MutableIO Request -&gt; MutableIO Response -&gt; IO (Maybe String)) -&gt; IO ()</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">get  :: String -&gt; (IO Request -&gt; IO Response) -&gt; IO ()</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -589,59 +704,88 @@ this invocation.</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>As a function sending and receiving data to and from the outside world
-needs to deal with the <code>IO</code> abstraction. Consequently it should
-reflect that situation in the function signature.</p>
+<p>A <code>handler</code> basically receives a <code>IO Request</code> and should return a <code>IO
+Response</code>. Both are available undere <code>chinook.Chinook</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">import chinook.Chinook (Request, Response, response)</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>On one side the handler should return a <code>IO (Maybe String)</code> data,
-meaning it could return a <code>String</code> and also that this <code>String</code> will be
-sent outside.</p>
+<p>Here&#8217;s a simple example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">helloWorldHandler :: IO Request -&gt; IO Response
+helloWorldHandler req = do
+   return $ response.{ output = Just "Hello World from Chinook :-)" }</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>Chinook.response</code> is a way of creating a new
+<code>chinook.Chinook.Response</code> without having to specify all possible
+fields in <code>Response</code>. It creates a new copy from the default
+<code>Response</code> value, but it lets you set different field values. This is
+not a <code>Chinook</code> thing but <code>Frege&#8217;s</code> and it&#8217;s call <code>value update</code>.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>On the other hand, the function itself returns IO () meaning it may
-content <code>side-effects</code> produced by the exposure to the real world.</p>
+<p>If you want a <code>GET</code> handler to return an output you should be setting
+the response&#8217;s <code>output</code> field.</p>
 </div>
 <div class="paragraph">
-<p>Do you remember the registered enpoints we had in our sample app ?</p>
+<p>Then the only thing remaining is to register the handler to receive
+a get call in a given URI:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">main _  = do
+    -- GET
     get  "/hi"              helloWorldHandler
     get  "/hi/:name/:age"   greetingsHandler
     get  "/bye"             goodbyeHandler
-    get  "/getjson"         getJSON</code></pre>
+    get  "/getjson"         getJSONHandler
+    -- POST
+    post "/postjson"        postJSONHandler</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_return_only_values">2.1. Return only values</h3>
+<h3 id="_return_only_values">3.1. Return only values</h3>
 <div class="paragraph">
 <p>The first endpoint returns a typical <code>hello world</code> message when
 invoking the <code>/hi</code> endpoint. Here is the handler implementation:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">helloWorldHandler :: MutableIO Request -&gt; MutableIO Response -&gt; IO (Maybe String)
-helloWorldHandler = \req \res -&gt; do
-  return $ Just "Hello World from Chinook :-)"</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">helloWorldHandler :: IO Request -&gt; IO Response
+helloWorldHandler req = do
+   return $ response.{ output = Just "Hello World from Chinook :-)" }</code></pre>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_changing_response">2.2. Changing response</h3>
+<h3 id="_changing_response">3.2. Changing response</h3>
 <div class="paragraph">
 <p>Sometimes depending on the request we may want to change something
 about the response.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">greetingsHandler :: MutableIO Request -&gt; MutableIO Response -&gt; IO (Maybe String)
-greetingsHandler = \req \res -&gt; do
-  name      &lt;- req.paths ":name"
-  age       &lt;- req.paths ":age"
-  _         &lt;- res.status 200 -- &lt;1&gt; response status code
-  return $ createGreetings name age</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">greetingsHandler :: IO Request -&gt; IO Response
+greetingsHandler req = do
+  name      &lt;- req.path ":name"
+  age       &lt;- req.path ":age"
+  return $ response.{ status = 200,
+                      output = createGreetings name age } -- &lt;1&gt; response status code</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -657,12 +801,13 @@ greetingsHandler = \req \res -&gt; do
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">getJSON :: MutableIO Request -&gt; MutableIO Response -&gt; IO (Maybe String)
-getJSON = \req \res -&gt; do
-  code  &lt;- req.queryParams "code"
-  desc  &lt;- req.queryParams "desc"
-  _     &lt;- res.contentType "application/json" -- &lt;1&gt; response content type
-  return $ getLangAsJSON code desc</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">getJSONHandler :: IO Request -&gt; IO Response
+getJSONHandler req = do
+  code  &lt;- req.param "code"
+  desc  &lt;- req.param "desc"
+  return $ response.{ status  = 200,
+                      output  = getLangAsJSON code desc,
+                      headers = [("Content-Type", Just "application/json")] } -- &lt;1&gt; response content type</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -682,22 +827,323 @@ explore the project&#8217;s Frege docs.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_development">3. Development</h2>
+<h2 id="_post">4. POST</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Here is the function to register a HTTP <code>POST</code> handler:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">post :: String -&gt; (IO Request -&gt; IO Response) -&gt; IO ()</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It basically works the same way <code>GET</code> did. The main difference
+is that in <code>POST</code> calls you would like to do something with the
+body text sent from the client.</p>
+</div>
+<div class="paragraph">
+<p>Most of the times that body could be a <code>JSON</code>/<code>XML</code> payload. You
+can get that information with the <code>body</code> field from the request.</p>
+</div>
+<div class="paragraph">
+<p>Here&#8217;s an example building a new <code>Lang</code> instance out of the json
+payload coming from the client:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">postJSONHandler :: IO Request -&gt; IO Response
+postJSONHandler req = do
+    body     &lt;- req.body
+    case (processJSON body) of
+        Just Lang { code, desc } -&gt; return response.{ status = 201 } -- &lt;1&gt; Created
+        Nothing                  -&gt; return response.{ status = 400 } -- &lt;2&gt; Bad request</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Successful response sending a <code>201</code> (created) status response</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Failure response sending a <code>400</code> (bad request) in case the payload
+wasn&#8217;t correct.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Of course it would be nice to send back more feedback about validation ;)</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_request_response">5. Request / Response</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Chinook http handlers normally have the following signature:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">IO Request -&gt; IO Reponse</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_request">5.1. Request</h3>
+<div class="paragraph">
+<p>A <code>chinook.Request</code> is a immutable data structure containing:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">data Request = Request { headers     :: [(String, Maybe String)],
+                         queryParams :: [(String, [String])],
+                         pathParams  :: [(String, String)],
+                         body        :: Maybe String }</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_headers">5.1.1. Headers</h4>
+<div class="paragraph">
+<p>Headers are of type <code>(String, Maybe String)</code> meaning <code>(name of the
+header, possible value)</code>. There are two utility methods to get headers
+from a <code>IO Request</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">    allHeaders :: IO Request -&gt; IO [(String, Maybe String)]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Returns a list of all headers from the request passed as first
+argument.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">    header :: IO Request -&gt; String -&gt; IO (Maybe String)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Returns a specific header. First argument is the request, then the
+name of the header.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_query_parameters">5.1.2. Query Parameters</h4>
+<div class="paragraph">
+<p>A typical URL containing a query string is as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-text" data-lang="text">http://anysite.com/over/there?name=ferret</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In order to get the name parameter we&#8217;ll be using the function:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">    param :: IO Request -&gt; String -&gt; IO (Maybe String)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>First parameter is the request, and then the name of the parameter
+(<code>name</code> in this particular example).</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_path_parameters">5.1.3. Path Parameters</h4>
+<div class="paragraph">
+<p>Bind the value of a path segment to a parameter. For instance:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-text" data-lang="text">http://localhost:4567/john/34</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Is mapped here <code>/hi/:name/:age</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">main _  = do
+    -- GET
+    get  "/hi"              helloWorldHandler
+    get  "/hi/:name/:age"   greetingsHandler
+    get  "/bye"             goodbyeHandler
+    get  "/getjson"         getJSONHandler
+    -- POST
+    post "/postjson"        postJSONHandler</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>So how can we retrieve the <code>:name</code> and <code>:age</code> path parameters ? With
+the following functions:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">    allPaths :: IO Request -&gt; IO [(String, String)]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This function receives the request as argument and it will return
+a list of type <code>(String, String)</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Why <code>(String, String)</code> and not <code>(String, Maybe String)</code> ? Well
+if it didn&#8217;t have any value it couldn&#8217;t match the path. So it&#8217;s safe
+to assume everytime the URI is hit you will get a value.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">    path :: IO Request -&gt; String -&gt; IO (Maybe String)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>path</code> should be use to get a specific path parameter. It receives the
+request and the name of the path parameter, and it will return a
+string representation of that parameter.</p>
+</div>
+<div class="paragraph">
+<p>This way you could be able to use it like the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">greetingsHandler :: IO Request -&gt; IO Response
+greetingsHandler req = do
+  name      &lt;- req.path ":name"
+  age       &lt;- req.path ":age"
+  return $ response.{ status = 200,
+                      output = createGreetings name age } -- &lt;1&gt; response status code</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_body">5.1.4. Body</h4>
+<div class="paragraph">
+<p>Specially when trying to save or update data you will need to access
+the request <code>body</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">postJSONHandler :: IO Request -&gt; IO Response
+postJSONHandler req = do
+    body     &lt;- req.body
+    case (processJSON body) of
+        Just Lang { code, desc } -&gt; return response.{ status = 201 } -- &lt;1&gt; Created
+        Nothing                  -&gt; return response.{ status = 400 } -- &lt;2&gt; Bad request</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_response">5.2. Response</h3>
+<div class="paragraph">
+<p><code>chinook.Chinook.Response</code> is just a data type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">data Response = Response { status  :: Int,
+                           output  :: Maybe String,
+                           headers :: [(String, Maybe String)]} where</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Unlike other web frameworks, you won&#8217;t be mutating the response via
+functions modifiying internal fields. <code>Chinook</code> forces you to create
+an immutable structure.</p>
+</div>
+<div class="paragraph">
+<p>Well, but, does it means I should be building from the scratch a
+<code>Response</code> every time ? Yes but <code>Chinook</code> (well <code>Frege</code> actually) will
+help you in this task. <code>Chinook</code> has a default <code>Response</code> value
+available through the constant <code>chinook.Chinook.response</code>. This
+value looks like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">response = Response 200 Nothing []</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>So e.g next time you wanted to return a message with no headers and
+returning a 200 http status you don&#8217;t have to set everything, you
+can take advantage of <code>Frege&#8217;s value update</code> and write something
+like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">helloWorldHandler :: IO Request -&gt; IO Response
+helloWorldHandler req = do
+   return $ response.{ output = Just "Hello World from Chinook :-)" }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A <code>Response</code> may contain:</p>
+</div>
+<div class="sect3">
+<h4 id="_headers_2">5.2.1. Headers</h4>
+<div class="paragraph">
+<p><code>(String, Maybe String)</code></p>
+</div>
+<div class="paragraph">
+<p>When setting content type, or setting browser cache&#8230;&#8203;etc we should be using
+http response headers. A header is of type <code>(String, Maybe String)</code> where
+the first tuple argument is the <strong>name</strong> of the header and the second part
+of the tuple is the <strong>possible value</strong> of the header.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_output">5.2.2. Output</h4>
+<div class="paragraph">
+<p><code>Maybe String</code></p>
+</div>
+<div class="paragraph">
+<p>If you would like to respond back with a message, you can set the output field
+with a <code>Maybe String</code>. That string could be anything: text, json&#8230;&#8203;</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_status">5.2.3. Status</h4>
+<div class="paragraph">
+<p><code>Int</code></p>
+</div>
+<div class="paragraph">
+<p>HTTP statuses are used often when doing Rest. For instance if you
+would like to create a resource, you would send a message to a
+resource using a POST endpoint and if it succeed it will return a 201
+code meaning <code>resource created</code>.  A status code is of type <code>Int</code>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_development">6. Development</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_license">3.1. License</h3>
+<h3 id="_license">6.1. License</h3>
 <div class="paragraph">
 <p><code>Chinook</code> uses <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_frege_docs">3.2. Frege docs</h3>
+<h3 id="_frege_docs">6.2. Frege docs</h3>
 <div class="paragraph">
-<p>#TODO</p>
+<p>You can check out Frege docs <a href="fregedoc/fregedoc.html">here</a></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_github">3.3. Github</h3>
+<h3 id="_github">6.3. Github</h3>
 <div class="paragraph">
 <p><code>Chinook</code> source code is hosted at <a href="https://github.com/januslynd/chinook">Github</a></p>
 </div>
@@ -708,7 +1154,7 @@ explore the project&#8217;s Frege docs.</p>
 <div id="footer">
 <div id="footer-text">
 Version unspecified<br>
-Last updated 2015-11-04 00:41:52 +01:00
+Last updated 2016-01-10 12:22:33 +01:00
 </div>
 </div>
 </body>

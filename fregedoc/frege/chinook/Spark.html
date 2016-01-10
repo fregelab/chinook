@@ -1,0 +1,420 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML>
+<META http-equiv="Content-Type" content="text/html;charset=utf-8">
+<TITLE>chinook.Spark - frege documentation</TITLE>
+<style TYPE="text/css">
+body { font-family: helvetica, arial, sans-serif }
+pre { font-family: "lucida console", "courier new", monospaced; font-size: 100%; color: rgb(0%,0%,60%) }
+h3  { font-weight: lighter }
+dt.func { background: rgb(95%, 95%, 80%); margin-top: 10px }
+dt.clas { background: rgb(80%, 95%, 95%); margin-top: 10px }
+dt.inst { background: rgb(95%, 90%, 95%); margin-top: 10px }
+dt.data { background: rgb(95%, 95%, 95%); margin-top: 10px }
+span.code { font-family: "lucida console", "courier new", monospaced; font-size: 100%; color: rgb(0%,0%,60%) }
+span.unknown { font-family: "lucida console", "courier new", monospaced; font-size: 100%; color: red }
+a.fref { text-decoration: none; font-family: "lucida console", "courier new", monospaced; font-size: 100%; color: rgb(30%, 30%, 0%) }
+a.tref { text-decoration: none; font-family: "lucida console", "courier new", monospaced; font-size: 100%; color: rgb(40%, 0%,  40%) }
+</style>
+<BODY>
+<h1>
+Module <SPAN CLASS="code">chinook.Spark</SPAN></h1>
+<h3>
+Imports</h3>
+<ul>
+<li>
+<div>
+import <a HREF="../frege/Prelude.html">frege.Prelude</a> as Prelude</div>
+</li>
+<li>
+<div>
+import <a HREF="../frege/prelude/PreludeArrays.html">Prelude.PreludeArrays</a> as PreludeArrays</div>
+</li>
+<li>
+<div>
+import <a HREF="../frege/prelude/PreludeBase.html">Prelude.PreludeBase</a> as PreludeBase</div>
+</li>
+<li>
+<div>
+import <a HREF="../frege/prelude/PreludeIO.html">Prelude.PreludeIO</a> as PreludeIO</div>
+</li>
+<li>
+<div>
+import <a HREF="../frege/prelude/PreludeList.html">Prelude.PreludeList</a> as PreludeList</div>
+</li>
+<li>
+<div>
+import <a HREF="../frege/prelude/PreludeMonad.html">Prelude.PreludeMonad</a> as PreludeMonad</div>
+</li>
+<li>
+<div>
+import <a HREF="../frege/prelude/PreludeText.html">Prelude.PreludeText</a> as PreludeText</div>
+</li>
+<li>
+<div>
+import <a HREF="../frege/java/util/Regex.html">Java.util.Regex</a> as Regexp</div>
+</li>
+<li>
+<div>
+import <a HREF="../frege/java/Util.html">Java.Util</a> as Util</div>
+</li>
+</ul>
+<h3>
+Table of Content</h3>
+<ul class="data">
+<li>
+<div>
+<a HREF="#data">Definitions</a></div>
+<dl>
+<dt>
+<SPAN CLASS="code"><b>data </b><a class="tref" href="#QueryMap"> </a> <a class="tref" href="#QueryMap">QueryMap</a> = <b>native </b>spark.QueryParamsMap</SPAN></dt>
+<dd>
+</dd>
+<dt>
+<SPAN CLASS="code"><b>data </b><a class="tref" href="#Request"> </a> <a class="tref" href="#Request">Request</a> = <b>native </b>spark.Request</SPAN></dt>
+<dd>
+</dd>
+<dt>
+<SPAN CLASS="code"><b>data </b><a class="tref" href="#Response"> </a> <a class="tref" href="#Response">Response</a> = <b>native </b>spark.Response</SPAN></dt>
+<dd>
+</dd>
+<dt>
+<SPAN CLASS="code"><b>data </b><a class="tref" href="#Rest"> </a> <a class="tref" href="#Rest">Rest</a> = <b>native </b>spark.Spark</SPAN></dt>
+<dd>
+</dd>
+<dt>
+<SPAN CLASS="code"><b>data </b><a class="tref" href="#Route"> </a> <a class="tref" href="#Route">Route</a> = <b>native </b>spark.Route</SPAN></dt>
+<dd>
+</dd>
+</dl>
+</li>
+<li>
+<div>
+<a HREF="#case">Functions and Values by Type</a></div>
+</li>
+</ul>
+<h2>
+<a NAME="data">Definitions</a></h2>
+<dl class="data">
+<dt class="data">
+<SPAN CLASS="code"><b>data </b><a name=QueryMap> </a> <a class="tref" href="#QueryMap">QueryMap</a> = <b>native </b>spark.QueryParamsMap</SPAN></dt>
+<dd class="data">
+<h3>
+Member Functions</h3>
+<dl class="func">
+<dt class="func">
+<SPAN CLASS="code"><a name=QueryMap.toMap>toMap</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#QueryMap">QueryMap</a></b> → <a class="tref" href="../frege/prelude/PreludeIO.html#STMutable">STMutable</a> <a class="tref" href="../frege/prelude/PreludeBase.html#RealWorld">RealWorld</a> (<a class="tref" href="../frege/java/Util.html#Map">Map</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a> (<a class="tref" href="../frege/prelude/PreludeArrays.html#JArray">JArray</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>))<br><b>native </b>toMap</SPAN></dt>
+<dd class="func">
+</dd>
+</dl>
+</dd>
+<dt class="data">
+<SPAN CLASS="code"><b>data </b><a name=Request> </a> <a class="tref" href="#Request">Request</a> = <b>native </b>spark.Request</SPAN></dt>
+<dd class="data">
+<h3>
+Member Functions</h3>
+<dl class="func">
+<dt class="func">
+<SPAN CLASS="code"><a name=Request.allHeaders>allHeaders</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a></b> → <a class="tref" href="../frege/prelude/PreludeIO.html#STMutable">STMutable</a> <a class="tref" href="../frege/prelude/PreludeBase.html#RealWorld">RealWorld</a> (<a class="tref" href="../frege/java/Util.html#Set">Set</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)<br><b>native </b>headers</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Request.allPaths>allPaths</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a></b> → <a class="tref" href="../frege/prelude/PreludeIO.html#STMutable">STMutable</a> <a class="tref" href="../frege/prelude/PreludeBase.html#RealWorld">RealWorld</a> (<a class="tref" href="../frege/java/Util.html#Map">Map</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)<br><b>native </b>params</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Request.allQueryParams>allQueryParams</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a></b> → <a class="tref" href="../frege/prelude/PreludeIO.html#STMutable">STMutable</a> <a class="tref" href="../frege/prelude/PreludeBase.html#RealWorld">RealWorld</a> (<a class="tref" href="../frege/java/Util.html#Set">Set</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)<br><b>native </b>queryParams</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Request.attributes>attributes</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a></b> → <a class="tref" href="../frege/prelude/PreludeIO.html#STMutable">STMutable</a> <a class="tref" href="../frege/prelude/PreludeBase.html#RealWorld">RealWorld</a> (<a class="tref" href="../frege/java/Util.html#Set">Set</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)<br><b>native </b>attributes</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Request.body>body</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a></b> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> (<a class="tref" href="../frege/prelude/PreludeBase.html#Maybe">Maybe</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)<br><b>native </b>body</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Request.bodyAsBytes>bodyAsBytes</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a></b> → <a class="tref" href="../frege/prelude/PreludeIO.html#STMutable">STMutable</a> <a class="tref" href="../frege/prelude/PreludeBase.html#RealWorld">RealWorld</a> (<a class="tref" href="../frege/prelude/PreludeArrays.html#JArray">JArray</a> <a class="tref" href="../frege/java/Lang.html#Byte">Byte</a>)<br><b>native </b>bodyAsBytes</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Request.contentLength>contentLength</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a></b> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Int">Int</a><br><b>native </b>contentLength</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Request.contentType>contentType</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a></b> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> (<a class="tref" href="../frege/prelude/PreludeBase.html#Maybe">Maybe</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)<br><b>native </b>contentType</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Request.contextPath>contextPath</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a></b> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> (<a class="tref" href="../frege/prelude/PreludeBase.html#Maybe">Maybe</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)<br><b>native </b>contextPath</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Request.cookie>cookie</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a></b> → <b><a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a></b> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> (<a class="tref" href="../frege/prelude/PreludeBase.html#Maybe">Maybe</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)<br><b>native </b>cookie</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Request.cookies>cookies</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a></b> → <a class="tref" href="../frege/prelude/PreludeIO.html#STMutable">STMutable</a> <a class="tref" href="../frege/prelude/PreludeBase.html#RealWorld">RealWorld</a> (<a class="tref" href="../frege/java/Util.html#Map">Map</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)<br><b>native </b>cookies</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Request.gattr>gattr</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a></b> → <b><a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a></b> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> (<a class="tref" href="../frege/prelude/PreludeBase.html#Maybe">Maybe</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)<br><b>native </b>attribute</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Request.headers>headers</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a></b> → <b><a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a></b> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> (<a class="tref" href="../frege/prelude/PreludeBase.html#Maybe">Maybe</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)<br><b>native </b>headers</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Request.host>host</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a></b> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> (<a class="tref" href="../frege/prelude/PreludeBase.html#Maybe">Maybe</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)<br><b>native </b>host</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Request.ip>ip</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a></b> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> (<a class="tref" href="../frege/prelude/PreludeBase.html#Maybe">Maybe</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)<br><b>native </b>ip</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Request.params>params</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a></b> → <b><a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a></b> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> (<a class="tref" href="../frege/prelude/PreludeBase.html#Maybe">Maybe</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)<br><b>native </b>queryParams</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Request.pathInfo>pathInfo</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a></b> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> (<a class="tref" href="../frege/prelude/PreludeBase.html#Maybe">Maybe</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)<br><b>native </b>pathInfo</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Request.paths>paths</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a></b> → <b><a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a></b> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> (<a class="tref" href="../frege/prelude/PreludeBase.html#Maybe">Maybe</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)<br><b>native </b>params</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Request.port>port</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a></b> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> (<a class="tref" href="../frege/prelude/PreludeBase.html#Maybe">Maybe</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Integer">Integer</a>)<br><b>native </b>port</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Request.protocol>protocol</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a></b> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> (<a class="tref" href="../frege/prelude/PreludeBase.html#Maybe">Maybe</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)<br><b>native </b>protocol</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Request.queryMap>queryMap</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a></b> → <a class="tref" href="../frege/prelude/PreludeIO.html#STMutable">STMutable</a> <a class="tref" href="../frege/prelude/PreludeBase.html#RealWorld">RealWorld</a> <a class="tref" href="#QueryMap">QueryMap</a><br><b>native </b>queryMap</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Request.queryMapFor>queryMapFor</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a></b> → <b><a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a></b> → <a class="tref" href="../frege/prelude/PreludeIO.html#STMutable">STMutable</a> <a class="tref" href="../frege/prelude/PreludeBase.html#RealWorld">RealWorld</a> <a class="tref" href="#QueryMap">QueryMap</a><br><b>native </b>queryMap</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Request.queryParams>queryParams</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a></b> → <b><a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a></b> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> (<a class="tref" href="../frege/prelude/PreludeBase.html#Maybe">Maybe</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)<br><b>native </b>queryParams</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Request.queryParamsValues>queryParamsValues</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a></b> → <b><a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a></b> → <a class="tref" href="../frege/prelude/PreludeIO.html#STMutable">STMutable</a> <a class="tref" href="../frege/prelude/PreludeBase.html#RealWorld">RealWorld</a> (<a class="tref" href="../frege/prelude/PreludeArrays.html#JArray">JArray</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)<br><b>native </b>queryParamsValues</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Request.requestMethod>requestMethod</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a></b> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> (<a class="tref" href="../frege/prelude/PreludeBase.html#Maybe">Maybe</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)<br><b>native </b>requestMethod</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Request.sattr>sattr</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a></b> → <b><a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a></b> → <b><a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a></b> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a><br><b>native </b>attribute</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Request.scheme>scheme</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a></b> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> (<a class="tref" href="../frege/prelude/PreludeBase.html#Maybe">Maybe</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)<br><b>native </b>scheme</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Request.servletPath>servletPath</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a></b> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> (<a class="tref" href="../frege/prelude/PreludeBase.html#Maybe">Maybe</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)<br><b>native </b>servletPath</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Request.splat>splat</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a></b> → <a class="tref" href="../frege/prelude/PreludeIO.html#STMutable">STMutable</a> <a class="tref" href="../frege/prelude/PreludeBase.html#RealWorld">RealWorld</a> (<a class="tref" href="../frege/prelude/PreludeArrays.html#JArray">JArray</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)<br><b>native </b>splat</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Request.uri>uri</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a></b> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> (<a class="tref" href="../frege/prelude/PreludeBase.html#Maybe">Maybe</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)<br><b>native </b>uri</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Request.url>url</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a></b> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> (<a class="tref" href="../frege/prelude/PreludeBase.html#Maybe">Maybe</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)<br><b>native </b>url</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Request.userAgent>userAgent</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a></b> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> (<a class="tref" href="../frege/prelude/PreludeBase.html#Maybe">Maybe</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)<br><b>native </b>userAgent</SPAN></dt>
+<dd class="func">
+</dd>
+</dl>
+</dd>
+<dt class="data">
+<SPAN CLASS="code"><b>data </b><a name=Response> </a> <a class="tref" href="#Response">Response</a> = <b>native </b>spark.Response</SPAN></dt>
+<dd class="data">
+<h3>
+Member Functions</h3>
+<dl class="func">
+<dt class="func">
+<SPAN CLASS="code"><a name=Response.body>body</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Response">Response</a></b> → <b><a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a></b> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a><br><b>native </b>body</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Response.contentType>contentType</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Response">Response</a></b> → <b><a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a></b> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a><br><b>native </b>type</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Response.cookie>cookie</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Response">Response</a></b> → <b><a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a></b> → <b><a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a></b> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a><br><b>native </b>cookie</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Response.header>header</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Response">Response</a></b> → <b><a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a></b> → <b><a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a></b> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a><br><b>native </b>header</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Response.status>status</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Response">Response</a></b> → <b><a class="tref" href="../frege/prelude/PreludeBase.html#Int">Int</a></b> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a><br><b>native </b>status</SPAN></dt>
+<dd class="func">
+</dd>
+</dl>
+</dd>
+<dt class="data">
+<SPAN CLASS="code"><b>data </b><a name=Route> </a> <a class="tref" href="#Route">Route</a> = <b>native </b>spark.Route</SPAN></dt>
+<dd class="data">
+<h3>
+Member Functions</h3>
+<dl class="func">
+<dt class="func">
+<SPAN CLASS="code"><a name=Route._new>new</a> ∷ (<b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a> → <a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Response">Response</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> a</b>) → <a class="tref" href="../frege/prelude/PreludeIO.html#STMutable">STMutable</a> <a class="tref" href="../frege/prelude/PreludeBase.html#RealWorld">RealWorld</a> <a class="tref" href="#Route">Route</a><br><b>native </b>chinook.into.Rest.createRoute</SPAN></dt>
+<dd class="func">
+</dd>
+</dl>
+</dd>
+<dt class="data">
+<SPAN CLASS="code"><b>data </b><a name=Rest> </a> <a class="tref" href="#Rest">Rest</a> = <b>native </b>spark.Spark</SPAN></dt>
+<dd class="data">
+<p>
+Rest wraps all sparkjava.com calls and exposes to Frege</p>
+<h3>
+Member Functions</h3>
+<dl class="func">
+<dt class="func">
+<SPAN CLASS="code"><a name=Rest.get>get</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a></b> → <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Route">Route</a></b> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a><br><b>native </b>spark.Spark.get</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Rest.post>post</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a></b> → <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Route">Route</a></b> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a><br><b>native </b>spark.Spark.post</SPAN></dt>
+<dd class="func">
+</dd>
+</dl>
+</dd>
+</dl>
+<h2>
+<a NAME="case">Functions and Values by Type</a></h2>
+<dl class="func">
+<dt class="func">
+<SPAN CLASS="code"><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#QueryMap">QueryMap</a> → <a class="tref" href="../frege/prelude/PreludeIO.html#STMutable">STMutable</a> <a class="tref" href="../frege/prelude/PreludeBase.html#RealWorld">RealWorld</a> (<a class="tref" href="../frege/java/Util.html#Map">Map</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a> (<a class="tref" href="../frege/prelude/PreludeArrays.html#JArray">JArray</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>))</SPAN></dt>
+<dd class="func">
+<p>
+<a class="fref" href="#QueryMap.toMap">QueryMap.toMap</a></p>
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a></SPAN></dt>
+<dd class="func">
+<p>
+<a class="fref" href="#Request.sattr">Request.sattr</a></p>
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a> → <a class="tref" href="../frege/prelude/PreludeIO.html#STMutable">STMutable</a> <a class="tref" href="../frege/prelude/PreludeBase.html#RealWorld">RealWorld</a> (<a class="tref" href="../frege/prelude/PreludeArrays.html#JArray">JArray</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)</SPAN></dt>
+<dd class="func">
+<p>
+<a class="fref" href="#Request.queryParamsValues">Request.queryParamsValues</a></p>
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a> → <a class="tref" href="../frege/prelude/PreludeIO.html#STMutable">STMutable</a> <a class="tref" href="../frege/prelude/PreludeBase.html#RealWorld">RealWorld</a> <a class="tref" href="#QueryMap">QueryMap</a></SPAN></dt>
+<dd class="func">
+<p>
+<a class="fref" href="#Request.queryMapFor">Request.queryMapFor</a></p>
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> (<a class="tref" href="../frege/prelude/PreludeBase.html#Maybe">Maybe</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)</SPAN></dt>
+<dd class="func">
+<p>
+<a class="fref" href="#Request.queryParams">Request.queryParams</a>, <a class="fref" href="#Request.paths">Request.paths</a>, <a class="fref" href="#Request.params">Request.params</a>, <a class="fref" href="#Request.headers">Request.headers</a>, <a class="fref" href="#Request.cookie">Request.cookie</a>, <a class="fref" href="#Request.gattr">Request.gattr</a></p>
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a> → <a class="tref" href="../frege/prelude/PreludeIO.html#STMutable">STMutable</a> <a class="tref" href="../frege/prelude/PreludeBase.html#RealWorld">RealWorld</a> (<a class="tref" href="../frege/java/Util.html#Map">Map</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)</SPAN></dt>
+<dd class="func">
+<p>
+<a class="fref" href="#Request.cookies">Request.cookies</a>, <a class="fref" href="#Request.allPaths">Request.allPaths</a></p>
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a> → <a class="tref" href="../frege/prelude/PreludeIO.html#STMutable">STMutable</a> <a class="tref" href="../frege/prelude/PreludeBase.html#RealWorld">RealWorld</a> (<a class="tref" href="../frege/java/Util.html#Set">Set</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)</SPAN></dt>
+<dd class="func">
+<p>
+<a class="fref" href="#Request.attributes">Request.attributes</a>, <a class="fref" href="#Request.allHeaders">Request.allHeaders</a>, <a class="fref" href="#Request.allQueryParams">Request.allQueryParams</a></p>
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a> → <a class="tref" href="../frege/prelude/PreludeIO.html#STMutable">STMutable</a> <a class="tref" href="../frege/prelude/PreludeBase.html#RealWorld">RealWorld</a> (<a class="tref" href="../frege/prelude/PreludeArrays.html#JArray">JArray</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)</SPAN></dt>
+<dd class="func">
+<p>
+<a class="fref" href="#Request.splat">Request.splat</a></p>
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a> → <a class="tref" href="../frege/prelude/PreludeIO.html#STMutable">STMutable</a> <a class="tref" href="../frege/prelude/PreludeBase.html#RealWorld">RealWorld</a> (<a class="tref" href="../frege/prelude/PreludeArrays.html#JArray">JArray</a> <a class="tref" href="../frege/java/Lang.html#Byte">Byte</a>)</SPAN></dt>
+<dd class="func">
+<p>
+<a class="fref" href="#Request.bodyAsBytes">Request.bodyAsBytes</a></p>
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a> → <a class="tref" href="../frege/prelude/PreludeIO.html#STMutable">STMutable</a> <a class="tref" href="../frege/prelude/PreludeBase.html#RealWorld">RealWorld</a> <a class="tref" href="#QueryMap">QueryMap</a></SPAN></dt>
+<dd class="func">
+<p>
+<a class="fref" href="#Request.queryMap">Request.queryMap</a></p>
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> (<a class="tref" href="../frege/prelude/PreludeBase.html#Maybe">Maybe</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)</SPAN></dt>
+<dd class="func">
+<p>
+<a class="fref" href="#Request.userAgent">Request.userAgent</a>, <a class="fref" href="#Request.uri">Request.uri</a>, <a class="fref" href="#Request.url">Request.url</a>, <a class="fref" href="#Request.scheme">Request.scheme</a>, <a class="fref" href="#Request.servletPath">Request.servletPath</a>, <a class="fref" href="#Request.requestMethod">Request.requestMethod</a>, <a class="fref" href="#Request.protocol">Request.protocol</a>, <a class="fref" href="#Request.ip">Request.ip</a>, <a class="fref" href="#Request.host">Request.host</a>, <a class="fref" href="#Request.contentType">Request.contentType</a>, <a class="fref" href="#Request.body">Request.body</a>, <a class="fref" href="#Request.contextPath">Request.contextPath</a>, <a class="fref" href="#Request.pathInfo">Request.pathInfo</a></p>
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> (<a class="tref" href="../frege/prelude/PreludeBase.html#Maybe">Maybe</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Integer">Integer</a>)</SPAN></dt>
+<dd class="func">
+<p>
+<a class="fref" href="#Request.port">Request.port</a></p>
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Int">Int</a></SPAN></dt>
+<dd class="func">
+<p>
+<a class="fref" href="#Request.contentLength">Request.contentLength</a></p>
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Response">Response</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a></SPAN></dt>
+<dd class="func">
+<p>
+<a class="fref" href="#Response.header">Response.header</a>, <a class="fref" href="#Response.cookie">Response.cookie</a></p>
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Response">Response</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a></SPAN></dt>
+<dd class="func">
+<p>
+<a class="fref" href="#Response.contentType">Response.contentType</a>, <a class="fref" href="#Response.body">Response.body</a></p>
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Response">Response</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#Int">Int</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a></SPAN></dt>
+<dd class="func">
+<p>
+<a class="fref" href="#Response.status">Response.status</a></p>
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a> → <a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Route">Route</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a></SPAN></dt>
+<dd class="func">
+<p>
+<a class="fref" href="#Rest.get">Rest.get</a>, <a class="fref" href="#Rest.post">Rest.post</a></p>
+</dd>
+<dt class="func">
+<SPAN CLASS="code">(<a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a> → <a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Response">Response</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> a) → <a class="tref" href="../frege/prelude/PreludeIO.html#STMutable">STMutable</a> <a class="tref" href="../frege/prelude/PreludeBase.html#RealWorld">RealWorld</a> <a class="tref" href="#Route">Route</a></SPAN></dt>
+<dd class="func">
+<p>
+<a class="fref" href="#Route._new">Route.new</a></p>
+</dd>
+</dl>
+<p>
+<a HREF="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-html401" alt="Valid HTML 4.01 Strict" height="31" width="88"></a></p>
+</BODY>
+</HTML>

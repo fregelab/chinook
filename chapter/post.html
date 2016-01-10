@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.2">
-<title>Getting Started</title>
+<title>POST</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -418,61 +418,55 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_getting_started">Getting Started</a></li>
+<li><a href="#_post">POST</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_getting_started">Getting Started</h2>
+<h2 id="_post">POST</h2>
 <div class="sectionbody">
-<div class="admonitionblock warning">
+<div class="paragraph">
+<p>Here is the function to register a HTTP <code>POST</code> handler:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in post.ad - include::{coreSrc}/chinook/Chinook.fr[tags=postFunction]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It basically works the same way <code>GET</code> did. The main difference
+is that in <code>POST</code> calls you would like to do something with the
+body text sent from the client.</p>
+</div>
+<div class="paragraph">
+<p>Most of the times that body could be a <code>JSON</code>/<code>XML</code> payload. You
+can get that information with the <code>body</code> field from the request.</p>
+</div>
+<div class="paragraph">
+<p>Here&#8217;s an example building a new <code>Lang</code> instance out of the json
+payload coming from the client:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in post.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=postJSONHandler]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
 <table>
 <tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-Before going any further make sure you have installed JDK 7+
-in your machine.
-</td>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Successful response sending a <code>201</code> (created) status response</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Failure response sending a <code>400</code> (bad request) in case the payload
+wasn&#8217;t correct.</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Clone <code>Chinook</code> project at github and from the project&#8217;s root folder
-execute:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-shell" data-lang="shell">./gradlew :chinook-sample:run</code></pre>
-</div>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-If it is your first execution and you don&#8217;t have Gradle or
-the project dependencies already installed, it may take a while before
-executing <code>Chinook</code>.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Once the server has started:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-shell" data-lang="shell">[Thread-0] INFO org.eclipse.jetty.server.Server - Started @292ms</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You can go to your browser a go to <a href="http://localhost:4567/hi" class="bare">http://localhost:4567/hi</a> You should
-see the phrase <code>Hello World from Chinook :-)</code>.</p>
+<p>Of course it would be nice to send back more feedback about validation ;)</p>
 </div>
 </div>
 </div>

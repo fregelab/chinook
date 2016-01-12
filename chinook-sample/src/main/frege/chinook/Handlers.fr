@@ -137,3 +137,16 @@ processJSON body = do
     _                    -> Nothing
 -- end::processJSON[]
 
+-- tag::deleteHandler[]
+deleteHandler :: IO Request -> IO Response
+deleteHandler req = do
+  id <- req.path ":id"
+  return $ response.{ status = 204 }
+-- end::deleteHandler[]
+
+-- tag::putHandler[]
+putHandler :: IO Request -> IO Response
+putHandler req = do
+  id <- req.path ":id"
+  return $ response.{ status = 202 }
+-- end::putHandler[]

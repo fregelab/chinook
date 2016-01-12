@@ -1,4 +1,4 @@
-== Overview
+=== Overview
 
 Chinook is a tiny web framework aimed to create microservices. A basic
 `Chinook` application needs only three steps to expose an endpoint:
@@ -19,7 +19,7 @@ main _ = do
 ----
 
 
-=== Handler
+==== Handler
 
 Handlers are the most important part of Chinook, is where client
 requests are handled. Chinook http handlers normally have the
@@ -30,7 +30,7 @@ following signature:
 IO Request -> IO Reponse
 ----
 
-=== Endpoint registration
+==== Endpoint registration
 
 The way `Chinook` works at the moment is a main entry point where
 registering the routes and then several files where implementing
@@ -55,7 +55,7 @@ Here you can see all available endpoints in your application. For a
 given URL there is the related handler function. How you manage your
 handler files is completely up to you.
 
-=== Main
+==== Main
 
 To start a `Chinook` application you only have to invoke the main
 function containing all the endpoint registrations as we saw in the

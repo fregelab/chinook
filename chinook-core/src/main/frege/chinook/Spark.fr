@@ -135,5 +135,7 @@ data Route = native spark.Route where
     Rest wraps all sparkjava.com calls and exposes to Frege
 -}
 data Rest = native spark.Spark where
-    native get  spark.Spark.get   :: String -> MutableIO Route -> IO ()
-    native post spark.Spark.post  :: String -> MutableIO Route -> IO ()
+    native get    spark.Spark.get     :: String -> MutableIO Route -> IO ()
+    native post   spark.Spark.post    :: String -> MutableIO Route -> IO ()
+    native delete spark.Spark.delete  :: String -> MutableIO Route -> IO ()
+    native put    spark.Spark.put     :: String -> MutableIO Route -> IO ()

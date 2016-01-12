@@ -272,6 +272,46 @@ post path lambda = do
   Spark.Rest.post path route
 
 {--
+   Creates an HTTP DELETE endpoint. It receives:
+
+   - A path
+   - A function handling the request
+
+   The function is a lambda function receiving a chinook.Request
+   and a chinook.Response and returns an IO ().
+
+-}
+-- tag::deleteFunction[]
+delete :: String -> (IO Request -> IO Response) -> IO ()
+-- end::deleteFunction[]
+delete path lambda = do
+  route <- Spark.Route.new $ toSparkOutput $ \req \res -> do
+    response  <- lambda $ toChinookRequest req
+    applyChinookResponseToSpark response res
+    return $ response.output
+  Spark.Rest.delete path route
+
+{--
+   Creates an HTTP PUT endpoint. It receives:
+
+   - A path
+   - A function handling the request
+
+   The function is a lambda function receiving a chinook.Request
+   and a chinook.Response and returns an IO ().
+
+-}
+-- tag::putFunction[]
+put :: String -> (IO Request -> IO Response) -> IO ()
+-- end::putFunction[]
+put path lambda = do
+  route <- Spark.Route.new $ toSparkOutput $ \req \res -> do
+    response  <- lambda $ toChinookRequest req
+    applyChinookResponseToSpark response res
+    return $ response.output
+  Spark.Rest.put path route
+
+{--
   While within Frege we want to work with safe abstractions like
   Maybe or Either, Spark needs to receive a concrete Java type.
   This transformation narrows the gap between both worlds.

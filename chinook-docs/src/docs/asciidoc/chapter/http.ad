@@ -2,52 +2,6 @@
 
 include::overview.ad[]
 
-All `HTTP` handlers have the same structure, here is the function to
-register a HTTP `GET` handler:
-
-[source, haskell]
-----
-include::{coreSrc}/chinook/Chinook.fr[tags=getFunction]
-----
-
-It basically needs:
-
-- A `String` representing the URI resource A handler function to
-- A `Handler` to deal with the `request` and `response` originated in
-this invocation.
-
-A `handler` basically receives a `IO Request` and should return a `IO
-Response`. Both are available undere `chinook.Chinook`:
-
-[source, haskell]
-----
-include::{sampleSrc}/chinook/Handlers.fr[tags=basic-imports]
-----
-
-Here's a simple example:
-
-[source, haskell]
-----
-include::{sampleSrc}/chinook/Handlers.fr[tags=helloWorldHandler]
-----
-
-NOTE: `Chinook.response` is a way of creating a new
-`chinook.Chinook.Response` without having to specify all possible
-fields in `Response`. It creates a new copy from the default
-`Response` value, but it lets you set different field values. This is
-not a `Chinook` thing but `Frege's` and it's call `value update`.
-
-If you want a `GET` handler to return an output you should be setting
-the response's `output` field.
-
-Then the only thing remaining is to register the handler to receive
-a get call in a given URI:
-
-[source, haskell]
-----
-include::{sampleSrc}/chinook/App.fr[tags=routes]
-----
-
 === Return only values
 
 The first endpoint returns a typical `hello world` message when

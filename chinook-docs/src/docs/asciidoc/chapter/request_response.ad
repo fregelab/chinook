@@ -1,12 +1,5 @@
 === Request / Response
 
-Chinook http handlers normally have the following signature:
-
-[source, haskell]
-----
-IO Request -> IO Reponse
-----
-
 ==== Request
 
 A `chinook.Request` is a immutable data structure containing:

@@ -5,7 +5,6 @@
 module chinook.Chinook where
 
 import Data.List (lookup)
-
 import frege.java.Util (Set, Map)
 import frege.data.Iterators (ArrayIterator)
 
@@ -83,7 +82,7 @@ instance Requestable (IO Request) where
     -- end::param[]
     param req name = do
       all   <- params req name
-      return $ fmap head all
+      return $ fmap PreludeList.head all
 
     -- Returns all path params
     -- tag::allpaths[]
@@ -245,10 +244,7 @@ setSparkHeaders (x:xs) response = case x of
 get  :: String -> (IO Request -> IO Response) -> IO ()
 -- end::getFunction[]
 get path lambda = do
-  route <- Spark.Route.new $ toSparkOutput $ \req \res -> do
-      response  <- lambda $ toChinookRequest req
-      applyChinookResponseToSpark response res
-      return $ response.output
+  route <- toSparkRoute lambda
   Spark.Rest.get path route
 
 {--
@@ -265,10 +261,7 @@ get path lambda = do
 post :: String -> (IO Request -> IO Response) -> IO ()
 -- end::postFunction[]
 post path lambda = do
-  route <- Spark.Route.new $ toSparkOutput $ \req \res -> do
-    response  <- lambda $ toChinookRequest req
-    applyChinookResponseToSpark response res
-    return $ response.output
+  route <- toSparkRoute lambda
   Spark.Rest.post path route
 
 {--
@@ -285,10 +278,7 @@ post path lambda = do
 delete :: String -> (IO Request -> IO Response) -> IO ()
 -- end::deleteFunction[]
 delete path lambda = do
-  route <- Spark.Route.new $ toSparkOutput $ \req \res -> do
-    response  <- lambda $ toChinookRequest req
-    applyChinookResponseToSpark response res
-    return $ response.output
+  route <- toSparkRoute lambda
   Spark.Rest.delete path route
 
 {--
@@ -305,11 +295,100 @@ delete path lambda = do
 put :: String -> (IO Request -> IO Response) -> IO ()
 -- end::putFunction[]
 put path lambda = do
-  route <- Spark.Route.new $ toSparkOutput $ \req \res -> do
-    response  <- lambda $ toChinookRequest req
+  route <- toSparkRoute lambda
+  Spark.Rest.put path route
+
+{--
+   Creates an HTTP PATCH endpoint. It receives:
+
+   - A path
+   - A function handling the request
+
+   The function is a lambda function receiving a chinook.Request
+   and a chinook.Response and returns an IO ().
+
+-}
+-- tag::patchFunction[]
+patch :: String -> (IO Request -> IO Response) -> IO ()
+-- end::patchFunction[]
+patch path lambda = do
+  route <- toSparkRoute lambda
+  Spark.Rest.patch path route
+
+{--
+   Creates an HTTP OPTIONS endpoint. It receives:
+
+   - A path
+   - A function handling the request
+
+   The function is a lambda function receiving a chinook.Request
+   and a chinook.Response and returns an IO ().
+
+-}
+-- tag::optionsFunction[]
+options :: String -> (IO Request -> IO Response) -> IO ()
+-- end::optionsFunction[]
+options path lambda = do
+  route <- toSparkRoute lambda
+  Spark.Rest.options path route
+
+{--
+   Creates an TRACE endpoint. It receives:
+
+   - A path
+   - A function handling the request
+
+   The function is a lambda function receiving a chinook.Request
+   and a chinook.Response and returns an IO ().
+
+-}
+-- tag::traceFunction[]
+trace :: String -> (IO Request -> IO Response) -> IO ()
+-- end::traceFunction[]
+trace path lambda = do
+  route <- toSparkRoute lambda
+  Spark.Rest.trace path route
+
+{--
+   Creates an CONNECT endpoint. It receives:
+
+   - A path
+   - A function handling the request
+
+   The function is a lambda function receiving a chinook.Request
+   and a chinook.Response and returns an IO ().
+
+-}
+-- tag::connectFunction[]
+connect :: String -> (IO Request -> IO Response) -> IO ()
+-- end::connectFunction[]
+connect path lambda = do
+  route <- toSparkRoute lambda
+  Spark.Rest.connect path route
+
+{--
+   Creates an HEAD endpoint. It receives:
+
+   - A path
+   - A function handling the request
+
+   The function is a lambda function receiving a chinook.Request
+   and a chinook.Response and returns an IO ().
+
+-}
+-- tag::connectFunction[]
+head :: String -> (IO Request -> IO Response) -> IO ()
+-- end::connectFunction[]
+head path lambda = do
+  route <- toSparkRoute lambda
+  Spark.Rest.head path route
+
+-- Converts a handler to a Spark route instance
+toSparkRoute :: (IO Request -> IO Response) -> IO (MutableIO Route)
+toSparkRoute lambda = Spark.Route.new $ toSparkOutput $ \req \res -> do
+    response <- lambda $ toChinookRequest req
     applyChinookResponseToSpark response res
     return $ response.output
-  Spark.Rest.put path route
 
 {--
   While within Frege we want to work with safe abstractions like

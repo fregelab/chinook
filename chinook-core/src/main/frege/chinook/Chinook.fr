@@ -207,10 +207,16 @@ response = Response 200 Nothing []
 applyChinookResponseToSpark :: Response -> MutableIO Spark.Response -> IO ()
 applyChinookResponseToSpark response spark = do
     setSparkStatus  response.status  spark
+    setSparkOutput  response.output  spark
     setSparkHeaders response.headers spark
 
 setSparkStatus  :: Int -> MutableIO Spark.Response  -> IO ()
 setSparkStatus status response = response.status status
+
+setSparkOutput  :: Maybe String -> MutableIO Spark.Response  -> IO ()
+setSparkOutput output response = case output of
+    Just output -> response.body output
+    Nothing     -> response.body ""
 
 setSparkHeaders :: [(String, Maybe String)] -> MutableIO Spark.Response -> IO ()
 setSparkHeaders []     response = return ()

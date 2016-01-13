@@ -36,14 +36,14 @@ The way `Chinook` works at the moment is a main entry point where
 registering the routes and then several files where implementing
 application handlers.
 
-It always follow the same pattern:
+It always follows the same pattern:
 
 [source, haskell]
 ----
 http-verb "/registered-path" handler
 ----
 
-If take a look at the `chinook-sample` application, the main entry
+If you take a look at the `chinook-sample` application, the main entry
 point is located in the `App.fr` file.
 
 [source, haskell]

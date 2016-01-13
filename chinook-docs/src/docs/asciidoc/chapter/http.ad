@@ -33,6 +33,9 @@ include::{sampleSrc}/chinook/Handlers.fr[tags=getJSON]
 
 <1> Setting response content type
 
+NOTE: Instead setting content type headers manually you can use
+`chinook.ContentType`, e.g. `ContentType.json`
+
 There are many functions available for `Request` and `Response`
 abstractions, if you want to explore it please don't hesitate to
 explore the project's Frege docs.
@@ -45,12 +48,11 @@ register a HTTP `POST` handler:
 include::{coreSrc}/chinook/Chinook.fr[tags=postFunction]
 ----
 
-It basically works the same way `GET` did. The main difference
-is that in `POST` calls you would like to do something with the
-body text sent from the client.
-
-Most of the times that body could be a `JSON`/`XML` payload. You
-can get that information with the `body` field from the request.
+It basically works the same way `GET` did. The main difference is that
+in `POST` calls you would like to do something with the body text sent
+from the client. Most of the times that body could be a `JSON`/`XML`
+payload. You can get that information with the `body` field from the
+request.
 
 Here's an example building a new `Lang` instance out of the json
 payload coming from the client:

@@ -94,7 +94,7 @@ This way you could be able to use it like the following:
 
 [source, haskell]
 ----
-include::{sampleSrc}/chinook/Handlers.fr[tags=greetingsHandler]
+include::{sampleSrc}/chinook/Handlers.fr[tags=putHandler]
 ----
 
 ===== Body

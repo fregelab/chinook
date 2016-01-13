@@ -23,9 +23,8 @@ greetingsHandler :: IO Request -> IO Response
 greetingsHandler req = do
   name      <- req.path ":name"
   age       <- req.path ":age"
-  return $ response.{ status = 200, -- <1> response status code
-                      output = createGreetings name age
-                    }
+  return $ response.{ status = 200, -- <1>
+                      output = createGreetings name age }
 -- end::greetingsHandler[]
 
 createGreetings :: Maybe String -> Maybe String -> Maybe String
@@ -34,16 +33,6 @@ createGreetings name age = fmap (concat) $ sequence [greeting, name, question, a
           question = Just ". Are you "
           mark     = Just "?"
 
--- tag::badRequest[]
-badRequest :: Response
-badRequest = response.{
-                       status = 400 , -- <2> Bad request
-                       output  = Just "Bad request",
-                       headers = [("Content-Type", Just "text/plain")]
-                      }
-
--- end::badRequest[]
-
 -- tag::getJSON[]
 getJSONHandler :: IO Request -> IO Response
 getJSONHandler req = do
@@ -51,8 +40,7 @@ getJSONHandler req = do
   desc  <- req.param "desc"
   return $ response.{ status  = 200,
                       output  = getLangAsJSON code desc,
-                      headers = [("Content-Type", Just "application/json")]
-                      } -- <1> response content type
+                      headers = [("Content-Type", Just "application/json")] } -- <1>
 -- end::getJSON[]
 
 getLangAsJSON :: Maybe String -> Maybe String -> Maybe String
@@ -99,15 +87,20 @@ getJsonSenderHandler req = do
 postJSONHandler :: IO Request -> IO Response
 postJSONHandler req = do
     body  <- req.body
-    case (processJSON body) of
-        Just Lang { code, desc } ->
-                     return $ response.{
-                       status  = 201 , -- <1> Created
-                       output  = Just "Created",
-                       headers = [("Content-Type", Just "text/plain")]
-                     }
-        Nothing                  ->
-                     return badRequest
+    return $ case (processJSON body) of
+        Just Lang { code, desc } -> createdResponse
+        Nothing                  -> badRequest
+
+createdResponse :: Response
+createdResponse = response.{ status  = 201 , -- <1>
+                             output  = Just "Created",
+                             headers = [ContentType.json] }
+
+badRequest :: Response
+badRequest = response.{ status = 400 , -- <2>
+                        output  = Just "Bad request",
+                        headers = [ContentType.json] }
+
 -- end::postJSONHandler[]
 
 
@@ -116,15 +109,15 @@ postFormHandler :: IO Request -> IO Response
 postFormHandler req = do
     code  <- req.param "code"
     desc  <- req.param "desc"
-    case (code, desc) of
-        (Just code, Just desc) ->
-                     return $ response.{
-                       status  = 201 , -- <1> Created
-                       output  = Just ((show . toJSON) $ Lang { code, desc }),
-                       headers = [("Content-Type", Just "application/json")]
-                     }
-        _                      ->
-                     return badRequest
+    return $ case (code, desc) of
+        (Just code, Just desc) -> langCreatedResponse
+        _                      -> badRequest
+
+
+langCreatedResponse :: Response
+langCreatedResponse = response.{ status  = 201 , -- <1>
+                                 output  = Just ((show . toJSON) $ Lang { code, desc }),
+                                 headers = [ContentType.json] }
 -- end::postFormHandler[]
 
 -- tag::processJSON[]

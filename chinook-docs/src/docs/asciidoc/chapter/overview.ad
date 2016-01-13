@@ -1,4 +1,4 @@
-== Overview
+=== Overview
 
 Chinook is a tiny web framework aimed to create microservices. A basic
 `Chinook` application needs only three steps to expose an endpoint:
@@ -7,7 +7,7 @@ Chinook is a tiny web framework aimed to create microservices. A basic
 * `Endpoint registration`
 * `Main method`
 
-A whole `Chinook` application could simply be:
+A whole `Chinook` application could as simple as:
 
 [source, haskell]
 ----
@@ -19,7 +19,7 @@ main _ = do
 ----
 
 
-=== Handler
+==== Handler
 
 Handlers are the most important part of Chinook, is where client
 requests are handled. Chinook http handlers normally have the
@@ -30,11 +30,27 @@ following signature:
 IO Request -> IO Reponse
 ----
 
-=== Endpoint registration
+As you may see there's no difference between handlers used with
+different http verbs:
+
+[source, haskell]
+.GET
+----
+include::{sampleSrc}/chinook/Handlers.fr[tags=helloWorldHandler]
+----
+
+[source, haskell]
+.DELETE
+----
+include::{sampleSrc}/chinook/Handlers.fr[tags=deleteHandler]
+----
+
+What makes them different ? The endpoint registration.
+
+==== Endpoint registration
 
 The way `Chinook` works at the moment is a main entry point where
-registering the routes and then several files where implementing
-application handlers.
+handlers are registered for a specific `http verb` and a `path`.
 
 It always follows the same pattern:
 
@@ -55,7 +71,54 @@ Here you can see all available endpoints in your application. For a
 given URL there is the related handler function. How you manage your
 handler files is completely up to you.
 
-=== Main
+All `HTTP` registration functions have the same structure, here is the
+function to register a HTTP `GET` handler:
+
+[source, haskell]
+----
+include::{coreSrc}/chinook/Chinook.fr[tags=getFunction]
+----
+
+It basically needs:
+
+- A `String` representing the URI resource A handler function to
+- A `Handler` to deal with the `request` and `response` originated in
+this invocation.
+
+A `handler` basically receives a `IO Request` and should return a `IO
+Response`. Both are available undere `chinook.Chinook`:
+
+[source, haskell]
+----
+include::{sampleSrc}/chinook/Handlers.fr[tags=basic-imports]
+----
+
+Here's a simple example:
+
+[source, haskell]
+----
+include::{sampleSrc}/chinook/Handlers.fr[tags=helloWorldHandler]
+----
+
+NOTE: `Chinook.response` is a way of creating a new
+`chinook.Chinook.Response` without having to specify all possible
+fields in `Response`. It creates a new copy from the default
+`Response` value, but it lets you set different field values. This is
+not a `Chinook` thing but `Frege's` and it's call `value update`.
+
+If you want a `GET` handler to return an output you should be setting
+the response's `output` field.
+
+Then the only thing remaining is to register the handler to receive
+a get call in a given URI:
+
+[source, haskell]
+----
+include::{sampleSrc}/chinook/App.fr[tags=routes]
+----
+
+
+==== Main
 
 To start a `Chinook` application you only have to invoke the main
 function containing all the endpoint registrations as we saw in the

@@ -6,21 +6,23 @@ import chinook.Handlers (helloWorldHandler,
                          greetingsHandler,
                          goodbyeHandler,
                          getJSONHandler,
+                         postJSONHandler,
+                         deleteHandler,
+                         putHandler,
                          getFormHandler,
                          getJsonSenderHandler,
                          postFormHandler,
                          postJSONHandler)
-
 -- tag::routes[]
 main _  = do
-    -- GET
-    get  "/hi"              helloWorldHandler
-    get  "/hi/:name/:age"   greetingsHandler
-    get  "/bye"             goodbyeHandler
-    get  "/getjson"         getJSONHandler
-    get  "/htmlform"        getFormHandler
-    get  "/jsonsender"      getJsonSenderHandler
-    -- POST
-    post "/posthtml"        postFormHandler
-    post "/postjson"        postJSONHandler
+    get    "/hi"             helloWorldHandler
+    get    "/hi/:name/:age"  greetingsHandler
+    get    "/bye"            goodbyeHandler
+    get    "/getjson"        getJSONHandler
+    get    "/htmlform"       getFormHandler
+    get    "/jsonsender"     getJsonSenderHandler
+    post   "/postjson"       postJSONHandler
+    post   "/posthtml"       postFormHandler
+    delete "/deleteme/:id"   deleteHandler
+    put    "/updateme/:id"   putHandler
 -- end::routes[]

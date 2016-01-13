@@ -1,13 +1,6 @@
-== Request / Response
+=== Request / Response
 
-Chinook http handlers normally have the following signature:
-
-[source, haskell]
-----
-IO Request -> IO Reponse
-----
-
-=== Request
+==== Request
 
 A `chinook.Request` is a immutable data structure containing:
 
@@ -16,7 +9,7 @@ A `chinook.Request` is a immutable data structure containing:
 include::{coreSrc}/chinook/Chinook.fr[tags=request]
 ----
 
-==== Headers
+===== Headers
 
 Headers are of type `(String, Maybe String)` meaning `(name of the
 header, possible value)`. There are two utility methods to get headers
@@ -38,7 +31,7 @@ include::{coreSrc}/chinook/Chinook.fr[tags=header]
 Returns a specific header. First argument is the request, then the
 name of the header.
 
-==== Query Parameters
+===== Query Parameters
 
 A typical URL containing a query string is as follows:
 
@@ -57,7 +50,7 @@ include::{coreSrc}/chinook/Chinook.fr[tags=param]
 First parameter is the request, and then the name of the parameter
 (`name` in this particular example).
 
-==== Path Parameters
+===== Path Parameters
 
 Bind the value of a path segment to a parameter. For instance:
 
@@ -101,10 +94,10 @@ This way you could be able to use it like the following:
 
 [source, haskell]
 ----
-include::{sampleSrc}/chinook/Handlers.fr[tags=greetingsHandler]
+include::{sampleSrc}/chinook/Handlers.fr[tags=putHandler]
 ----
 
-==== Body
+===== Body
 
 Specially when trying to save or update data you will need to access
 the request `body`.
@@ -114,7 +107,7 @@ the request `body`.
 include::{sampleSrc}/chinook/Handlers.fr[tags=postJSONHandler]
 ----
 
-=== Response
+==== Response
 
 `chinook.Chinook.Response` is just a data type:
 
@@ -150,7 +143,7 @@ include::{sampleSrc}/chinook/Handlers.fr[tags=helloWorldHandler]
 
 A `Response` may contain:
 
-==== Headers
+===== Headers
 
 `(String, Maybe String)`
 
@@ -159,14 +152,14 @@ http response headers. A header is of type `(String, Maybe String)` where
 the first tuple argument is the **name** of the header and the second part
 of the tuple is the **possible value** of the header.
 
-==== Output
+===== Output
 
 `Maybe String`
 
 If you would like to respond back with a message, you can set the output field
 with a `Maybe String`. That string could be anything: text, json...
 
-==== Status
+===== Status
 
 `Int`
 

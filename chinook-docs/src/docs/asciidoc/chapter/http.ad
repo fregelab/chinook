@@ -1,0 +1,71 @@
+== HTTP
+
+include::overview.ad[]
+
+=== Return only values
+
+The first endpoint returns a typical `hello world` message when
+invoking the `/hi` endpoint. Here is the handler implementation:
+
+[source, haskell]
+----
+include::{sampleSrc}/chinook/Handlers.fr[tags=helloWorldHandler]
+----
+
+=== Changing response
+
+Sometimes depending on the request we may want to change something
+about the response.
+
+[source, haskell]
+----
+include::{sampleSrc}/chinook/Handlers.fr[tags=greetingsHandler]
+----
+
+<1> Setting response status
+
+Here we're setting the content type:
+
+[source, haskell]
+----
+include::{sampleSrc}/chinook/Handlers.fr[tags=getJSON]
+----
+
+<1> Setting response content type
+
+NOTE: Instead setting content type headers manually you can use
+`chinook.ContentType`, e.g. `ContentType.json`
+
+There are many functions available for `Request` and `Response`
+abstractions, if you want to explore it please don't hesitate to
+explore the project's Frege docs.
+
+For the rest of HTTP verbs it doesn't change, here is the function to
+register a HTTP `POST` handler:
+
+[source, haskell]
+----
+include::{coreSrc}/chinook/Chinook.fr[tags=postFunction]
+----
+
+It basically works the same way `GET` did. The main difference is that
+in `POST` calls you would like to do something with the body text sent
+from the client. Most of the times that body could be a `JSON`/`XML`
+payload. You can get that information with the `body` field from the
+request.
+
+Here's an example building a new `Lang` instance out of the json
+payload coming from the client:
+
+[source, haskell]
+----
+include::{sampleSrc}/chinook/Handlers.fr[tags=postJSONHandler]
+----
+
+<1> Successful response sending a `201` (created) status response
+<2> Failure response sending a `400` (bad request) in case the payload
+wasn't correct.
+
+Of course it would be nice to send back more feedback about validation ;)
+
+include::request_response.ad[]

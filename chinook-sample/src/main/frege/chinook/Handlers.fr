@@ -110,12 +110,12 @@ postFormHandler req = do
     code  <- req.param "code"
     desc  <- req.param "desc"
     return $ case (code, desc) of
-        (Just code, Just desc) -> langCreatedResponse
+        (Just code, Just desc) -> langCreatedResponse code desc
         _                      -> badRequest
 
 
-langCreatedResponse :: Response
-langCreatedResponse = response.{ status  = 201 , -- <1>
+langCreatedResponse :: String -> String -> Response
+langCreatedResponse code desc = response.{ status  = 201 , -- <1>
                                  output  = Just ((show . toJSON) $ Lang { code, desc }),
                                  headers = [ContentType.json] }
 -- end::postFormHandler[]

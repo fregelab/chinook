@@ -130,6 +130,10 @@ Table of Content</h3>
 <dd>
 </dd>
 <dt>
+<SPAN CLASS="code"><a class="fref" href="#setSparkOutput">setSparkOutput</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeBase.html#Maybe">Maybe</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a></b> → <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="./Spark.html#Response">Spark.Response</a></b> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a></SPAN></dt>
+<dd>
+</dd>
+<dt>
 <SPAN CLASS="code"><a class="fref" href="#setSparkHeaders">setSparkHeaders</a> ∷ <b>[(<a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>, <a class="tref" href="../frege/prelude/PreludeBase.html#Maybe">Maybe</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)]</b> → <a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="./Spark.html#Response">Spark.Response</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a></SPAN></dt>
 <dd>
 </dd>
@@ -139,6 +143,38 @@ Table of Content</h3>
 </dd>
 <dt>
 <SPAN CLASS="code"><a class="fref" href="#post">post</a> ∷ <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a> → (<b><a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Request">Request</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Response">Response</a></b>) → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a></SPAN></dt>
+<dd>
+</dd>
+<dt>
+<SPAN CLASS="code"><a class="fref" href="#delete">delete</a> ∷ <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a> → (<b><a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Request">Request</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Response">Response</a></b>) → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a></SPAN></dt>
+<dd>
+</dd>
+<dt>
+<SPAN CLASS="code"><a class="fref" href="#put">put</a> ∷ <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a> → (<b><a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Request">Request</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Response">Response</a></b>) → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a></SPAN></dt>
+<dd>
+</dd>
+<dt>
+<SPAN CLASS="code"><a class="fref" href="#patch">patch</a> ∷ <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a> → (<b><a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Request">Request</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Response">Response</a></b>) → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a></SPAN></dt>
+<dd>
+</dd>
+<dt>
+<SPAN CLASS="code"><a class="fref" href="#options">options</a> ∷ <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a> → (<b><a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Request">Request</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Response">Response</a></b>) → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a></SPAN></dt>
+<dd>
+</dd>
+<dt>
+<SPAN CLASS="code"><a class="fref" href="#trace">trace</a> ∷ <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a> → (<b><a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Request">Request</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Response">Response</a></b>) → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a></SPAN></dt>
+<dd>
+</dd>
+<dt>
+<SPAN CLASS="code"><a class="fref" href="#connect">connect</a> ∷ <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a> → (<b><a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Request">Request</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Response">Response</a></b>) → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a></SPAN></dt>
+<dd>
+</dd>
+<dt>
+<SPAN CLASS="code"><a class="fref" href="#head">head</a> ∷ <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a> → (<b><a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Request">Request</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Response">Response</a></b>) → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a></SPAN></dt>
+<dd>
+</dd>
+<dt>
+<SPAN CLASS="code"><a class="fref" href="#toSparkRoute">toSparkRoute</a> ∷ (<b><a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Request">Request</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Response">Response</a></b>) → <a class="tref" href="../frege/prelude/PreludeIO.html#STMutable">STMutable</a> <a class="tref" href="../frege/prelude/PreludeBase.html#RealWorld">RealWorld</a> <a class="tref" href="./Spark.html#Route">Route</a></SPAN></dt>
 <dd>
 </dd>
 <dt>
@@ -352,6 +388,10 @@ Takes the response generated in a Chinook Handler and converts that response in 
 <dd class="data">
 </dd>
 <dt class="data">
+<SPAN CLASS="code"><a name=setSparkOutput>setSparkOutput</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeBase.html#Maybe">Maybe</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a></b> → <b><a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="./Spark.html#Response">Spark.Response</a></b> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a></SPAN></dt>
+<dd class="data">
+</dd>
+<dt class="data">
 <SPAN CLASS="code"><a name=setSparkHeaders>setSparkHeaders</a> ∷ <b>[(<a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>, <a class="tref" href="../frege/prelude/PreludeBase.html#Maybe">Maybe</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)]</b> → <a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="./Spark.html#Response">Spark.Response</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a></SPAN></dt>
 <dd class="data">
 </dd>
@@ -382,6 +422,108 @@ Creates an HTTP POST endpoint. It receives:</p>
 </ul>
 <p>
 The function is a lambda function receiving a chinook.Request and a chinook.Response and returns an IO ().</p>
+</dd>
+<dt class="data">
+<SPAN CLASS="code"><a name=delete>delete</a> ∷ <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a> → (<b><a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Request">Request</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Response">Response</a></b>) → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a></SPAN></dt>
+<dd class="data">
+<p>
+Creates an HTTP DELETE endpoint. It receives:</p>
+<ul>
+<LI>
+ A path </LI>
+<LI>
+ A function handling the request </LI>
+</ul>
+<p>
+The function is a lambda function receiving a chinook.Request and a chinook.Response and returns an IO ().</p>
+</dd>
+<dt class="data">
+<SPAN CLASS="code"><a name=put>put</a> ∷ <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a> → (<b><a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Request">Request</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Response">Response</a></b>) → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a></SPAN></dt>
+<dd class="data">
+<p>
+Creates an HTTP PUT endpoint. It receives:</p>
+<ul>
+<LI>
+ A path </LI>
+<LI>
+ A function handling the request </LI>
+</ul>
+<p>
+The function is a lambda function receiving a chinook.Request and a chinook.Response and returns an IO ().</p>
+</dd>
+<dt class="data">
+<SPAN CLASS="code"><a name=patch>patch</a> ∷ <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a> → (<b><a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Request">Request</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Response">Response</a></b>) → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a></SPAN></dt>
+<dd class="data">
+<p>
+Creates an HTTP PATCH endpoint. It receives:</p>
+<ul>
+<LI>
+ A path </LI>
+<LI>
+ A function handling the request </LI>
+</ul>
+<p>
+The function is a lambda function receiving a chinook.Request and a chinook.Response and returns an IO ().</p>
+</dd>
+<dt class="data">
+<SPAN CLASS="code"><a name=options>options</a> ∷ <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a> → (<b><a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Request">Request</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Response">Response</a></b>) → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a></SPAN></dt>
+<dd class="data">
+<p>
+Creates an HTTP OPTIONS endpoint. It receives:</p>
+<ul>
+<LI>
+ A path </LI>
+<LI>
+ A function handling the request </LI>
+</ul>
+<p>
+The function is a lambda function receiving a chinook.Request and a chinook.Response and returns an IO ().</p>
+</dd>
+<dt class="data">
+<SPAN CLASS="code"><a name=trace>trace</a> ∷ <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a> → (<b><a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Request">Request</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Response">Response</a></b>) → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a></SPAN></dt>
+<dd class="data">
+<p>
+Creates an TRACE endpoint. It receives:</p>
+<ul>
+<LI>
+ A path </LI>
+<LI>
+ A function handling the request </LI>
+</ul>
+<p>
+The function is a lambda function receiving a chinook.Request and a chinook.Response and returns an IO ().</p>
+</dd>
+<dt class="data">
+<SPAN CLASS="code"><a name=connect>connect</a> ∷ <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a> → (<b><a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Request">Request</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Response">Response</a></b>) → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a></SPAN></dt>
+<dd class="data">
+<p>
+Creates an CONNECT endpoint. It receives:</p>
+<ul>
+<LI>
+ A path </LI>
+<LI>
+ A function handling the request </LI>
+</ul>
+<p>
+The function is a lambda function receiving a chinook.Request and a chinook.Response and returns an IO ().</p>
+</dd>
+<dt class="data">
+<SPAN CLASS="code"><a name=head>head</a> ∷ <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a> → (<b><a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Request">Request</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Response">Response</a></b>) → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a></SPAN></dt>
+<dd class="data">
+<p>
+Creates an HEAD endpoint. It receives:</p>
+<ul>
+<LI>
+ A path </LI>
+<LI>
+ A function handling the request </LI>
+</ul>
+<p>
+The function is a lambda function receiving a chinook.Request and a chinook.Response and returns an IO ().</p>
+</dd>
+<dt class="data">
+<SPAN CLASS="code"><a name=toSparkRoute>toSparkRoute</a> ∷ (<b><a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Request">Request</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Response">Response</a></b>) → <a class="tref" href="../frege/prelude/PreludeIO.html#STMutable">STMutable</a> <a class="tref" href="../frege/prelude/PreludeBase.html#RealWorld">RealWorld</a> <a class="tref" href="./Spark.html#Route">Route</a></SPAN></dt>
+<dd class="data">
 </dd>
 <dt class="data">
 <SPAN CLASS="code"><a name=toSparkOutput>toSparkOutput</a> ∷ (<b>a → b → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> (<a class="tref" href="../frege/prelude/PreludeBase.html#Maybe">Maybe</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)</b>) → a → b → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a></SPAN></dt>
@@ -534,6 +676,12 @@ Function generated for derived instance.</p>
 <a NAME="case">Functions and Values by Type</a></h2>
 <dl class="func">
 <dt class="func">
+<SPAN CLASS="code">(<a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Request">Request</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Response">Response</a>) → <a class="tref" href="../frege/prelude/PreludeIO.html#STMutable">STMutable</a> <a class="tref" href="../frege/prelude/PreludeBase.html#RealWorld">RealWorld</a> <a class="tref" href="./Spark.html#Route">Route</a></SPAN></dt>
+<dd class="func">
+<p>
+<a class="fref" href="#toSparkRoute">toSparkRoute</a></p>
+</dd>
+<dt class="func">
 <SPAN CLASS="code">(<a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>, <a class="tref" href="../frege/prelude/PreludeArrays.html#JArray">JArray</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>) → (<a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>, [<a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>])</SPAN></dt>
 <dd class="func">
 <p>
@@ -606,10 +754,16 @@ Function generated for derived instance.</p>
 <a class="fref" href="#toChinookRequest">toChinookRequest</a></p>
 </dd>
 <dt class="func">
+<SPAN CLASS="code"><a class="tref" href="../frege/prelude/PreludeBase.html#Maybe">Maybe</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a> → <a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="./Spark.html#Response">Spark.Response</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a></SPAN></dt>
+<dd class="func">
+<p>
+<a class="fref" href="#setSparkOutput">setSparkOutput</a></p>
+</dd>
+<dt class="func">
 <SPAN CLASS="code"><a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a> → (<a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Request">Request</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="#Response">Response</a>) → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a></SPAN></dt>
 <dd class="func">
 <p>
-<a class="fref" href="#get">get</a>, <a class="fref" href="#post">post</a></p>
+<a class="fref" href="#connect">connect</a>, <a class="fref" href="#delete">delete</a>, <a class="fref" href="#get">get</a>, <a class="fref" href="#head">head</a>, <a class="fref" href="#options">options</a>, <a class="fref" href="#patch">patch</a>, <a class="fref" href="#post">post</a>, <a class="fref" href="#put">put</a>, <a class="fref" href="#trace">trace</a></p>
 </dd>
 <dt class="func">
 <SPAN CLASS="code">[(<a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>, <a class="tref" href="../frege/prelude/PreludeBase.html#Maybe">Maybe</a> <a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a>)] → <a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="./Spark.html#Response">Spark.Response</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a></SPAN></dt>

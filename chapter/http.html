@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.2">
-<title>Overview</title>
+<title>HTTP</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -417,6 +417,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="header">
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_http">HTTP</a>
 <ul class="sectlevel2">
 <li><a href="#_overview">Overview</a>
 <ul class="sectlevel3">
@@ -425,10 +427,23 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_main">Main</a></li>
 </ul>
 </li>
+<li><a href="#_return_only_values">Return only values</a></li>
+<li><a href="#_changing_response">Changing response</a></li>
+<li><a href="#_request_response">Request / Response</a>
+<ul class="sectlevel3">
+<li><a href="#_request">Request</a></li>
+<li><a href="#_response">Response</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 <div id="content">
+<div class="sect1">
+<h2 id="_http">HTTP</h2>
+<div class="sectionbody">
 <div class="sect2">
 <h3 id="_overview">Overview</h3>
 <div class="paragraph">
@@ -617,6 +632,330 @@ using gradle you can use the <code>application</code> plugin.</p>
 <td>Namespace where the <code>main</code> function is located</td>
 </tr>
 </table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_return_only_values">Return only values</h3>
+<div class="paragraph">
+<p>The first endpoint returns a typical <code>hello world</code> message when
+invoking the <code>/hi</code> endpoint. Here is the handler implementation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=helloWorldHandler]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_changing_response">Changing response</h3>
+<div class="paragraph">
+<p>Sometimes depending on the request we may want to change something
+about the response.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=greetingsHandler]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Setting response status</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Here we&#8217;re setting the content type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=getJSON]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Setting response content type</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Instead setting content type headers manually you can use
+<code>chinook.ContentType</code>, e.g. <code>ContentType.json</code>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>There are many functions available for <code>Request</code> and <code>Response</code>
+abstractions, if you want to explore it please don&#8217;t hesitate to
+explore the project&#8217;s Frege docs.</p>
+</div>
+<div class="paragraph">
+<p>For the rest of HTTP verbs it doesn&#8217;t change, here is the function to
+register a HTTP <code>POST</code> handler:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http.ad - include::{coreSrc}/chinook/Chinook.fr[tags=postFunction]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It basically works the same way <code>GET</code> did. The main difference is that
+in <code>POST</code> calls you would like to do something with the body text sent
+from the client. Most of the times that body could be a <code>JSON</code>/<code>XML</code>
+payload. You can get that information with the <code>body</code> field from the
+request.</p>
+</div>
+<div class="paragraph">
+<p>Here&#8217;s an example building a new <code>Lang</code> instance out of the json
+payload coming from the client:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=postJSONHandler]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Successful response sending a <code>201</code> (created) status response</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Failure response sending a <code>400</code> (bad request) in case the payload
+wasn&#8217;t correct.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Of course it would be nice to send back more feedback about validation ;)</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_request_response">Request / Response</h3>
+<div class="sect3">
+<h4 id="_request">Request</h4>
+<div class="paragraph">
+<p>A <code>chinook.Request</code> is a immutable data structure containing:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in request_response.ad - include::{coreSrc}/chinook/Chinook.fr[tags=request]</code></pre>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_headers">Headers</h5>
+<div class="paragraph">
+<p>Headers are of type <code>(String, Maybe String)</code> meaning <code>(name of the
+header, possible value)</code>. There are two utility methods to get headers
+from a <code>IO Request</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in request_response.ad - include::{coreSrc}/chinook/Chinook.fr[tags=allheaders]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Returns a list of all headers from the request passed as first
+argument.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in request_response.ad - include::{coreSrc}/chinook/Chinook.fr[tags=header]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Returns a specific header. First argument is the request, then the
+name of the header.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_query_parameters">Query Parameters</h5>
+<div class="paragraph">
+<p>A typical URL containing a query string is as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-text" data-lang="text">http://anysite.com/over/there?name=ferret</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In order to get the name parameter we&#8217;ll be using the function:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in request_response.ad - include::{coreSrc}/chinook/Chinook.fr[tags=param]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>First parameter is the request, and then the name of the parameter
+(<code>name</code> in this particular example).</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_path_parameters">Path Parameters</h5>
+<div class="paragraph">
+<p>Bind the value of a path segment to a parameter. For instance:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-text" data-lang="text">http://localhost:4567/john/34</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Is mapped here <code>/hi/:name/:age</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in request_response.ad - include::{sampleSrc}/chinook/App.fr[tags=routes]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>So how can we retrieve the <code>:name</code> and <code>:age</code> path parameters ? With
+the following functions:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in request_response.ad - include::{coreSrc}/chinook/Chinook.fr[tags=allpaths]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This function receives the request as argument and it will return
+a list of type <code>(String, String)</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Why <code>(String, String)</code> and not <code>(String, Maybe String)</code> ? Well
+if it didn&#8217;t have any value it couldn&#8217;t match the path. So it&#8217;s safe
+to assume everytime the URI is hit you will get a value.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in request_response.ad - include::{coreSrc}/chinook/Chinook.fr[tags=path]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>path</code> should be use to get a specific path parameter. It receives the
+request and the name of the path parameter, and it will return a
+string representation of that parameter.</p>
+</div>
+<div class="paragraph">
+<p>This way you could be able to use it like the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in request_response.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=putHandler]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_body">Body</h5>
+<div class="paragraph">
+<p>Specially when trying to save or update data you will need to access
+the request <code>body</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in request_response.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=postJSONHandler]</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_response">Response</h4>
+<div class="paragraph">
+<p><code>chinook.Chinook.Response</code> is just a data type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in request_response.ad - include::{coreSrc}/chinook/Chinook.fr[tags=response]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Unlike other web frameworks, you won&#8217;t be mutating the response via
+functions modifiying internal fields. <code>Chinook</code> forces you to create
+an immutable structure.</p>
+</div>
+<div class="paragraph">
+<p>Well, but, does it means I should be building from the scratch a
+<code>Response</code> every time ? Yes but <code>Chinook</code> (well <code>Frege</code> actually) will
+help you in this task. <code>Chinook</code> has a default <code>Response</code> value
+available through the constant <code>chinook.Chinook.response</code>. This
+value looks like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in request_response.ad - include::{coreSrc}/chinook/Chinook.fr[tags=responseconstant]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>So e.g next time you wanted to return a message with no headers and
+returning a 200 http status you don&#8217;t have to set everything, you
+can take advantage of <code>Frege&#8217;s value update</code> and write something
+like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in request_response.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=helloWorldHandler]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A <code>Response</code> may contain:</p>
+</div>
+<div class="sect4">
+<h5 id="_headers_2">Headers</h5>
+<div class="paragraph">
+<p><code>(String, Maybe String)</code></p>
+</div>
+<div class="paragraph">
+<p>When setting content type, or setting browser cache&#8230;&#8203;etc we should be using
+http response headers. A header is of type <code>(String, Maybe String)</code> where
+the first tuple argument is the <strong>name</strong> of the header and the second part
+of the tuple is the <strong>possible value</strong> of the header.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_output">Output</h5>
+<div class="paragraph">
+<p><code>Maybe String</code></p>
+</div>
+<div class="paragraph">
+<p>If you would like to respond back with a message, you can set the output field
+with a <code>Maybe String</code>. That string could be anything: text, json&#8230;&#8203;</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_status">Status</h5>
+<div class="paragraph">
+<p><code>Int</code></p>
+</div>
+<div class="paragraph">
+<p>HTTP statuses are used often when doing Rest. For instance if you
+would like to create a resource, you would send a message to a
+resource using a POST endpoint and if it succeed it will return a 201
+code meaning <code>resource created</code>.  A status code is of type <code>Int</code>.</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>

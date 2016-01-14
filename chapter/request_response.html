@@ -417,43 +417,21 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="header">
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
-<ul class="sectlevel1">
-<li><a href="#_request_response">Request / Response</a>
 <ul class="sectlevel2">
-<li><a href="#_request">Request</a>
+<li><a href="#_request_response">Request / Response</a>
 <ul class="sectlevel3">
-<li><a href="#_headers">Headers</a></li>
-<li><a href="#_query_parameters">Query Parameters</a></li>
-<li><a href="#_path_parameters">Path Parameters</a></li>
-<li><a href="#_body">Body</a></li>
-</ul>
-</li>
-<li><a href="#_response">Response</a>
-<ul class="sectlevel3">
-<li><a href="#_headers_2">Headers</a></li>
-<li><a href="#_output">Output</a></li>
-<li><a href="#_status">Status</a></li>
-</ul>
-</li>
+<li><a href="#_request">Request</a></li>
+<li><a href="#_response">Response</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="_request_response">Request / Response</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Chinook http handlers normally have the following signature:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">IO Request -&gt; IO Reponse</code></pre>
-</div>
-</div>
 <div class="sect2">
-<h3 id="_request">Request</h3>
+<h3 id="_request_response">Request / Response</h3>
+<div class="sect3">
+<h4 id="_request">Request</h4>
 <div class="paragraph">
 <p>A <code>chinook.Request</code> is a immutable data structure containing:</p>
 </div>
@@ -462,8 +440,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in request_response.ad - include::{coreSrc}/chinook/Chinook.fr[tags=request]</code></pre>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_headers">Headers</h4>
+<div class="sect4">
+<h5 id="_headers">Headers</h5>
 <div class="paragraph">
 <p>Headers are of type <code>(String, Maybe String)</code> meaning <code>(name of the
 header, possible value)</code>. There are two utility methods to get headers
@@ -488,8 +466,8 @@ argument.</p>
 name of the header.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_query_parameters">Query Parameters</h4>
+<div class="sect4">
+<h5 id="_query_parameters">Query Parameters</h5>
 <div class="paragraph">
 <p>A typical URL containing a query string is as follows:</p>
 </div>
@@ -511,8 +489,8 @@ name of the header.</p>
 (<code>name</code> in this particular example).</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_path_parameters">Path Parameters</h4>
+<div class="sect4">
+<h5 id="_path_parameters">Path Parameters</h5>
 <div class="paragraph">
 <p>Bind the value of a path segment to a parameter. For instance:</p>
 </div>
@@ -571,12 +549,12 @@ string representation of that parameter.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in request_response.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=greetingsHandler]</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in request_response.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=putHandler]</code></pre>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_body">Body</h4>
+<div class="sect4">
+<h5 id="_body">Body</h5>
 <div class="paragraph">
 <p>Specially when trying to save or update data you will need to access
 the request <code>body</code>.</p>
@@ -588,8 +566,8 @@ the request <code>body</code>.</p>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_response">Response</h3>
+<div class="sect3">
+<h4 id="_response">Response</h4>
 <div class="paragraph">
 <p><code>chinook.Chinook.Response</code> is just a data type:</p>
 </div>
@@ -629,8 +607,8 @@ like this:</p>
 <div class="paragraph">
 <p>A <code>Response</code> may contain:</p>
 </div>
-<div class="sect3">
-<h4 id="_headers_2">Headers</h4>
+<div class="sect4">
+<h5 id="_headers_2">Headers</h5>
 <div class="paragraph">
 <p><code>(String, Maybe String)</code></p>
 </div>
@@ -641,8 +619,8 @@ the first tuple argument is the <strong>name</strong> of the header and the seco
 of the tuple is the <strong>possible value</strong> of the header.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_output">Output</h4>
+<div class="sect4">
+<h5 id="_output">Output</h5>
 <div class="paragraph">
 <p><code>Maybe String</code></p>
 </div>
@@ -651,8 +629,8 @@ of the tuple is the <strong>possible value</strong> of the header.</p>
 with a <code>Maybe String</code>. That string could be anything: text, json&#8230;&#8203;</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_status">Status</h4>
+<div class="sect4">
+<h5 id="_status">Status</h5>
 <div class="paragraph">
 <p><code>Int</code></p>
 </div>
@@ -666,10 +644,9 @@ code meaning <code>resource created</code>.  A status code is of type <code>Int<
 </div>
 </div>
 </div>
-</div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-01-10 12:22:33 +01:00
+Last updated 2016-01-14 00:41:48 +01:00
 </div>
 </div>
 </body>

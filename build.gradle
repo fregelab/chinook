@@ -18,6 +18,7 @@ subprojects {
     repositories {
         jcenter()
         maven { url "https://oss.sonatype.org/content/groups/public" }
+        maven { url  "http://dl.bintray.com/januslynd/maven" }
     }
 }
 

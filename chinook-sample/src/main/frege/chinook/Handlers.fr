@@ -8,6 +8,9 @@ import chinook.util.ContentType
 import chinook.Chinook (Request, Response, response)
 --end::basic-imports[]
 
+import diablo.Diablo (fromPath)
+import diablo.Groovy (GroovyEngine)
+
 -- tag::helloWorldHandler[]
 helloWorldHandler :: IO Request -> IO Response
 helloWorldHandler req = do
@@ -52,36 +55,29 @@ getLangAsJSON pCode pDesc = do
 -- tag::getFormHandler[]
 getFormHandler :: IO Request -> IO Response
 getFormHandler req = do
-  return $ response.{ status  = 200,
-                      output  = Just ("<html><head><title>HTML Input</title></head>"
-                                   ++ "<body><form action='posthtml' method='POST'>"
-                                   ++ "<input name='code'/>"
-                                   ++ "<input name='desc'/>"
-                                   ++ "<input type='submit'/>"
-                                   ++ "</form></body></html>"),
-                      headers = [("Content-Type", Just "text/html")]
-                    }
+  html <- render "chinook/form.gtpl"
+  return response.{ status  = 200,
+                    output  = html,
+                    headers = [ContentType.html]
+                  }
 -- end::getFormHandler[]
 
--- tag:getJsonSenderHandler :: IO Reques -> IO Response
+-- tag::getJsonSenderHandler[]
+getJsonSenderHandler :: IO Request -> IO Response
 getJsonSenderHandler req = do
-  return $ response.{ status  = 200,
-                      output  = Just ("<html><head><title>JSON Sender</title></head>"
-                                   ++ "<body>\n"
-                                   ++ "<p id='status' ></p>\n"
-                                   ++ "<p id='result' ></p>\n"
-                                   ++ "<input type='button' "
-                                   ++ "onclick='"
-                                   ++  "var xhttp = new XMLHttpRequest(); "
-                                   ++  "xhttp.open(\"POST\", \"postjson\", false); "
-                                   ++  "xhttp.send(\"{\\\"code\\\": \\\"key\\\", \\\"desc\\\" : \\\"value\\\"}\");"
-                                   ++  "document.getElementById(\"status\").innerHTML = xhttp.status;"
-                                   ++  "document.getElementById(\"result\").innerHTML = xhttp.responseText;"
-                                   ++ "' "
-                                   ++ "value='Send' />\n"
-                                   ++ "</body></html>\n"),
-                      headers = [("Content-Type", Just "text/html")]
-                    }
+  html <- render "chinook/sender.gtpl"
+  return response.{ status  = 200,
+                    output  = html,
+                    headers = [ContentType.html]
+                  }
+-- end::getJsonSenderHandler[]
+
+-- tag::diabloTemplating[]
+render :: String -> IO (Maybe String)
+render tplName = do
+  groovy <- GroovyEngine.new ()
+  Just <$> fromPath groovy tplName []
+-- end::diabloTemplating[]
 
 -- tag::postJSONHandler[]
 postJSONHandler :: IO Request -> IO Response

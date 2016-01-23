@@ -1,3 +1,4 @@
 module chinook.util.ContentType where
 
 json = ("Content-Type", Just "application/json")
+html = ("Content-Type", Just "text/html")

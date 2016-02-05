@@ -18,14 +18,9 @@ subprojects {
     repositories {
         jcenter()
         maven { url "https://oss.sonatype.org/content/groups/public" }
+        maven { url  "http://dl.bintray.com/januslynd/maven" }
     }
 }
-
-ext.metadata = [
-    group   : "com.github.januslynd",
-    version : "0.1.0-beta-eb1d7ee",
-    desc: 'Chinook is a Frege (http://frege-lang.org) port of SparkJava (http://sparkjava.com) for creating web applications with minimum effort.'
-]
 
 ext.libraries = [
     frege_core: 'org.frege-lang:frege:3.23.288-gaa3af0c',

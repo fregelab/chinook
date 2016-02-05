@@ -38,9 +38,9 @@ compileFrege.dependsOn 'compileJava'
 publishing {
     publications {
         mavenCustom(MavenPublication) {
-            groupId    metadata.group
+            groupId    releaseGroup
             artifactId 'chinook-core'
-            version    metadata.version
+            version    releaseVersion
 
             from components.java
         }
@@ -56,17 +56,17 @@ bintray {
     pkg {
         repo            = 'maven'
         name            = 'chinook-core'
-        desc            =  metadata.desc
+        desc            =  releaseDescription
         websiteUrl      = 'http://januslynd.github.io/chinook/'
         issueTrackerUrl = 'https://github.com/januslynd/chinook/issues'
         licenses        = ['Apache-2.0']
         vcsUrl          = 'https://github.com/januslynd/chinook.git'
         labels          = ['frege', 'rest']
         version {
-            name      = metadata.version
+            name      = releaseVersion
             desc      = 'Chinook Release'
             released  = new Date()
-            vcsTag    = metadata.version
+            vcsTag    = releaseVersion
         }
     }
 }

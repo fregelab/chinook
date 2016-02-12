@@ -1,28 +1,27 @@
 --- This module registers handlers to a given URI
-module chinook.Routes where
+module chinook.App where
 
 import chinook.Chinook
-import chinook.Handlers (helloWorldHandler,
-                         greetingsHandler,
-                         goodbyeHandler,
-                         getJSONHandler,
-                         postJSONHandler,
-                         deleteHandler,
-                         putHandler,
-                         getFormHandler,
-                         getJsonSenderHandler,
-                         postFormHandler,
-                         postJSONHandler)
+import chinook.Router
+import chinook.Handlers
+
 -- tag::routes[]
-main _  = do
-    get    "/hi"             helloWorldHandler
-    get    "/hi/:name/:age"  greetingsHandler
-    get    "/bye"            goodbyeHandler
-    get    "/getjson"        getJSONHandler
-    get    "/htmlform"       getFormHandler
-    get    "/jsonsender"     getJsonSenderHandler
-    post   "/postjson"       postJSONHandler
-    post   "/posthtml"       postFormHandler
-    delete "/deleteme/:id"   deleteHandler
-    put    "/updateme/:id"   putHandler
+routes = [
+  "/hi" + [
+      Get "/" helloWorldHandler,
+      Get "/:name/:age" greetingsHandler
+      ],
+  "/json" + [
+    Get  "/get" getJSONHandler,
+    Get  "/form" getFormHandler,
+    Get  "/sender" getJsonSenderHandler,
+    Post "/post" postJSONHandler,
+    Post "/html" postFormHandler
+    ],
+  Get "/bye" goodbyeHandler,
+  Delete "/deleteme/:id" deleteHandler,
+  Put "/updateme/:id" putHandler
+  ]
 -- end::routes[]
+
+main = mapM_ convertRoute routes

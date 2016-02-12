@@ -8,6 +8,6 @@ dependencies {
     compile 'com.github.januslynd:diablo-groovy:0.1.0'
 }
 
-mainClassName = "chinook.Routes" // <2>
+mainClassName = "chinook.App" // <2>
 
 compileFrege.dependsOn 'compileJava'

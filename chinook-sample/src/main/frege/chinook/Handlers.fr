@@ -5,7 +5,7 @@ import Data.JSON
 import chinook.Data (Lang)
 import chinook.util.ContentType
 --tag::basic-imports[]
-import chinook.Chinook (Request, Response, response)
+import chinook.Core (Request, Response, response)
 --end::basic-imports[]
 
 import diablo.Diablo (fromPath)

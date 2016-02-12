@@ -10,3 +10,4 @@ All notable changes to this project will be documented in this file.
 ## [0.1.2] ???
 ### Changes
 - Upgrade sample to `diablo-groovy` 0.1.0
+- Add new URI mapping

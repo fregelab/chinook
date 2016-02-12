@@ -1,0 +1,59 @@
+module chinook.Router where
+
+import chinook.Core
+
+{--
+  The `Resource` type represents all possible resources
+  exposed by Chinook.
+-}
+data Resource = Get     String Handler |
+                Post    String Handler |
+                Put     String Handler |
+                Delete  String Handler |
+                Patch   String Handler |
+                Options String Handler |
+                Trace   String Handler |
+                Head    String Handler |
+                Family  String [Resource]
+
+{--
+   When nesting resources we need children to be aware
+   of parent's path to end with a complete path.
+-}
+modify :: Resource -> String -> Resource
+modify res parent = case res of
+  Get     path handler -> Get     (parent ++ path) handler
+  Post    path handler -> Post    (parent ++ path) handler
+  Put     path handler -> Put     (parent ++ path) handler
+  Delete  path handler -> Delete  (parent ++ path) handler
+  Patch   path handler -> Patch   (parent ++ path) handler
+  Options path handler -> Options (parent ++ path) handler
+  Trace   path handler -> Trace   (parent ++ path) handler
+  Head    path handler -> Head    (parent ++ path) handler
+
+{--
+
+  Most of the time we may want to nest URI hierarchies. In
+  order to achieve that we use the `Family` type.
+
+  A family has the family `path` and all children resources:
+
+  resources = [
+    "/quest" + [
+        (Get    "/" findAll),
+        (Get    "/:id" find),
+        (Post   "/" save),
+        (Delete "/:id" delete)
+        ],
+    "/stats" + [
+        (Get "/metrics" getMetrics),
+        (Get "/critical" getCritical)
+        ],
+    Get "/ping" ping,
+    ]
+-}
+(+) :: String -> [Resource] -> Resource
+(+) family []     = Family family []
+(+) family (x:xs) = Family family $ case x of
+  Family  path res -> (path + res)      : [(family + xs)]
+  _                -> (modify x family) : [(family + xs)]

@@ -8,8 +8,10 @@ import chinook.util.ContentType
 import chinook.Core (Request, Response, response)
 --end::basic-imports[]
 
+-- tag::diablo-imports[]
 import diablo.Diablo (fromPath)
 import diablo.Groovy (GroovyEngine)
+-- end::diablo-imports[]
 
 -- tag::helloWorldHandler[]
 helloWorldHandler :: IO Request -> IO Response

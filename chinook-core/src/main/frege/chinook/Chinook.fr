@@ -103,9 +103,7 @@ get path lambda = do
    and a chinook.Response and returns an IO ().
 
 -}
--- tag::postFunction[]
 post :: String -> (IO Core.Request -> IO Core.Response) -> IO ()
--- end::postFunction[]
 post path lambda = do
   route <- toSparkRoute lambda
   Spark.Rest.post path route
@@ -274,6 +272,8 @@ toSparkOutput fn1 request response = do
   return $ fromMaybe blank result
 
 {--
+  Maps between `Router.Resource` mappings to realworld
+  endpointgs
 -}
 convertRoute :: Router.Resource -> IO ()
 convertRoute route = case route of
@@ -286,3 +286,44 @@ convertRoute route = case route of
   Router.Trace   path handler -> trace   path handler
   Router.Head    path handler -> head    path handler
   Router.Family  path routes  -> mapM_ convertRoute routes
+
+{--
+  Settings like application available port or static files
+  location are represented by `Configuration`. Instead of
+  using (String,String) pairs, it seems to be safer to use
+  types to represent those settings, e.g instead of
+  writing ("port", "808x") and receive a runtime error it's
+  better to write `port 8080` which is checked at compile time.
+-}
+-- tag::configuration[]
+data Configuration = IntConfig String Int    |
+                     StrConfig String String
+-- end::configuration[]
+
+--- Creates settings for service port
+-- tag::port[]
+port :: Int -> Configuration
+-- end::port[]
+port number = IntConfig "port" number
+
+--- Creates settings for static files location
+-- tag::staticFiles[]
+staticFiles :: String -> Configuration
+-- end::staticFiles[]
+staticFiles path = StrConfig "staticFileLocation" path
+
+--- Translates `Configuration` values to real world settings
+configure :: Configuration -> IO ()
+configure cfg = case cfg of
+  IntConfig "port" value               -> Spark.Config.port value
+  StrConfig "staticFileLocation" value -> Spark.Config.staticFileLocation value
+  _                                    -> return ()
+
+{--
+  Bootstraps the application. It receives configuration
+  settings as well as the resource mappings
+-}
+run :: [Configuration] -> [Resource] -> IO ()
+run cfg mappings = do
+  _ <- mapM_ configure cfg
+  mapM_ convertRoute mappings

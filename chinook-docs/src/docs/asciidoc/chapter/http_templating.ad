@@ -6,3 +6,28 @@ TIP: However `chinook-sample` application is using
 http://januslynd.github.io/diablo/[`Diablo`].  Diablo is a small
 templating engine abstraction. It tries to expose different templating
 engines with a unified api.
+
+In the `chinook-sample` application `Diablo` is used to render html
+using Groovy templates. These templates are located in the classpath,
+precisely at `src/main/resources`. In order to be able to use `Diablo`
+first you need some import statements.
+
+[source, haskell]
+----
+include::{sampleSrc}/chinook/Handlers.fr[tags=diablo-imports, indent=0]
+----
+
+Then a helper function is created to execute any template available in
+the classpath (See `Diablo` docs for more options):
+
+[source, haskell]
+----
+include::{sampleSrc}/chinook/Handlers.fr[tags=diabloTemplating, indent=0]
+----
+
+Finally we use the helper function in our handlers:
+
+[source, haskell]
+----
+include::{sampleSrc}/chinook/Handlers.fr[tags=getFormHandler, indent=0]
+----

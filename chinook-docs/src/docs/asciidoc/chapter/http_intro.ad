@@ -14,12 +14,11 @@ A whole `Chinook` application could as simple as:
 import chinook.Core
 import chinook.Chinook
 
-main _ = startup [] [
+main _ = Chinook.run [] [
    Get "/hello" $ \req -> do
       return response.{ output = Just "Hello World" }
    ]
 ----
-
 
 ==== Handler
 
@@ -124,15 +123,19 @@ a get call in a given URI:
 
 [source, haskell]
 ----
-include::{sampleSrc}/chinook/App.fr[tags=helloWorldHandler]
+include::{sampleSrc}/chinook/App.fr[tags=helloWorldHandler, indent=0]
 ----
-
 
 ==== Main
 
 To start a `Chinook` application you only have to invoke the main
 function containing all the endpoint registrations as we saw in the
 previous chapter.
+
+[source, haskell]
+----
+include::{sampleSrc}/chinook/App.fr[tags=app, indent=0]
+----
 
 This is independent of the tool used to call that method. For instance,
 using gradle you can use the `application` plugin.

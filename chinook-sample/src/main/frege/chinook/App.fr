@@ -1,12 +1,11 @@
---- This module registers handlers to a given URI
 module chinook.App where
 
-import chinook.Chinook
 import chinook.Router
+import chinook.Chinook
 import chinook.Handlers
 
 -- tag::routes[]
-routes = [
+mappings = [
   -- tag::helloWorldHandler[]
   Get "/hi" helloWorldHandler,
   -- end::helloWorldHandler[]
@@ -26,4 +25,8 @@ routes = [
   ]
 -- end::routes[]
 
-main = mapM_ convertRoute routes
+-- tag::app[]
+main = Chinook.run config routes
+  where config = [port 8080, staticFiles "/public"]
+        routes = mappings
+-- end::app[]

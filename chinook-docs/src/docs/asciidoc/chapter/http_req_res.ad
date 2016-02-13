@@ -4,9 +4,9 @@
 
 A `chinook.Request` is a immutable data structure containing:
 
-[source, haskell]
+[source, haskell, indent=0]
 ----
-include::{coreSrc}/chinook/Chinook.fr[tags=request]
+include::{coreSrc}/chinook/Core.fr[tags=request]
 ----
 
 ===== Headers
@@ -15,17 +15,17 @@ Headers are of type `(String, Maybe String)` meaning `(name of the
 header, possible value)`. There are two utility methods to get headers
 from a `IO Request`.
 
-[source, haskell]
+[source, haskell, indent=0]
 ----
-include::{coreSrc}/chinook/Chinook.fr[tags=allheaders]
+include::{coreSrc}/chinook/Core.fr[tags=allheaders]
 ----
 
 Returns a list of all headers from the request passed as first
 argument.
 
-[source, haskell]
+[source, haskell, indent=0]
 ----
-include::{coreSrc}/chinook/Chinook.fr[tags=header]
+include::{coreSrc}/chinook/Core.fr[tags=header]
 ----
 
 Returns a specific header. First argument is the request, then the
@@ -42,9 +42,9 @@ http://anysite.com/over/there?name=ferret
 
 In order to get the name parameter we'll be using the function:
 
-[source, haskell]
+[source, haskell, indent=0]
 ----
-include::{coreSrc}/chinook/Chinook.fr[tags=param]
+include::{coreSrc}/chinook/Core.fr[tags=param]
 ----
 
 First parameter is the request, and then the name of the parameter
@@ -59,19 +59,19 @@ Bind the value of a path segment to a parameter. For instance:
 http://localhost:4567/john/34
 ----
 
-Is mapped here `/hi/:name/:age`:
+Is mapped:
 
-[source, haskell]
+[source, haskell, indent=0]
 ----
-include::{sampleSrc}/chinook/App.fr[tags=routes]
+include::{sampleSrc}/chinook/App.fr[tags=greetingsHandler]
 ----
 
 So how can we retrieve the `:name` and `:age` path parameters ? With
 the following functions:
 
-[source, haskell]
+[source, haskell, indent=0]
 ----
-include::{coreSrc}/chinook/Chinook.fr[tags=allpaths]
+include::{coreSrc}/chinook/Core.fr[tags=allpaths]
 ----
 
 This function receives the request as argument and it will return
@@ -81,9 +81,9 @@ NOTE: Why `(String, String)` and not `(String, Maybe String)` ? Well
 if it didn't have any value it couldn't match the path. So it's safe
 to assume everytime the URI is hit you will get a value.
 
-[source, haskell]
+[source, haskell, indent=0]
 ----
-include::{coreSrc}/chinook/Chinook.fr[tags=path]
+include::{coreSrc}/chinook/Core.fr[tags=path]
 ----
 
 `path` should be use to get a specific path parameter. It receives the
@@ -92,7 +92,7 @@ string representation of that parameter.
 
 This way you could be able to use it like the following:
 
-[source, haskell]
+[source, haskell, indent=0]
 ----
 include::{sampleSrc}/chinook/Handlers.fr[tags=putHandler]
 ----
@@ -102,7 +102,7 @@ include::{sampleSrc}/chinook/Handlers.fr[tags=putHandler]
 Specially when trying to save or update data you will need to access
 the request `body`.
 
-[source, haskell]
+[source, haskell, indent=0]
 ----
 include::{sampleSrc}/chinook/Handlers.fr[tags=postJSONHandler]
 ----
@@ -111,9 +111,9 @@ include::{sampleSrc}/chinook/Handlers.fr[tags=postJSONHandler]
 
 `chinook.Chinook.Response` is just a data type:
 
-[source, haskell]
+[source, haskell, indent=0]
 ----
-include::{coreSrc}/chinook/Chinook.fr[tags=response]
+include::{coreSrc}/chinook/Core.fr[tags=response]
 ----
 
 Unlike other web frameworks, you won't be mutating the response via
@@ -123,12 +123,12 @@ an immutable structure.
 Well, but, does it means I should be building from the scratch a
 `Response` every time ? Yes but `Chinook` (well `Frege` actually) will
 help you in this task. `Chinook` has a default `Response` value
-available through the constant `chinook.Chinook.response`. This
+available through the constant `chinook.Core.response`. This
 value looks like this:
 
-[source, haskell]
+[source, haskell, indent=0]
 ----
-include::{coreSrc}/chinook/Chinook.fr[tags=responseconstant]
+include::{coreSrc}/chinook/Core.fr[tags=responseconstant]
 ----
 
 So e.g next time you wanted to return a message with no headers and
@@ -136,7 +136,7 @@ returning a 200 http status you don't have to set everything, you
 can take advantage of `Frege's value update` and write something
 like this:
 
-[source, haskell]
+[source, haskell, indent=0]
 ----
 include::{sampleSrc}/chinook/Handlers.fr[tags=helloWorldHandler]
 ----

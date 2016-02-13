@@ -1,6 +1,6 @@
 == HTTP
 
-include::overview.ad[]
+include::http_intro.ad[]
 
 === Return only values
 
@@ -68,4 +68,6 @@ wasn't correct.
 
 Of course it would be nice to send back more feedback about validation ;)
 
-include::request_response.ad[]
+include::http_req_res.ad[]
+
+include::http_templating.ad[]

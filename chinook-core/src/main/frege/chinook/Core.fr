@@ -10,7 +10,9 @@ import frege.data.Iterators (ArrayIterator)
 {--
   This type is an alias for handlers used in Chinook
 -}
+-- tag::handler[]
 type Handler = IO Request -> IO Response
+-- end::handler[]
 
 --    _____                            _
 --   |  __ \                          | |

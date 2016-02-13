@@ -1,0 +1,8 @@
+=== Templating
+
+`Chinook` doesn't have any templating solution `by default`.
+
+TIP: However `chinook-sample` application is using
+http://januslynd.github.io/diablo/[`Diablo`].  Diablo is a small
+templating engine abstraction. It tries to expose different templating
+engines with a unified api.

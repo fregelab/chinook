@@ -7,10 +7,12 @@ import chinook.Handlers
 
 -- tag::routes[]
 routes = [
-  "/hi" + [
-      Get "/" helloWorldHandler,
-      Get "/:name/:age" greetingsHandler
-      ],
+  -- tag::helloWorldHandler[]
+  Get "/hi" helloWorldHandler,
+  -- end::helloWorldHandler[]
+  -- tag::greetingsHandler[]
+  Get "/hi/:name/:age" greetingsHandler,
+  -- end::greetingsHandler[]
   "/json" + [
     Get  "/get" getJSONHandler,
     Get  "/form" getFormHandler,

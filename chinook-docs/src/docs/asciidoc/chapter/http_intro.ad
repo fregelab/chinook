@@ -11,11 +11,13 @@ A whole `Chinook` application could as simple as:
 
 [source, haskell]
 ----
+import chinook.Core
 import chinook.Chinook
 
-main _ = do
-   get "/hello" $ \req -> do
+main _ = startup [] [
+   Get "/hello" $ \req -> do
       return response.{ output = Just "Hello World" }
+   ]
 ----
 
 
@@ -76,7 +78,7 @@ function to register a HTTP `GET` handler:
 
 [source, haskell]
 ----
-include::{coreSrc}/chinook/Chinook.fr[tags=getFunction]
+include::{coreSrc}/chinook/Router.fr[tags=resources]
 ----
 
 It basically needs:
@@ -85,8 +87,16 @@ It basically needs:
 - A `Handler` to deal with the `request` and `response` originated in
 this invocation.
 
+NOTE: a handler is just an alias for a function with the following
+shape:
+
+[source, haskell]
+----
+include::{coreSrc}/chinook/Core.fr[tags=handler]
+----
+
 A `handler` basically receives a `IO Request` and should return a `IO
-Response`. Both are available undere `chinook.Chinook`:
+Response`. Both are available undere `chinook.Core`:
 
 [source, haskell]
 ----
@@ -100,8 +110,8 @@ Here's a simple example:
 include::{sampleSrc}/chinook/Handlers.fr[tags=helloWorldHandler]
 ----
 
-NOTE: `Chinook.response` is a way of creating a new
-`chinook.Chinook.Response` without having to specify all possible
+NOTE: `Core.response` is a way of creating a new
+`chinook.Core.Response` without having to specify all possible
 fields in `Response`. It creates a new copy from the default
 `Response` value, but it lets you set different field values. This is
 not a `Chinook` thing but `Frege's` and it's call `value update`.
@@ -114,7 +124,7 @@ a get call in a given URI:
 
 [source, haskell]
 ----
-include::{sampleSrc}/chinook/App.fr[tags=routes]
+include::{sampleSrc}/chinook/App.fr[tags=helloWorldHandler]
 ----
 
 

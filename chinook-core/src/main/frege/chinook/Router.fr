@@ -6,6 +6,7 @@ import chinook.Core
   The `Resource` type represents all possible resources
   exposed by Chinook.
 -}
+-- tag::resources[]
 data Resource = Get     String Handler |
                 Post    String Handler |
                 Put     String Handler |
@@ -15,6 +16,7 @@ data Resource = Get     String Handler |
                 Trace   String Handler |
                 Head    String Handler |
                 Family  String [Resource]
+-- end::resources[]
 
 {--
    When nesting resources we need children to be aware

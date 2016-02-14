@@ -1,5 +1,5 @@
 = Chinook
-:revnumber: {project-version}
+:revnumber: 0.2.0
 :numbered:
 :imagesDir: images/
 :baseDir: ../../../../..

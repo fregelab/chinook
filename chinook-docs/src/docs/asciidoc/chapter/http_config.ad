@@ -1,0 +1,38 @@
+=== Configuration
+
+Settings are passed when bootstraping the application. Instead of
+passing a list of tuples `Chinook` expects values of type
+`chinook.Chinook.Configuration`.
+
+Anyway `Chinook` provides a set of functions as a shortcut to
+produce these settings.
+
+[source, haskell]
+----
+include::{sampleSrc}/chinook/App.fr[tags=app]
+----
+
+==== Port
+
+To produce server port settings you can use the port function:
+
+[source, haskell]
+----
+include::{coreSrc}/chinook/Chinook.fr[tags=port]
+----
+
+==== Static Files
+
+You can assign a folder in the classpath to serve static files, with
+the `staticFiles` function.
+
+For instance `staticFiles "/public"` will make files located at
+"src/main/resources/public" be exposed at `http://{server}:{port}`
+
+[source, haskell]
+----
+include::{coreSrc}/chinook/Chinook.fr[tags=staticFiles]
+----
+
+
+

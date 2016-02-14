@@ -4,4 +4,6 @@ include::http_intro.ad[]
 
 include::http_req_res.ad[]
 
+include::http_config.ad[]
+
 include::http_templating.ad[]

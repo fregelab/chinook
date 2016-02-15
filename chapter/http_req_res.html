@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.2">
-<title>Chinook</title>
+<title>Request / Response</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -412,406 +412,27 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
 <script>document.addEventListener('DOMContentLoaded', prettyPrint)</script>
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  tex2jax: {
-    inlineMath: [["\\(", "\\)"]],
-    displayMath: [["\\[", "\\]"]],
-    ignoreClass: "nostem|nolatexmath"
-  },
-  asciimath2jax: {
-    delimiters: [["\\$", "\\$"]],
-    ignoreClass: "nostem|noasciimath"
-  },
-  TeX: { equationNumbers: { autoNumber: "none" } }
-});
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.4.0/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>Chinook</h1>
-<div class="details">
-<span id="revnumber">version 0.2.0</span>
-</div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
-<ul class="sectlevel1">
-<li><a href="#_getting_started">1. Getting Started</a></li>
-<li><a href="#_http">2. HTTP</a>
 <ul class="sectlevel2">
-<li><a href="#_overview">2.1. Overview</a>
+<li><a href="#_request_response">Request / Response</a>
 <ul class="sectlevel3">
-<li><a href="#_handler">2.1.1. Handler</a></li>
-<li><a href="#_endpoint_registration">2.1.2. Endpoint registration</a></li>
-<li><a href="#_main">2.1.3. Main</a></li>
-</ul>
-</li>
-<li><a href="#_request_response">2.2. Request / Response</a>
-<ul class="sectlevel3">
-<li><a href="#_basics">2.2.1. Basics</a></li>
-<li><a href="#_request">2.2.2. Request</a></li>
-<li><a href="#_response">2.2.3. Response</a></li>
-</ul>
-</li>
-<li><a href="#_configuration">2.3. Configuration</a>
-<ul class="sectlevel3">
-<li><a href="#_port">2.3.1. Port</a></li>
-<li><a href="#_static_files">2.3.2. Static Files</a></li>
-</ul>
-</li>
-<li><a href="#_templating">2.4. Templating</a></li>
-</ul>
-</li>
-<li><a href="#_development">3. Development</a>
-<ul class="sectlevel2">
-<li><a href="#_license">3.1. License</a></li>
-<li><a href="#_frege_docs">3.2. Frege docs</a></li>
-<li><a href="#_github">3.3. Github</a></li>
+<li><a href="#_basics">Basics</a></li>
+<li><a href="#_request">Request</a></li>
+<li><a href="#_response">Response</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
-<div class="sectionbody">
-<div class="quoteblock">
-<blockquote>
-Chinook winds /ʃɪˈnʊk/, or simply chinooks, are foehn winds in the
-interior West of North America, where the Canadian Prairies and Great
-Plains meet various mountain ranges, although the original usage is in
-reference to wet, warm coastal winds in the Pacific Northwest.
-</blockquote>
-<div class="attribution">
-&#8212; Wikipedia
-</div>
-</div>
-<div class="paragraph">
-<p><strong>Chinook</strong> is a <code>Frege</code> (<a href="http://frege-lang.org" class="bare">http://frege-lang.org</a>) port of
-  <code>SparkJava</code> (<a href="http://sparkjava.com" class="bare">http://sparkjava.com</a>) for creating web applications with
-  minimum effort.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_getting_started">1. Getting Started</h2>
-<div class="sectionbody">
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-Before going any further make sure you have installed JDK 7+
-in your machine.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Clone <code>Chinook</code> project at github and from the project&#8217;s root folder
-execute:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-shell" data-lang="shell">./gradlew :chinook-sample:run</code></pre>
-</div>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-If it is your first execution and you don&#8217;t have Gradle or
-the project dependencies already installed, it may take a while before
-executing <code>Chinook</code>.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Once the server has started:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-shell" data-lang="shell">[Thread-0] INFO org.eclipse.jetty.server.Server - Started @292ms</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You can go to your browser a go to <a href="http://localhost:8080/hi" class="bare">http://localhost:8080/hi</a> You should
-see the phrase <code>Hello World from Chinook :-)</code>.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_http">2. HTTP</h2>
-<div class="sectionbody">
 <div class="sect2">
-<h3 id="_overview">2.1. Overview</h3>
-<div class="paragraph">
-<p>Chinook is a tiny web framework aimed to create microservices. A basic
-<code>Chinook</code> application needs only three steps to expose an endpoint:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>Handler</code></p>
-</li>
-<li>
-<p><code>Endpoint registration</code></p>
-</li>
-<li>
-<p><code>Main method</code></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>A whole <code>Chinook</code> application could as simple as:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">import chinook.Core
-import chinook.Chinook
-
-main _ = Chinook.run [] [
-   Get "/hello" $ \req -&gt; do
-      return response.{ output = Just "Hello World" }
-   ]</code></pre>
-</div>
-</div>
+<h3 id="_request_response">Request / Response</h3>
 <div class="sect3">
-<h4 id="_handler">2.1.1. Handler</h4>
-<div class="paragraph">
-<p>Handlers are the most important part of Chinook, is where client
-requests are handled. Chinook http handlers normally have the
-following signature:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">IO Request -&gt; IO Reponse</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>As you may see there&#8217;s no difference between handlers used with
-different http verbs:</p>
-</div>
-<div class="listingblock">
-<div class="title">GET</div>
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">helloWorldHandler :: IO Request -&gt; IO Response
-helloWorldHandler req = do
-   return $ response.{ output = Just "Hello World from Chinook :-)" }</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">DELETE</div>
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">deleteHandler :: IO Request -&gt; IO Response
-deleteHandler req = do
-  id &lt;- req.path ":id"
-  return $ response.{ status = 204 }</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>What makes them different ? The endpoint registration.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_endpoint_registration">2.1.2. Endpoint registration</h4>
-<div class="paragraph">
-<p>The way <code>Chinook</code> works at the moment is a main entry point where
-handlers are registered for a specific <code>http verb</code> and a <code>path</code>.</p>
-</div>
-<div class="paragraph">
-<p>It always follows the same pattern:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">http-verb "/registered-path" handler</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>If you take a look at the <code>chinook-sample</code> application, the main entry
-point is located in the <code>App.fr</code> file.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">mappings = [
-  Get "/hi" helloWorldHandler,
-  Get "/hi/:name/:age" greetingsHandler,
-  "/json" + [
-    Get  "/get" getJSONHandler,
-    Get  "/form" getFormHandler,
-    Get  "/sender" getJsonSenderHandler,
-    Post "/post" postJSONHandler,
-    Post "/html" postFormHandler
-    ],
-  Get "/bye" goodbyeHandler,
-  Delete "/deleteme/:id" deleteHandler,
-  Put "/updateme/:id" putHandler
-  ]</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Here you can see all available endpoints in your application. For a
-given URL there is the related handler function. How you manage your
-handler files is completely up to you.</p>
-</div>
-<div class="paragraph">
-<p>All <code>HTTP</code> registration functions have the same structure, here is the
-function to register a HTTP <code>GET</code> handler:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">data Resource = Get     String Handler |
-                Post    String Handler |
-                Put     String Handler |
-                Delete  String Handler |
-                Patch   String Handler |
-                Options String Handler |
-                Trace   String Handler |
-                Head    String Handler |
-                Family  String [Resource]</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>It basically needs:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>A <code>String</code> representing the URI resource A handler function to</p>
-</li>
-<li>
-<p>A <code>Handler</code> to deal with the <code>request</code> and <code>response</code> originated in
-this invocation.</p>
-</li>
-</ul>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-a handler is just an alias for a function with the following
-shape:
-</td>
-</tr>
-</table>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">type Handler = IO Request -&gt; IO Response</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>A <code>handler</code> basically receives a <code>IO Request</code> and should return a <code>IO
-Response</code>. Both are available undere <code>chinook.Core</code>:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">import chinook.Core (Request, Response, response)</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Here&#8217;s a simple example:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">helloWorldHandler :: IO Request -&gt; IO Response
-helloWorldHandler req = do
-   return $ response.{ output = Just "Hello World from Chinook :-)" }</code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<code>Core.response</code> is a way of creating a new
-<code>chinook.Core.Response</code> without having to specify all possible
-fields in <code>Response</code>. It creates a new copy from the default
-<code>Response</code> value, but it lets you set different field values. This is
-not a <code>Chinook</code> thing but <code>Frege&#8217;s</code> and it&#8217;s call <code>value update</code>.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>If you want a <code>GET</code> handler to return an output you should be setting
-the response&#8217;s <code>output</code> field.</p>
-</div>
-<div class="paragraph">
-<p>Then the only thing remaining is to register the handler to receive
-a get call in a given URI:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Get "/hi" helloWorldHandler,</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_main">2.1.3. Main</h4>
-<div class="paragraph">
-<p>To start a <code>Chinook</code> application you only have to invoke the main
-function containing all the endpoint registrations as we saw in the
-previous chapter.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">main = Chinook.run config routes
-  where config = [port 8080, staticFiles "/public"]
-        routes = mappings</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>This is independent of the tool used to call that method. For instance,
-using gradle you can use the <code>application</code> plugin.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">apply plugin: 'java'
-apply plugin: "org.frege-lang"
-apply plugin: 'application' <i class="conum" data-value="1"></i><b>(1)</b>
-
-dependencies {
-    compile project (':chinook-core')
-
-    compile 'com.github.januslynd:diablo-groovy:0.1.0'
-}
-
-mainClassName = "chinook.App" <i class="conum" data-value="2"></i><b>(2)</b>
-
-compileFrege.dependsOn 'compileJava'</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Gradle Application plugin</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Namespace where the <code>main</code> function is located</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_request_response">2.2. Request / Response</h3>
-<div class="sect3">
-<h4 id="_basics">2.2.1. Basics</h4>
+<h4 id="_basics">Basics</h4>
 <div class="sect4">
 <h5 id="_to_return_simple_values">To return simple values</h5>
 <div class="paragraph">
@@ -820,9 +441,7 @@ invoking the <code>/hi</code> endpoint. Here is the handler implementation:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">helloWorldHandler :: IO Request -&gt; IO Response
-helloWorldHandler req = do
-   return $ response.{ output = Just "Hello World from Chinook :-)" }</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_req_res.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=helloWorldHandler]</code></pre>
 </div>
 </div>
 </div>
@@ -834,12 +453,7 @@ about the response.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">greetingsHandler :: IO Request -&gt; IO Response
-greetingsHandler req = do
-  name      &lt;- req.path ":name"
-  age       &lt;- req.path ":age"
-  return $ response.{ status = 200, <i class="conum" data-value="1"></i><b>(1)</b>
-                      output = createGreetings name age }</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_req_res.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=greetingsHandler]</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -855,13 +469,7 @@ greetingsHandler req = do
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">getJSONHandler :: IO Request -&gt; IO Response
-getJSONHandler req = do
-  code  &lt;- req.param "code"
-  desc  &lt;- req.param "desc"
-  return $ response.{ status  = 200,
-                      output  = getLangAsJSON code desc,
-                      headers = [("Content-Type", Just "application/json")] } <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_req_res.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=getJSON]</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -904,22 +512,7 @@ payload coming from the client:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">postJSONHandler :: IO Request -&gt; IO Response
-postJSONHandler req = do
-    body  &lt;- req.body
-    return $ case (processJSON body) of
-        Just Lang { code, desc } -&gt; createdResponse
-        Nothing                  -&gt; badRequest
-
-createdResponse :: Response
-createdResponse = response.{ status  = 201 , <i class="conum" data-value="1"></i><b>(1)</b>
-                             output  = Just "Created",
-                             headers = [ContentType.json] }
-
-badRequest :: Response
-badRequest = response.{ status = 400 , <i class="conum" data-value="2"></i><b>(2)</b>
-                        output  = Just "Bad request",
-                        headers = [ContentType.json] }</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_req_res.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=postJSONHandler]</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -941,16 +534,13 @@ wasn&#8217;t correct.</td>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_request">2.2.2. Request</h4>
+<h4 id="_request">Request</h4>
 <div class="paragraph">
 <p>A <code>chinook.Core.Request</code> is a immutable data structure containing:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">data Request = Request { headers     :: [(String, Maybe String)],
-                         queryParams :: [(String, [String])],
-                         pathParams  :: [(String, String)],
-                         body        :: Maybe String }</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_req_res.ad - include::{coreSrc}/chinook/Core.fr[tags=request]</code></pre>
 </div>
 </div>
 <div class="sect4">
@@ -962,7 +552,7 @@ from a <code>IO Request</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">allHeaders :: IO Request -&gt; IO [(String, Maybe String)]</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_req_res.ad - include::{coreSrc}/chinook/Core.fr[tags=allheaders]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -971,7 +561,7 @@ argument.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">header :: IO Request -&gt; String -&gt; IO (Maybe String)</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_req_res.ad - include::{coreSrc}/chinook/Core.fr[tags=header]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -994,7 +584,7 @@ name of the header.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">param :: IO Request -&gt; String -&gt; IO (Maybe String)</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_req_res.ad - include::{coreSrc}/chinook/Core.fr[tags=param]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1017,7 +607,7 @@ name of the header.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Get "/hi/:name/:age" greetingsHandler,</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_req_res.ad - include::{sampleSrc}/chinook/App.fr[tags=greetingsHandler]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1026,7 +616,7 @@ the following functions:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">allPaths :: IO Request -&gt; IO [(String, String)]</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_req_res.ad - include::{coreSrc}/chinook/Core.fr[tags=allpaths]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1049,7 +639,7 @@ to assume everytime the URI is hit you will get a value.
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">path :: IO Request -&gt; String -&gt; IO (Maybe String)</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_req_res.ad - include::{coreSrc}/chinook/Core.fr[tags=path]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1062,10 +652,7 @@ string representation of that parameter.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">putHandler :: IO Request -&gt; IO Response
-putHandler req = do
-  id &lt;- req.path ":id"
-  return $ response.{ status = 202 }</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_req_res.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=putHandler]</code></pre>
 </div>
 </div>
 </div>
@@ -1077,36 +664,19 @@ the request <code>body</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">postJSONHandler :: IO Request -&gt; IO Response
-postJSONHandler req = do
-    body  &lt;- req.body
-    return $ case (processJSON body) of
-        Just Lang { code, desc } -&gt; createdResponse
-        Nothing                  -&gt; badRequest
-
-createdResponse :: Response
-createdResponse = response.{ status  = 201 , <i class="conum" data-value="1"></i><b>(1)</b>
-                             output  = Just "Created",
-                             headers = [ContentType.json] }
-
-badRequest :: Response
-badRequest = response.{ status = 400 , <i class="conum" data-value="2"></i><b>(2)</b>
-                        output  = Just "Bad request",
-                        headers = [ContentType.json] }</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_req_res.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=postJSONHandler]</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_response">2.2.3. Response</h4>
+<h4 id="_response">Response</h4>
 <div class="paragraph">
 <p><code>chinook.Core.Response</code> is just a data type:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">data Response = Response { status  :: Int,
-                           output  :: Maybe String,
-                           headers :: [(String, Maybe String)]} where</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_req_res.ad - include::{coreSrc}/chinook/Core.fr[tags=response]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1123,7 +693,7 @@ value looks like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">response = Response 200 Nothing []</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_req_res.ad - include::{coreSrc}/chinook/Core.fr[tags=responseconstant]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1134,9 +704,7 @@ like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">helloWorldHandler :: IO Request -&gt; IO Response
-helloWorldHandler req = do
-   return $ response.{ output = Just "Hello World from Chinook :-)" }</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_req_res.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=helloWorldHandler]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1178,140 +746,9 @@ code meaning <code>resource created</code>.  A status code is of type <code>Int<
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_configuration">2.3. Configuration</h3>
-<div class="paragraph">
-<p>Settings are passed when bootstraping the application. Instead of
-passing a list of tuples <code>Chinook</code> expects values of type
-<code>chinook.Chinook.Configuration</code>.</p>
-</div>
-<div class="paragraph">
-<p>Anyway <code>Chinook</code> provides a set of functions as a shortcut to
-produce these settings.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">main = Chinook.run config routes
-  where config = [port 8080, staticFiles "/public"]
-        routes = mappings</code></pre>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_port">2.3.1. Port</h4>
-<div class="paragraph">
-<p>To produce server port settings you can use the port function:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">port :: Int -&gt; Configuration</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_static_files">2.3.2. Static Files</h4>
-<div class="paragraph">
-<p>You can assign a folder in the classpath to serve static files, with
-the <code>staticFiles</code> function.</p>
-</div>
-<div class="paragraph">
-<p>For instance <code>staticFiles "/public"</code> will make files located at
-"src/main/resources/public" be exposed at <code><a href="http://{server}:{port}" class="bare">http://{server}:{port}</a></code></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">staticFiles :: String -&gt; Configuration</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_templating">2.4. Templating</h3>
-<div class="paragraph">
-<p><code>Chinook</code> doesn&#8217;t have any templating solution <code>by default</code>.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-However <code>chinook-sample</code> application is using
-<a href="http://januslynd.github.io/diablo/"><code>Diablo</code></a>.  Diablo is a small
-templating engine abstraction. It tries to expose different templating
-engines with a unified api.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>In the <code>chinook-sample</code> application <code>Diablo</code> is used to render html
-using Groovy templates. These templates are located in the classpath,
-precisely at <code>src/main/resources</code>. In order to be able to use <code>Diablo</code>
-first you need some import statements.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">import diablo.Diablo (fromPath)
-import diablo.Groovy (GroovyEngine)</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Then a helper function is created to execute any template available in
-the classpath (See <code>Diablo</code> docs for more options):</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">render :: String -&gt; IO (Maybe String)
-render tplName = do
-  groovy &lt;- GroovyEngine.new ()
-  Just &lt;$&gt; fromPath groovy tplName []</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Finally we use the helper function in our handlers:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">getFormHandler :: IO Request -&gt; IO Response
-getFormHandler req = do
-  html &lt;- render "chinook/form.gtpl"
-  return response.{ status  = 200,
-                    output  = html,
-                    headers = [ContentType.html]
-                  }</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_development">3. Development</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_license">3.1. License</h3>
-<div class="paragraph">
-<p><code>Chinook</code> uses <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_frege_docs">3.2. Frege docs</h3>
-<div class="paragraph">
-<p>You can check out Frege docs <a href="fregedoc/fregedoc.html">here</a></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_github">3.3. Github</h3>
-<div class="paragraph">
-<p><code>Chinook</code> source code is hosted at <a href="https://github.com/januslynd/chinook">Github</a></p>
-</div>
-</div>
-</div>
-</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 0.2.0<br>
 Last updated 2016-02-15 13:57:02 +01:00
 </div>
 </div>

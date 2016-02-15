@@ -66,6 +66,10 @@ Table of Content</h3>
 <a HREF="#data">Definitions</a></div>
 <dl>
 <dt>
+<SPAN CLASS="code"><b>data </b><a class="tref" href="#Config"> </a> <a class="tref" href="#Config">Config</a> = <b>native </b>spark.Spark</SPAN></dt>
+<dd>
+</dd>
+<dt>
 <SPAN CLASS="code"><b>data </b><a class="tref" href="#QueryMap"> </a> <a class="tref" href="#QueryMap">QueryMap</a> = <b>native </b>spark.QueryParamsMap</SPAN></dt>
 <dd>
 </dd>
@@ -329,6 +333,24 @@ Member Functions</h3>
 </dd>
 </dl>
 </dd>
+<dt class="data">
+<SPAN CLASS="code"><b>data </b><a name=Config> </a> <a class="tref" href="#Config">Config</a> = <b>native </b>spark.Spark</SPAN></dt>
+<dd class="data">
+<p>
+Config wraps all sparkjava.com settings calls</p>
+<h3>
+Member Functions</h3>
+<dl class="func">
+<dt class="func">
+<SPAN CLASS="code"><a name=Config.port>port</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeBase.html#Int">Int</a></b> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a><br><b>native </b>spark.Spark.port</SPAN></dt>
+<dd class="func">
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a name=Config.staticFileLocation>staticFileLocation</a> ∷ <b><a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a></b> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a><br><b>native </b>spark.Spark.staticFileLocation</SPAN></dt>
+<dd class="func">
+</dd>
+</dl>
+</dd>
 </dl>
 <h2>
 <a NAME="case">Functions and Values by Type</a></h2>
@@ -434,6 +456,18 @@ Member Functions</h3>
 <dd class="func">
 <p>
 <a class="fref" href="#Rest.trace">Rest.trace</a>, <a class="fref" href="#Rest.patch">Rest.patch</a>, <a class="fref" href="#Rest.post">Rest.post</a>, <a class="fref" href="#Rest.put">Rest.put</a>, <a class="fref" href="#Rest.get">Rest.get</a>, <a class="fref" href="#Rest.head">Rest.head</a>, <a class="fref" href="#Rest.connect">Rest.connect</a>, <a class="fref" href="#Rest.delete">Rest.delete</a>, <a class="fref" href="#Rest.options">Rest.options</a></p>
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a class="tref" href="../frege/prelude/PreludeBase.html#String">String</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a></SPAN></dt>
+<dd class="func">
+<p>
+<a class="fref" href="#Config.staticFileLocation">Config.staticFileLocation</a></p>
+</dd>
+<dt class="func">
+<SPAN CLASS="code"><a class="tref" href="../frege/prelude/PreludeBase.html#Int">Int</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> <a class="tref" href="../frege/prelude/PreludeBase.html#Unit">()</a></SPAN></dt>
+<dd class="func">
+<p>
+<a class="fref" href="#Config.port">Config.port</a></p>
 </dd>
 <dt class="func">
 <SPAN CLASS="code">(<a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Request">Request</a> → <a class="tref" href="../frege/prelude/PreludeIO.html#MutableIO">MutableIO</a> <a class="tref" href="#Response">Response</a> → <a class="tref" href="../frege/prelude/PreludeBase.html#IO">IO</a> a) → <a class="tref" href="../frege/prelude/PreludeIO.html#STMutable">STMutable</a> <a class="tref" href="../frege/prelude/PreludeBase.html#RealWorld">RealWorld</a> <a class="tref" href="#Route">Route</a></SPAN></dt>

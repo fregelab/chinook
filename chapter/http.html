@@ -427,14 +427,20 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_main">Main</a></li>
 </ul>
 </li>
-<li><a href="#_return_only_values">Return only values</a></li>
-<li><a href="#_changing_response">Changing response</a></li>
 <li><a href="#_request_response">Request / Response</a>
 <ul class="sectlevel3">
+<li><a href="#_basics">Basics</a></li>
 <li><a href="#_request">Request</a></li>
 <li><a href="#_response">Response</a></li>
 </ul>
 </li>
+<li><a href="#_configuration">Configuration</a>
+<ul class="sectlevel3">
+<li><a href="#_port">Port</a></li>
+<li><a href="#_static_files">Static Files</a></li>
+</ul>
+</li>
+<li><a href="#_templating">Templating</a></li>
 </ul>
 </li>
 </ul>
@@ -468,11 +474,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">import chinook.Chinook
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">import chinook.Core
+import chinook.Chinook
 
-main _ = do
-   get "/hello" $ \req -&gt; do
-      return response.{ output = Just "Hello World" }</code></pre>
+main _ = Chinook.run [] [
+   Get "/hello" $ \req -&gt; do
+      return response.{ output = Just "Hello World" }
+   ]</code></pre>
 </div>
 </div>
 <div class="sect3">
@@ -494,13 +502,13 @@ different http verbs:</p>
 <div class="listingblock">
 <div class="title">GET</div>
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in overview.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=helloWorldHandler]</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_intro.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=helloWorldHandler]</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">DELETE</div>
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in overview.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=deleteHandler]</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_intro.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=deleteHandler]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -527,7 +535,7 @@ point is located in the <code>App.fr</code> file.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in overview.ad - include::{sampleSrc}/chinook/App.fr[tags=routes]</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_intro.ad - include::{sampleSrc}/chinook/App.fr[tags=routes]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -541,7 +549,7 @@ function to register a HTTP <code>GET</code> handler:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in overview.ad - include::{coreSrc}/chinook/Chinook.fr[tags=getFunction]</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_intro.ad - include::{coreSrc}/chinook/Router.fr[tags=resources]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -558,13 +566,31 @@ this invocation.</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>A <code>handler</code> basically receives a <code>IO Request</code> and should return a <code>IO
-Response</code>. Both are available undere <code>chinook.Chinook</code>:</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+a handler is just an alias for a function with the following
+shape:
+</td>
+</tr>
+</table>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in overview.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=basic-imports]</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_intro.ad - include::{coreSrc}/chinook/Core.fr[tags=handler]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A <code>handler</code> basically receives a <code>IO Request</code> and should return a <code>IO
+Response</code>. Both are available undere <code>chinook.Core</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_intro.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=basic-imports]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -572,7 +598,7 @@ Response</code>. Both are available undere <code>chinook.Chinook</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in overview.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=helloWorldHandler]</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_intro.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=helloWorldHandler]</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -582,8 +608,8 @@ Response</code>. Both are available undere <code>chinook.Chinook</code>:</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<code>Chinook.response</code> is a way of creating a new
-<code>chinook.Chinook.Response</code> without having to specify all possible
+<code>Core.response</code> is a way of creating a new
+<code>chinook.Core.Response</code> without having to specify all possible
 fields in <code>Response</code>. It creates a new copy from the default
 <code>Response</code> value, but it lets you set different field values. This is
 not a <code>Chinook</code> thing but <code>Frege&#8217;s</code> and it&#8217;s call <code>value update</code>.
@@ -601,7 +627,7 @@ a get call in a given URI:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in overview.ad - include::{sampleSrc}/chinook/App.fr[tags=routes]</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_intro.ad - include::{sampleSrc}/chinook/App.fr[tags=helloWorldHandler, indent=0]</code></pre>
 </div>
 </div>
 </div>
@@ -612,13 +638,18 @@ a get call in a given URI:</p>
 function containing all the endpoint registrations as we saw in the
 previous chapter.</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_intro.ad - include::{sampleSrc}/chinook/App.fr[tags=app, indent=0]</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>This is independent of the tool used to call that method. For instance,
 using gradle you can use the <code>application</code> plugin.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">Unresolved directive in overview.ad - include::{sampleBase}/build.gradle[]</code></pre>
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">Unresolved directive in http_intro.ad - include::{sampleBase}/build.gradle[]</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -636,26 +667,30 @@ using gradle you can use the <code>application</code> plugin.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_return_only_values">Return only values</h3>
+<h3 id="_request_response">Request / Response</h3>
+<div class="sect3">
+<h4 id="_basics">Basics</h4>
+<div class="sect4">
+<h5 id="_to_return_simple_values">To return simple values</h5>
 <div class="paragraph">
 <p>The first endpoint returns a typical <code>hello world</code> message when
 invoking the <code>/hi</code> endpoint. Here is the handler implementation:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=helloWorldHandler]</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_req_res.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=helloWorldHandler]</code></pre>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_changing_response">Changing response</h3>
+<div class="sect4">
+<h5 id="_changing_response">Changing response</h5>
 <div class="paragraph">
 <p>Sometimes depending on the request we may want to change something
 about the response.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=greetingsHandler]</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_req_res.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=greetingsHandler]</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -671,7 +706,7 @@ about the response.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=getJSON]</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_req_res.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=getJSON]</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -690,7 +725,7 @@ about the response.</p>
 </td>
 <td class="content">
 Instead setting content type headers manually you can use
-<code>chinook.ContentType</code>, e.g. <code>ContentType.json</code>
+<code>chinook.util.ContentType</code>, e.g. <code>ContentType.json</code>
 </td>
 </tr>
 </table>
@@ -701,20 +736,12 @@ abstractions, if you want to explore it please don&#8217;t hesitate to
 explore the project&#8217;s Frege docs.</p>
 </div>
 <div class="paragraph">
-<p>For the rest of HTTP verbs it doesn&#8217;t change, here is the function to
-register a HTTP <code>POST</code> handler:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http.ad - include::{coreSrc}/chinook/Chinook.fr[tags=postFunction]</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>It basically works the same way <code>GET</code> did. The main difference is that
-in <code>POST</code> calls you would like to do something with the body text sent
-from the client. Most of the times that body could be a <code>JSON</code>/<code>XML</code>
-payload. You can get that information with the <code>body</code> field from the
-request.</p>
+<p>For the rest of HTTP verbs it doesn&#8217;t change. For instance in a <code>POST</code>
+request it basically works the same way <code>GET</code> did. The main difference
+is that in <code>POST</code> calls you would like to do something with the body
+text sent from the client. Most of the times that body could be a
+<code>JSON</code>/<code>XML</code> payload. You can get that information with the <code>body</code>
+field from the request.</p>
 </div>
 <div class="paragraph">
 <p>Here&#8217;s an example building a new <code>Lang</code> instance out of the json
@@ -722,7 +749,7 @@ payload coming from the client:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=postJSONHandler]</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_req_res.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=postJSONHandler]</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -742,16 +769,15 @@ wasn&#8217;t correct.</td>
 <p>Of course it would be nice to send back more feedback about validation ;)</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_request_response">Request / Response</h3>
+</div>
 <div class="sect3">
 <h4 id="_request">Request</h4>
 <div class="paragraph">
-<p>A <code>chinook.Request</code> is a immutable data structure containing:</p>
+<p>A <code>chinook.Core.Request</code> is a immutable data structure containing:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in request_response.ad - include::{coreSrc}/chinook/Chinook.fr[tags=request]</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_req_res.ad - include::{coreSrc}/chinook/Core.fr[tags=request]</code></pre>
 </div>
 </div>
 <div class="sect4">
@@ -763,7 +789,7 @@ from a <code>IO Request</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in request_response.ad - include::{coreSrc}/chinook/Chinook.fr[tags=allheaders]</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_req_res.ad - include::{coreSrc}/chinook/Core.fr[tags=allheaders]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -772,7 +798,7 @@ argument.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in request_response.ad - include::{coreSrc}/chinook/Chinook.fr[tags=header]</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_req_res.ad - include::{coreSrc}/chinook/Core.fr[tags=header]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -795,7 +821,7 @@ name of the header.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in request_response.ad - include::{coreSrc}/chinook/Chinook.fr[tags=param]</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_req_res.ad - include::{coreSrc}/chinook/Core.fr[tags=param]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -814,11 +840,11 @@ name of the header.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Is mapped here <code>/hi/:name/:age</code>:</p>
+<p>Is mapped:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in request_response.ad - include::{sampleSrc}/chinook/App.fr[tags=routes]</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_req_res.ad - include::{sampleSrc}/chinook/App.fr[tags=greetingsHandler]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -827,7 +853,7 @@ the following functions:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in request_response.ad - include::{coreSrc}/chinook/Chinook.fr[tags=allpaths]</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_req_res.ad - include::{coreSrc}/chinook/Core.fr[tags=allpaths]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -850,7 +876,7 @@ to assume everytime the URI is hit you will get a value.
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in request_response.ad - include::{coreSrc}/chinook/Chinook.fr[tags=path]</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_req_res.ad - include::{coreSrc}/chinook/Core.fr[tags=path]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -863,7 +889,7 @@ string representation of that parameter.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in request_response.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=putHandler]</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_req_res.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=putHandler]</code></pre>
 </div>
 </div>
 </div>
@@ -875,7 +901,7 @@ the request <code>body</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in request_response.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=postJSONHandler]</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_req_res.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=postJSONHandler]</code></pre>
 </div>
 </div>
 </div>
@@ -883,11 +909,11 @@ the request <code>body</code>.</p>
 <div class="sect3">
 <h4 id="_response">Response</h4>
 <div class="paragraph">
-<p><code>chinook.Chinook.Response</code> is just a data type:</p>
+<p><code>chinook.Core.Response</code> is just a data type:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in request_response.ad - include::{coreSrc}/chinook/Chinook.fr[tags=response]</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_req_res.ad - include::{coreSrc}/chinook/Core.fr[tags=response]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -899,12 +925,12 @@ an immutable structure.</p>
 <p>Well, but, does it means I should be building from the scratch a
 <code>Response</code> every time ? Yes but <code>Chinook</code> (well <code>Frege</code> actually) will
 help you in this task. <code>Chinook</code> has a default <code>Response</code> value
-available through the constant <code>chinook.Chinook.response</code>. This
+available through the constant <code>chinook.Core.response</code>. This
 value looks like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in request_response.ad - include::{coreSrc}/chinook/Chinook.fr[tags=responseconstant]</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_req_res.ad - include::{coreSrc}/chinook/Core.fr[tags=responseconstant]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -915,7 +941,7 @@ like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in request_response.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=helloWorldHandler]</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_req_res.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=helloWorldHandler]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -957,12 +983,105 @@ code meaning <code>resource created</code>.  A status code is of type <code>Int<
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_configuration">Configuration</h3>
+<div class="paragraph">
+<p>Settings are passed when bootstraping the application. Instead of
+passing a list of tuples <code>Chinook</code> expects values of type
+<code>chinook.Chinook.Configuration</code>.</p>
+</div>
+<div class="paragraph">
+<p>Anyway <code>Chinook</code> provides a set of functions as a shortcut to
+produce these settings.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_config.ad - include::{sampleSrc}/chinook/App.fr[tags=app]</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_port">Port</h4>
+<div class="paragraph">
+<p>To produce server port settings you can use the port function:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_config.ad - include::{coreSrc}/chinook/Chinook.fr[tags=port]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_static_files">Static Files</h4>
+<div class="paragraph">
+<p>You can assign a folder in the classpath to serve static files, with
+the <code>staticFiles</code> function.</p>
+</div>
+<div class="paragraph">
+<p>For instance <code>staticFiles "/public"</code> will make files located at
+"src/main/resources/public" be exposed at <code><a href="http://{server}:{port}" class="bare">http://{server}:{port}</a></code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_config.ad - include::{coreSrc}/chinook/Chinook.fr[tags=staticFiles]</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_templating">Templating</h3>
+<div class="paragraph">
+<p><code>Chinook</code> doesn&#8217;t have any templating solution <code>by default</code>.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+However <code>chinook-sample</code> application is using
+<a href="http://januslynd.github.io/diablo/"><code>Diablo</code></a>.  Diablo is a small
+templating engine abstraction. It tries to expose different templating
+engines with a unified api.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In the <code>chinook-sample</code> application <code>Diablo</code> is used to render html
+using Groovy templates. These templates are located in the classpath,
+precisely at <code>src/main/resources</code>. In order to be able to use <code>Diablo</code>
+first you need some import statements.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_templating.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=diablo-imports, indent=0]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then a helper function is created to execute any template available in
+the classpath (See <code>Diablo</code> docs for more options):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_templating.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=diabloTemplating, indent=0]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally we use the helper function in our handlers:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Unresolved directive in http_templating.ad - include::{sampleSrc}/chinook/Handlers.fr[tags=getFormHandler, indent=0]</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-01-14 00:41:48 +01:00
+Last updated 2016-02-15 13:57:02 +01:00
 </div>
 </div>
 </body>

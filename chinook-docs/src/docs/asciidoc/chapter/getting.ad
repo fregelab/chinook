@@ -22,6 +22,6 @@ Once the server has started:
 [Thread-0] INFO org.eclipse.jetty.server.Server - Started @292ms
 ----
 
-You can go to your browser a go to http://localhost:4567/hi You should
+You can go to your browser a go to http://localhost:8080/hi You should
 see the phrase `Hello World from Chinook :-)`.
 

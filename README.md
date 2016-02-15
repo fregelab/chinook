@@ -17,4 +17,4 @@ Binaries are available at Bintray:
 
 Gradle dependencies:
 
-    compile 'com.github.januslynd:chinook-core:0.1.1'
+    compile 'com.github.januslynd:chinook-core:0.2.0'

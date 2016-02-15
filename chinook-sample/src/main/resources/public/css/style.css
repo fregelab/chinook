@@ -1,0 +1,27 @@
+
+html {
+    color: #333333;
+    font-size: 16px;
+}
+
+input[type=text] {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    background-color: #EBEBEB;
+}
+
+input[type=button] {
+    border: 1px;
+    padding: 10px;
+}
+
+input[type=submit] {
+    border: 1px;
+    padding: 10px;
+}
+
+label {
+    font-weight: bold;
+}
+

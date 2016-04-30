@@ -5,7 +5,7 @@
   `SparkJava` http://sparkjava.com for creating web applications with
   minimum effort.
 
-Docs are available at https://januslynd.github.io/chinook
+Docs are available at http://fregelab.github.io/chinook/
 
 Binaries are available at Bintray:
 

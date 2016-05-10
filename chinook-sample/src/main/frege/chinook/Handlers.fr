@@ -5,7 +5,7 @@ import Data.JSON
 import chinook.Data (Lang)
 import chinook.util.ContentType
 --tag::basic-imports[]
-import chinook.Core (Request, Response, response)
+import chinook.Core (Request, Response, response, haltingResponse)
 --end::basic-imports[]
 
 -- tag::diablo-imports[]
@@ -18,6 +18,16 @@ helloWorldHandler :: IO Request -> IO Response
 helloWorldHandler req = do
    return $ response.{ output = Just "Hello World from Chinook :-)" }
 -- end::helloWorldHandler[]
+
+-- tag::interceptorHandler[]
+securityHandler :: IO Request -> IO Response
+securityHandler req = do
+  token <- req.param "token"
+  return $ case token of
+    Just _  -> response
+    Nothing -> haltingResponse.{ status = 401,
+                                 output = Just "Please add a token to your query params '?token='" }
+-- end::interceptorHandler[]
 
 goodbyeHandler :: IO Request -> IO Response
 goodbyeHandler req = do

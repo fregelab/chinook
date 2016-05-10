@@ -229,3 +229,46 @@ would like to create a resource, you would send a message to a
 resource using a POST endpoint and if it succeed it will return a 201
 code meaning `resource created`.  A status code is of type `Int`.
 
+==== Interceptors
+
+Sometimes you may need to check something for every request on a given
+path. An example could be a security interceptor, or just an audit
+trace.
+
+For that purpose Chinook has two types of routes that don't represent
+a rest action but a handler capable of intercepting a given request,
+or set of requests and do something about it. Those routes are
+`Before` and `After` and as their name implies, one can be used to
+intercept before the request has been processed and the latter once
+the request has been processed.
+
+WARNING: `Chinook` interceptors are not `filters`. They can only
+access to the request and modify only the response.
+
+In the sample application, there's a silly security interceptor that
+may help as a starting point.
+
+[source, haskell, indent=0]
+.Mapping configuration
+----
+include::{sampleSrc}/chinook/App.fr[tags=securityInterceptor]
+----
+
+All requests found under `/hi` path will be intercepted by the
+`securityHandler`
+
+[source, haskell, indent=0]
+.Handler implementation
+----
+include::{sampleSrc}/chinook/Handlers.fr[tags=interceptorHandler]
+----
+
+In an interceptor in you would like to stop the process and return
+inmediately to the user, you should return a **halting `Response`**
+with its `halting` property set to true. There's a shortcut which is
+to make use of the `haltingResponse` value. If you would like to allow
+further execution just return a `Response` value making sure its
+halting property is set to false (which is the default value).
+
+NOTE: There are two alias for a normal response and a halting
+response: `response` and `haltingResponse`.

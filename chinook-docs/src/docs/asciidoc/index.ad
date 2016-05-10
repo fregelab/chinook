@@ -1,5 +1,5 @@
 = Chinook
-:revnumber: 0.2.0
+:revnumber: 0.2.1
 :numbered:
 :imagesDir: images/
 :baseDir: ../../../../..
@@ -26,5 +26,3 @@ include::chapter/getting.ad[]
 include::chapter/http.ad[]
 
 include::chapter/development.ad[]
-
-

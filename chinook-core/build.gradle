@@ -56,11 +56,12 @@ bintray {
     pkg {
         repo            = 'maven'
         name            = 'chinook-core'
+        userOrg         = 'fregelab'
         desc            =  releaseDescription
-        websiteUrl      = 'http://januslynd.github.io/chinook/'
-        issueTrackerUrl = 'https://github.com/januslynd/chinook/issues'
+        websiteUrl      = 'http://fregelab.github.io/chinook/'
+        issueTrackerUrl = 'https://github.com/fregelab/chinook/issues'
         licenses        = ['Apache-2.0']
-        vcsUrl          = 'https://github.com/januslynd/chinook.git'
+        vcsUrl          = 'https://github.com/fregelab/chinook.git'
         labels          = ['frege', 'rest']
         version {
             name      = releaseVersion

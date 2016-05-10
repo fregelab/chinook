@@ -122,6 +122,9 @@ data Response = native spark.Response where
 data Route = native spark.Route where
     native new chinook.into.Rest.createRoute :: (MutableIO Request -> MutableIO Response -> IO a) -> IO (MutableIO Route)
 
+data Filter = native spark.Filter where
+    native new chinook.into.Rest.createFilter :: (MutableIO Request -> MutableIO Response -> IO ()) -> IO (MutableIO Filter)
+
 --   _____                  _
 --  / ____|                | |
 -- | (___  _ __   __ _ _ __| | __
@@ -135,15 +138,18 @@ data Route = native spark.Route where
     Rest wraps all sparkjava.com calls and exposes to Frege
 -}
 data Rest = native spark.Spark where
-    native get     spark.Spark.get     :: String -> MutableIO Route -> IO ()
-    native post    spark.Spark.post    :: String -> MutableIO Route -> IO ()
-    native delete  spark.Spark.delete  :: String -> MutableIO Route -> IO ()
-    native put     spark.Spark.put     :: String -> MutableIO Route -> IO ()
-    native patch   spark.Spark.patch   :: String -> MutableIO Route -> IO ()
-    native options spark.Spark.options :: String -> MutableIO Route -> IO ()
-    native trace   spark.Spark.trace   :: String -> MutableIO Route -> IO ()
-    native connect spark.Spark.connect :: String -> MutableIO Route -> IO ()
-    native head    spark.Spark.connect :: String -> MutableIO Route -> IO ()
+    native get     spark.Spark.get     :: String -> MutableIO Route  -> IO ()
+    native post    spark.Spark.post    :: String -> MutableIO Route  -> IO ()
+    native delete  spark.Spark.delete  :: String -> MutableIO Route  -> IO ()
+    native put     spark.Spark.put     :: String -> MutableIO Route  -> IO ()
+    native patch   spark.Spark.patch   :: String -> MutableIO Route  -> IO ()
+    native options spark.Spark.options :: String -> MutableIO Route  -> IO ()
+    native trace   spark.Spark.trace   :: String -> MutableIO Route  -> IO ()
+    native connect spark.Spark.connect :: String -> MutableIO Route  -> IO ()
+    native head    spark.Spark.connect :: String -> MutableIO Route  -> IO ()
+    native before  spark.Spark.before  :: String -> MutableIO Filter -> IO ()
+    native after   spark.Spark.after   :: String -> MutableIO Filter -> IO ()
+    native halt    spark.Spark.halt    :: Int    -> Maybe String     -> IO ()
 
 {--
   Config wraps all sparkjava.com settings calls

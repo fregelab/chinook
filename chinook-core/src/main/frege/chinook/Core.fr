@@ -123,6 +123,7 @@ derive Show Request
 
 -- tag::response[]
 data Response = Response { status  :: Int,
+                           halting :: Bool,
                            output  :: Maybe String,
                            headers :: [(String, Maybe String)]} where
 -- end::response[]
@@ -142,5 +143,7 @@ derive Show Response
 
 -- Default response.
 --tag::responseconstant[]
-response = Response 200 Nothing []
+response = Response 200 false Nothing []
 --end::responseconstant[]
+
+haltingResponse = Response 200 true Nothing []

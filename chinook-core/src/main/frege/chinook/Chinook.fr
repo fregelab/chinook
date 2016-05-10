@@ -227,6 +227,20 @@ head path lambda = do
   route <- toSparkRoute lambda
   Spark.Rest.head path route
 
+-- tag::beforeFilter[]
+before :: String -> (IO Core.Request -> IO Core.Response) -> IO ()
+-- end::beforeFilter[]
+before path lambda = do
+  route <- toSparkFilter lambda
+  Spark.Rest.before path route
+
+-- tag::afterFilter[]
+after :: String -> (IO Core.Request -> IO Core.Response) -> IO ()
+-- end::afterFilter[]
+after path lambda = do
+  route <- toSparkFilter lambda
+  Spark.Rest.after path route
+
 {--
    Takes the response generated in a Chinook Handler and converts that response
    in a Spark valid response
@@ -236,6 +250,15 @@ applyChinookResponseToSpark response spark = do
     setSparkStatus  response.status  spark
     setSparkOutput  response.output  spark
     setSparkHeaders response.headers spark
+
+{--
+   When processing an interceptor if the result response has the `halting` property
+   set to true, then the process should be stopped
+-}
+applyPossibleHalt :: Core.Response -> MutableIO Spark.Response -> IO ()
+applyPossibleHalt response spark = if (response.halting == true)
+                                   then Spark.Rest.halt response.status response.output
+                                   else return ()
 
 setSparkStatus  :: Int -> MutableIO Spark.Response  -> IO ()
 setSparkStatus status response = response.status status
@@ -257,6 +280,19 @@ toSparkRoute lambda = Spark.Route.new $ toSparkOutput $ \req \res -> do
     response <- lambda $ toChinookRequest req
     applyChinookResponseToSpark response res
     return $ response.output
+
+-- Converts an interceptor to a Spark filter instance
+toSparkFilter :: (IO Core.Request -> IO Core.Response) -> IO (MutableIO Filter)
+toSparkFilter lambda = Spark.Filter.new $ toSparkFilterOutput $ \req \res -> do
+    response <- lambda $ toChinookRequest req
+    applyChinookResponseToSpark response res
+    applyPossibleHalt response res
+    return $ response.output
+
+toSparkFilterOutput :: (a -> b -> IO (Maybe String)) -> (a -> b -> IO ())
+toSparkFilterOutput fn1 request response = do
+  result <- fn1 request response
+  return ()
 
 {--
   While within Frege we want to work with safe abstractions like
@@ -285,6 +321,8 @@ convertRoute route = case route of
   Router.Options path handler -> options path handler
   Router.Trace   path handler -> trace   path handler
   Router.Head    path handler -> head    path handler
+  Router.Before  path handler -> before  path handler
+  Router.After   path handler -> after   path handler
   Router.Family  path routes  -> mapM_ convertRoute routes
 
 {--

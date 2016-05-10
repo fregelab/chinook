@@ -19,6 +19,7 @@ import frege.runtime.Lambda;
 import spark.Request;
 import spark.Response;
 import spark.Route;
+import spark.Filter;
 
 /**
  * Helper class for creating instances from lambda expressions
@@ -47,4 +48,23 @@ public final class Rest {
         };
     }
 
+    /**
+     * Creates a new {@link Route} instance from a {@link Lambda} expression.
+     *
+     * @param fn The function representing the behavior of the
+     * {@link Route#handle(spark.Request, spark.Response) } method
+     * @since 0.2.1
+     */
+    public static spark.Filter createFilter(final Lambda fn) {
+        return new Filter() {
+            @Override
+            public void handle(final Request request, final Response response) throws Exception {
+                fn.apply(request)
+                    .apply(response)
+                    .apply(null) // Forces IO to extract its value
+                    .result()
+                    .forced();
+            }
+        };
+    }
 }

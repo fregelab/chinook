@@ -5,9 +5,7 @@ apply plugin: 'application' // <1>
 dependencies {
     compile project (':chinook-core')
 
-    compile 'com.github.januslynd:diablo-groovy:0.1.0'
+    compile 'com.github.fregelab:diablo-groovy:0.1.1'
 }
 
 mainClassName = "chinook.App" // <2>
-
-compileFrege.dependsOn 'compileJava'

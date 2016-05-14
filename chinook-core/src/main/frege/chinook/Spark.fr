@@ -40,9 +40,9 @@ data Request = native spark.Request where
 -- the attributes list
     native attributes                        :: MutableIO Request -> IO (MutableIO (Set String))
     -- value of foo attribute
-    native gattr attribute                   :: MutableIO Request -> String -> IO (Maybe String)
+    native gattr attribute                   :: MutableIO Request -> Maybe String -> IO (Maybe Object)
     -- sets value of attribute A to V
-    native sattr attribute                   :: MutableIO Request -> String -> String -> IO ()
+    native sattr attribute                   :: MutableIO Request -> Maybe String -> Maybe String -> IO ()
     -- request body sent by the client
     native body                              :: MutableIO Request -> IO (Maybe String)
     -- request body as bytes
@@ -68,7 +68,7 @@ data Request = native spark.Request where
     -- the path info
     native pathInfo                          :: MutableIO Request -> IO (Maybe String)
     -- the server port
-    native port                              :: MutableIO Request -> IO (Maybe Integer)
+    native port                              :: MutableIO Request -> IO (Maybe Int)
     -- the protocol, e.g. HTTP/1.1
     native protocol                          :: MutableIO Request -> IO (Maybe String)
     -- The HTTP method (GET, ..etc)

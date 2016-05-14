@@ -15,7 +15,10 @@
  */
 package chinook.into;
 
-import frege.runtime.Lambda;
+import frege.run7.Func;
+import frege.run7.Thunk;
+import frege.runtime.Phantom.RealWorld;
+
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -30,40 +33,66 @@ import spark.Filter;
 public final class Rest {
 
     /**
-     * Creates a new {@link Route} instance from a {@link Lambda} expression.
+     * @since 0.2.1
+     */
+    static class Builder<A> {
+
+        private final Request request;
+        private final Response response;
+
+        /**
+         * @param request
+         * @param response
+         * @since 0.2.1
+         */
+        public Builder(final Request request, final Response response) {
+            this.request = request;
+            this.response = response;
+        }
+
+        /**
+         * @param fn
+         * @return
+         * @since 0.2.1
+         */
+        public A execute(final Func.U<Request, Func.U<Response, Func.U<RealWorld, A>>> fn) {
+            return fn
+                .apply(Thunk.<Request>lazy(request))   // First parameter
+                .call()
+                .apply(Thunk.<Response>lazy(response)) // Second parameter
+                .call()
+                .apply(null)                           // Execute IO to get value
+                .call();
+        }
+    }
+
+    /**
+     * Creates a new {@link Route} instance from a {@link Func.U} expression.
      *
      * @param fn The function representing the behavior of the
      * {@link Route#handle(spark.Request, spark.Response) } method
      */
-    public static spark.Route createRoute(final Lambda fn) {
+    public static <A> spark.Route createRoute(final Func.U<Request, Func.U<Response, Func.U<RealWorld, A>>> fn) {
         return new Route() {
             @Override
             public Object handle(final Request request, final Response response) throws Exception {
-                return fn.apply(request)
-                         .apply(response)
-                         .apply(null) // Forces IO to extract its value
-                         .result()
-                         .forced();
+                return new Builder<A>(request, response).execute(fn);
             }
         };
     }
 
     /**
-     * Creates a new {@link Route} instance from a {@link Lambda} expression.
+     * Creates a new {@link Route} instance from a {@link Func.U} expression.
      *
      * @param fn The function representing the behavior of the
      * {@link Route#handle(spark.Request, spark.Response) } method
      * @since 0.2.1
      */
-    public static spark.Filter createFilter(final Lambda fn) {
+    public static spark.Filter createFilter(final Func.U<Request, Func.U<Response, Func.U<RealWorld, Short>>> fn) {
         return new Filter() {
             @Override
             public void handle(final Request request, final Response response) throws Exception {
-                fn.apply(request)
-                    .apply(response)
-                    .apply(null) // Forces IO to extract its value
-                    .result()
-                    .forced();
+                new Builder<Short>(request, response).execute(fn);
             }
         };
     }

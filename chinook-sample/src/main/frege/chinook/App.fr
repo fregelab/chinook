@@ -6,6 +6,9 @@ import chinook.Handlers
 
 -- tag::routes[]
 mappings = [
+  -- tag::securityInterceptor[]
+  Before "/hi" securityHandler,
+  -- end::securityInterceptor[]
   -- tag::helloWorldHandler[]
   Get "/hi" helloWorldHandler,
   -- end::helloWorldHandler[]

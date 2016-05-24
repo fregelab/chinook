@@ -4,32 +4,38 @@ buildscript {
     }
 
     dependencies {
+        classpath 'org.ajoberstar:gradle-git:1.4.2'
         classpath 'org.asciidoctor:asciidoctor-gradle-plugin:1.5.2'
     }
 }
 
 apply plugin: 'org.asciidoctor.convert'
+apply plugin: 'org.ajoberstar.github-pages'
 
 asciidoctor {
     attributes 'source-highlighter': 'prettify',
                toc                 : 'left',
                icons               : 'font',
                toclevels           : 3,
-               'pdf-style'         : 'default'
+               'pdf-style'         : 'default',
+               'chinook-core'      : releaseVersion,
+               'frege-core'        : libraries.frege_core,
+               'frege-repl'        : libraries.frege_repl,
+               'spark-java'        : libraries.spark_java,
+               'target-jdk'        : libraries.jdk
 }
 
-asciidoctor.dependsOn 'copyFregeDocs'
+githubPages {
+    repoUri = 'https://github.com/fregelab/chinook.git'
+    deleteExistingFiles = true
 
-//    ______                       _
-//   |  ____|                     | |
-//   | |__ _ __ ___  __ _  ___  __| | ___   ___
-//   |  __| '__/ _ \/ _` |/ _ \/ _` |/ _ \ / __|
-//   | |  | | |  __/ (_| |  __/ (_| | (_) | (__
-//   |_|  |_|  \___|\__, |\___|\__,_|\___/ \___|
-//                   __/ |
-//                  |___/
+    pages {
+        from file('build/asciidoc/html5')
+    }
 
-task copyFregeDocs(type: Copy, dependsOn: ':chinook-core:fregeDocComplete') {
-    from "../chinook-core/build/docs"
-    into "build/asciidoc/html5/fregedoc/"
+    //https://github.com/ajoberstar/gradle-git/wiki/Travis-CI-Authentication
+    credentials {
+        username = System.getenv('GH_TOKEN')
+        password = ''
+    }
 }

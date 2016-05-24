@@ -1,0 +1,29 @@
+== Versions
+
+This is the compatibility version table of the current Chinook release:
+
+.Compatibility table
+|===
+
+|name|version
+
+|chinook
+|{chinook-core}
+
+|spark-java
+|{spark-java}
+
+|frege-core
+|{frege-core}
+
+|frege-repl
+|{frege-repl}
+
+|jdk
+|{target-jdk}+
+|===
+
+IMPORTANT: Because Frege is evolving at fast pace, at least at the
+moment, Chinook is trying to follow latest versions of Frege. That's
+why I thought it would be important to have a chapter where users
+would see a compatibility table of the current release.

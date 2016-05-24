@@ -6,7 +6,8 @@
 
 === Frege docs
 
-You can check out Frege docs link:fregedoc/fregedoc.html[here]
+IMPORTANT: At the moment there is an issue with how `FregeDoc` that
+prevents `Chinook` from publishing its fregedocs.
 
 === Github
 

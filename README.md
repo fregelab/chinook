@@ -17,4 +17,7 @@ Binaries are available at Bintray:
 
 Gradle dependencies:
 
-    compile 'com.github.fregelab:chinook-core:0.2.1'
+    compile 'com.github.fregelab:chinook-core:VERSION'
+
+Replace `VERSION` with the latest available version number (see above
+or check the `versions` chapter in the documentation).

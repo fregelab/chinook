@@ -1,5 +1,5 @@
 = Chinook
-:revnumber: 0.2.1
+:revnumber: {chinook-core}
 :numbered:
 :imagesDir: images/
 :baseDir: ../../../../..
@@ -22,6 +22,8 @@ reference to wet, warm coastal winds in the Pacific Northwest."
   minimum effort.
 
 include::chapter/getting.ad[]
+
+include::chapter/versions.adoc[]
 
 include::chapter/http.ad[]
 

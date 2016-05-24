@@ -432,42 +432,44 @@ MathJax.Hub.Config({
 <div id="header">
 <h1>Chinook</h1>
 <div class="details">
-<span id="revnumber">version 0.2.0</span>
+<span id="revnumber">version 0.2.1</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#_getting_started">1. Getting Started</a></li>
-<li><a href="#_http">2. HTTP</a>
+<li><a href="#_versions">2. Versions</a></li>
+<li><a href="#_http">3. HTTP</a>
 <ul class="sectlevel2">
-<li><a href="#_overview">2.1. Overview</a>
+<li><a href="#_overview">3.1. Overview</a>
 <ul class="sectlevel3">
-<li><a href="#_handler">2.1.1. Handler</a></li>
-<li><a href="#_endpoint_registration">2.1.2. Endpoint registration</a></li>
-<li><a href="#_main">2.1.3. Main</a></li>
+<li><a href="#_handler">3.1.1. Handler</a></li>
+<li><a href="#_endpoint_registration">3.1.2. Endpoint registration</a></li>
+<li><a href="#_main">3.1.3. Main</a></li>
 </ul>
 </li>
-<li><a href="#_request_response">2.2. Request / Response</a>
+<li><a href="#_request_response">3.2. Request / Response</a>
 <ul class="sectlevel3">
-<li><a href="#_basics">2.2.1. Basics</a></li>
-<li><a href="#_request">2.2.2. Request</a></li>
-<li><a href="#_response">2.2.3. Response</a></li>
+<li><a href="#_basics">3.2.1. Basics</a></li>
+<li><a href="#_request">3.2.2. Request</a></li>
+<li><a href="#_response">3.2.3. Response</a></li>
+<li><a href="#_interceptors">3.2.4. Interceptors</a></li>
 </ul>
 </li>
-<li><a href="#_configuration">2.3. Configuration</a>
+<li><a href="#_configuration">3.3. Configuration</a>
 <ul class="sectlevel3">
-<li><a href="#_port">2.3.1. Port</a></li>
-<li><a href="#_static_files">2.3.2. Static Files</a></li>
+<li><a href="#_port">3.3.1. Port</a></li>
+<li><a href="#_static_files">3.3.2. Static Files</a></li>
 </ul>
 </li>
-<li><a href="#_templating">2.4. Templating</a></li>
+<li><a href="#_templating">3.4. Templating</a></li>
 </ul>
 </li>
-<li><a href="#_development">3. Development</a>
+<li><a href="#_development">4. Development</a>
 <ul class="sectlevel2">
-<li><a href="#_license">3.1. License</a></li>
-<li><a href="#_frege_docs">3.2. Frege docs</a></li>
-<li><a href="#_github">3.3. Github</a></li>
+<li><a href="#_license">4.1. License</a></li>
+<li><a href="#_frege_docs">4.2. Frege docs</a></li>
+<li><a href="#_github">4.3. Github</a></li>
 </ul>
 </li>
 </ul>
@@ -548,10 +550,66 @@ see the phrase <code>Hello World from Chinook :-)</code>.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_http">2. HTTP</h2>
+<h2 id="_versions">2. Versions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This is the compatibility version table of the current Chinook release:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Compatibility table</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">version</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">chinook</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.2.1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spark-java</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.sparkjava:spark-core:2.5</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">frege-core</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">org.frege-lang:frege:3.24-7.100</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">frege-repl</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">org.frege-lang:frege-repl-core:1.3</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jdk</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.7+</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Because Frege is evolving at fast pace, at least at the
+moment, Chinook is trying to follow latest versions of Frege. That&#8217;s
+why I thought it would be important to have a chapter where users
+would see a compatibility table of the current release.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_http">3. HTTP</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_overview">2.1. Overview</h3>
+<h3 id="_overview">3.1. Overview</h3>
 <div class="paragraph">
 <p>Chinook is a tiny web framework aimed to create microservices. A basic
 <code>Chinook</code> application needs only three steps to expose an endpoint:</p>
@@ -584,7 +642,7 @@ main _ = Chinook.run [] [
 </div>
 </div>
 <div class="sect3">
-<h4 id="_handler">2.1.1. Handler</h4>
+<h4 id="_handler">3.1.1. Handler</h4>
 <div class="paragraph">
 <p>Handlers are the most important part of Chinook, is where client
 requests are handled. Chinook http handlers normally have the
@@ -621,7 +679,7 @@ deleteHandler req = do
 </div>
 </div>
 <div class="sect3">
-<h4 id="_endpoint_registration">2.1.2. Endpoint registration</h4>
+<h4 id="_endpoint_registration">3.1.2. Endpoint registration</h4>
 <div class="paragraph">
 <p>The way <code>Chinook</code> works at the moment is a main entry point where
 handlers are registered for a specific <code>http verb</code> and a <code>path</code>.</p>
@@ -641,6 +699,7 @@ point is located in the <code>App.fr</code> file.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">mappings = [
+  Before "/hi" securityHandler,
   Get "/hi" helloWorldHandler,
   Get "/hi/:name/:age" greetingsHandler,
   "/json" + [
@@ -675,6 +734,8 @@ function to register a HTTP <code>GET</code> handler:</p>
                 Options String Handler |
                 Trace   String Handler |
                 Head    String Handler |
+                Before  String Handler |
+                After   String Handler |
                 Family  String [Resource]</code></pre>
 </div>
 </div>
@@ -716,7 +777,7 @@ Response</code>. Both are available undere <code>chinook.Core</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">import chinook.Core (Request, Response, response)</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">import chinook.Core (Request, Response, response, haltingResponse)</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -760,7 +821,7 @@ a get call in a given URI:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_main">2.1.3. Main</h4>
+<h4 id="_main">3.1.3. Main</h4>
 <div class="paragraph">
 <p>To start a <code>Chinook</code> application you only have to invoke the main
 function containing all the endpoint registrations as we saw in the
@@ -786,12 +847,10 @@ apply plugin: 'application' <i class="conum" data-value="1"></i><b>(1)</b>
 dependencies {
     compile project (':chinook-core')
 
-    compile 'com.github.januslynd:diablo-groovy:0.1.0'
+    compile 'com.github.fregelab:diablo-groovy:0.1.1'
 }
 
-mainClassName = "chinook.App" <i class="conum" data-value="2"></i><b>(2)</b>
-
-compileFrege.dependsOn 'compileJava'</code></pre>
+mainClassName = "chinook.App" <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -809,9 +868,9 @@ compileFrege.dependsOn 'compileJava'</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_request_response">2.2. Request / Response</h3>
+<h3 id="_request_response">3.2. Request / Response</h3>
 <div class="sect3">
-<h4 id="_basics">2.2.1. Basics</h4>
+<h4 id="_basics">3.2.1. Basics</h4>
 <div class="sect4">
 <h5 id="_to_return_simple_values">To return simple values</h5>
 <div class="paragraph">
@@ -941,7 +1000,7 @@ wasn&#8217;t correct.</td>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_request">2.2.2. Request</h4>
+<h4 id="_request">3.2.2. Request</h4>
 <div class="paragraph">
 <p>A <code>chinook.Core.Request</code> is a immutable data structure containing:</p>
 </div>
@@ -1098,13 +1157,14 @@ badRequest = response.{ status = 400 , <i class="conum" data-value="2"></i><b>(2
 </div>
 </div>
 <div class="sect3">
-<h4 id="_response">2.2.3. Response</h4>
+<h4 id="_response">3.2.3. Response</h4>
 <div class="paragraph">
 <p><code>chinook.Core.Response</code> is just a data type:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">data Response = Response { status  :: Int,
+                           halting :: Bool,
                            output  :: Maybe String,
                            headers :: [(String, Maybe String)]} where</code></pre>
 </div>
@@ -1123,7 +1183,7 @@ value looks like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">response = Response 200 Nothing []</code></pre>
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">response = Response 200 false Nothing []</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1177,9 +1237,85 @@ code meaning <code>resource created</code>.  A status code is of type <code>Int<
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_interceptors">3.2.4. Interceptors</h4>
+<div class="paragraph">
+<p>Sometimes you may need to check something for every request on a given
+path. An example could be a security interceptor, or just an audit
+trace.</p>
+</div>
+<div class="paragraph">
+<p>For that purpose Chinook has two types of routes that don&#8217;t represent
+a rest action but a handler capable of intercepting a given request,
+or set of requests and do something about it. Those routes are
+<code>Before</code> and <code>After</code> and as their name implies, one can be used to
+intercept before the request has been processed and the latter once
+the request has been processed.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<code>Chinook</code> interceptors are not <code>filters</code>. They can only
+access to the request and modify only the response.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In the sample application, there&#8217;s a silly security interceptor that
+may help as a starting point.</p>
+</div>
+<div class="listingblock">
+<div class="title">Mapping configuration</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">Before "/hi" securityHandler,</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>All requests found under <code>/hi</code> path will be intercepted by the
+<code>securityHandler</code></p>
+</div>
+<div class="listingblock">
+<div class="title">Handler implementation</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-haskell" data-lang="haskell">securityHandler :: IO Request -&gt; IO Response
+securityHandler req = do
+  token &lt;- req.param "token"
+  return $ case token of
+    Just _  -&gt; response
+    Nothing -&gt; haltingResponse.{ status = 401,
+                                 output = Just "Please add a token to your query params '?token='" }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In an interceptor in you would like to stop the process and return
+inmediately to the user, you should return a <strong>halting <code>Response</code></strong>
+with its <code>halting</code> property set to true. There&#8217;s a shortcut which is
+to make use of the <code>haltingResponse</code> value. If you would like to allow
+further execution just return a <code>Response</code> value making sure its
+halting property is set to false (which is the default value).</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+There are two alias for a normal response and a halting
+response: <code>response</code> and <code>haltingResponse</code>.
+</td>
+</tr>
+</table>
+</div>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_configuration">2.3. Configuration</h3>
+<h3 id="_configuration">3.3. Configuration</h3>
 <div class="paragraph">
 <p>Settings are passed when bootstraping the application. Instead of
 passing a list of tuples <code>Chinook</code> expects values of type
@@ -1197,7 +1333,7 @@ produce these settings.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_port">2.3.1. Port</h4>
+<h4 id="_port">3.3.1. Port</h4>
 <div class="paragraph">
 <p>To produce server port settings you can use the port function:</p>
 </div>
@@ -1208,7 +1344,7 @@ produce these settings.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_static_files">2.3.2. Static Files</h4>
+<h4 id="_static_files">3.3.2. Static Files</h4>
 <div class="paragraph">
 <p>You can assign a folder in the classpath to serve static files, with
 the <code>staticFiles</code> function.</p>
@@ -1225,7 +1361,7 @@ the <code>staticFiles</code> function.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_templating">2.4. Templating</h3>
+<h3 id="_templating">3.4. Templating</h3>
 <div class="paragraph">
 <p><code>Chinook</code> doesn&#8217;t have any templating solution <code>by default</code>.</p>
 </div>
@@ -1286,22 +1422,32 @@ getFormHandler req = do
 </div>
 </div>
 <div class="sect1">
-<h2 id="_development">3. Development</h2>
+<h2 id="_development">4. Development</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_license">3.1. License</h3>
+<h3 id="_license">4.1. License</h3>
 <div class="paragraph">
 <p><code>Chinook</code> uses <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_frege_docs">3.2. Frege docs</h3>
-<div class="paragraph">
-<p>You can check out Frege docs <a href="fregedoc/fregedoc.html">here</a></p>
+<h3 id="_frege_docs">4.2. Frege docs</h3>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+At the moment there is an issue with how <code>FregeDoc</code> that
+prevents <code>Chinook</code> from publishing its fregedocs.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_github">3.3. Github</h3>
+<h3 id="_github">4.3. Github</h3>
 <div class="paragraph">
 <p><code>Chinook</code> source code is hosted at <a href="https://github.com/januslynd/chinook">Github</a></p>
 </div>
@@ -1311,8 +1457,8 @@ getFormHandler req = do
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 0.2.0<br>
-Last updated 2016-02-15 13:57:02 +01:00
+Version 0.2.1<br>
+Last updated 2016-05-24 22:24:49 UTC
 </div>
 </div>
 </body>
